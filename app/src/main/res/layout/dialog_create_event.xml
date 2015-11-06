@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+
+    <!-- Event Name Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/Et_input_event_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="活動名稱" />
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- The Content of Event -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/Et_input_event_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="活動內容"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- The Number of People Required Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/Et_input_people_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="需求人數"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Event Content Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/Et_input_event_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ToGetHer時間"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_create_evnet"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="12dp"
+        android:text="建立活動"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/btn_shape_selector_orange5"/>
+
+</LinearLayout>

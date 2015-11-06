@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">ToGetHer</string>
+
+    <string name="base_url">http://114.34.95.168:8080/</string>
+    <string name="api_login">user/login/</string>
+    <string name="api_register">user/register/</string>
+    <string name="api_create_event">event/create/</string>
+    <string name="api_refresh_event">event/query/</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="open_string">open</string>
+    <string name="close_string">close</string>
+    <string name="login">登入</string>
+    <string name="logout">登出</string>
+    <string name="edit_profile">編輯名片</string>
+    <string name="action_review">最近活動</string>
+    <string name="setup">設定</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="cancel">取消</string>
+
+    <string name="register_btn">註冊</string>
+    <string name="img_text1">相簿</string>
+    <string name="img_text2">相機</string>
+    <string name="name_hint">暱稱</string>
+    <string name="email_hint">電子郵件</string>
+    <string name="pwd_hint">密碼</string>
+    <string name="pwd_again_hint">確認密碼</string>
+    <string name="clear_btn">清空</string>
+    <string-array name="setup">
+        <item>"搜尋範圍"></item>
+        <item>"關於我們"></item>
+        <item>"修改密碼"></item>
+    </string-array>
+
+    <string name="warn_pls_input_email">請輸入Email</string>
+    <string name="warn_pls_input_password">請輸入密碼</string>
+    <string name="warn_input_password_length">密碼長度必須大於6</string>
+    <string name="warn_pls_input_password_again">請再次確認密碼</string>
+    <string name="warn_pls_verify_passwrod">請確認密碼正確</string>
+    <string name="warn_pls_input_name">請輸入暱稱</string>
+    <string name="hint_register_success">註冊成功，請到登入畫面登入</string>
+    <string name="hint_login_success">登入成功，歡迎開始使用</string>
+</resources>
