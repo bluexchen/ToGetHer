@@ -35,6 +35,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -253,7 +254,7 @@ public class MapsActivity extends AppCompatActivity implements
                 getCenterLatLng();
             }
         });
-
+        new RefreshEventTask().execute();
 
     }
 
@@ -275,6 +276,30 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
+
+    public void showMarkerOnMap(Event[] eventsNearby) {
+
+        mMap.clear();
+        double lat;
+        double lng;
+        String eventName;
+        int attendeeNum;
+        long eventTime;
+
+        for(Event event: eventsNearby) {
+            lat = event.getLatitude();
+            lng = event.getLongitude();
+            eventName = event.getName();
+            attendeeNum = event.getAttendeeNum();
+            eventTime = event.getTime();
+
+            mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(lat, lng))
+                            .title(eventName + ", " + attendeeNum + "人, " + eventTime));
+
+        }
+
+    }
 
     //獲取地圖中央定位點的座標
     private LatLng getCenterLatLng() {
@@ -385,29 +410,18 @@ public class MapsActivity extends AppCompatActivity implements
             return null;
         }
 
-//        @Override
-//        protected void onPostExecute(Map<String,Event> RefreshEvents) {
-//
-//            if(RefreshEvents != null && RefreshEvents.size() !=0 ){
-//                for (Map.Entry<String, Event> entry : RefreshEvents.entrySet())
-//                {
-//                    Event event = entry.getValue();
-//                    Log.i(TAG, "EvendId:" + event.getId() + ", EventName:" + event.getName() +
-//                           ", EventContent:" + event.getContent() + ", AttendeeNum:" + event.getAttendeeNum() +
-//                            ", Latitude:" + event.getLatitude() + ", Lontitude:" + event.getLongitude());
-//                }
-//            }
-//
-//        }
 
         @Override
         protected void onPostExecute(Event[] RefreshEvents) {
             if (RefreshEvents != null) {
-               for (Event event : RefreshEvents) {
-                    Log.i(TAG, "EvendId:" + event.getId() + ", EventName:" + event.getName() +
-                            ", EventContent:" + event.getContent() + ", AttendeeNum:" + event.getAttendeeNum() +
-                            ", Latitude:" + event.getLatitude() + ", Lontitude:" + event.getLongitude());
-                }
+//               for (Event event : RefreshEvents) {
+//                    Log.i(TAG, "EvendId:" + event.getId() + ", EventName:" + event.getName() +
+//                            ", EventContent:" + event.getContent() + ", AttendeeNum:" + event.getAttendeeNum() +
+//                            ", Latitude:" + event.getLatitude() + ", Lontitude:" + event.getLongitude() +
+//                            ", Time:" + event.getTime());
+//                }
+                showMarkerOnMap(RefreshEvents);
+
             }
         }
     }
