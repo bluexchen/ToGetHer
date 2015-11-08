@@ -16,8 +16,8 @@ import android.widget.EditText;
 
 import com.exfantasy.together.R;
 import com.exfantasy.together.util.DateTimeUtil;
-import com.exfantasy.together.vo.OpResult;
 import com.exfantasy.together.vo.Event;
+import com.exfantasy.together.vo.OpResult;
 import com.exfantasy.together.vo.ResultCode;
 
 import org.springframework.http.HttpEntity;
@@ -51,6 +51,7 @@ public class  CreateEventDialog extends DialogFragment implements OnClickListene
     EditText mEtAttendeeNum;   //事件人數
     EditText mEteventTime;  //暫時用手動輸入
     Button   mBtnCreateEvent;
+//    DatePickerDialog datePickerDialog;
 
     //values
     Double centerLat;
@@ -91,9 +92,32 @@ public class  CreateEventDialog extends DialogFragment implements OnClickListene
         mEtAttendeeNum  = (EditText) mCreateEventView.findViewById(R.id.Et_input_people_num);
         mEteventTime = (EditText) mCreateEventView.findViewById(R.id.Et_input_event_time);
         mBtnCreateEvent = (Button) mCreateEventView.findViewById(R.id.btn_create_evnet);
+
+        mEteventTime.setKeyListener(null);
+        mEteventTime.setFocusable(false);
+        mEteventTime.setClickable(true);
     }
 
     private void setListener(AlertDialog.Builder builder) {
+
+        mEteventTime.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Calendar now = Calendar.getInstance();
+//
+//                datePickerDialog = DatePickerDialog.newInstance(
+//                        getActivity(),
+//                        now.get(Calendar.YEAR),
+//                        now.get(Calendar.MONTH),
+//                        now.get(Calendar.DAY_OF_MONTH)
+//                );
+//
+//                datePickerDialog.show(getActivity().getFragmentManager(), "datePickerDialog");
+
+
+            }
+        });
+
         mBtnCreateEvent.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

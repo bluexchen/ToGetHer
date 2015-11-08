@@ -16,10 +16,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.exfantasy.together.R;
-import com.exfantasy.together.event.CreateEventDialog;
-import com.exfantasy.together.login.LoginDialog;
-import com.exfantasy.together.event.MyEventRecordDialog;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
+import com.exfantasy.together.event.CreateEventDialog;
+import com.exfantasy.together.event.MyEventRecordDialog;
+import com.exfantasy.together.login.LoginDialog;
 import com.exfantasy.together.setting.SettingDialog;
 import com.exfantasy.together.vo.Event;
 import com.google.android.gms.common.ConnectionResult;
@@ -61,6 +61,7 @@ public class MapsActivity extends AppCompatActivity implements
     DrawerLayout drawerLayout;
     FloatingActionButton mFabCreatEvent;
     FloatingActionButton mFabSearchEvent;
+    FloatingActionButton mFabRefreshMap;
 
     /*
      * Define a request code to send to Google Play services
@@ -80,16 +81,21 @@ public class MapsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         resources = this.getResources();
         drawerLayout= (DrawerLayout) findViewById(R.id.drawer);
 
+//        ViewGroup actionBarLayout = (ViewGroup) getLayoutInflater().inflate(R.layout.layout_action_bar, null);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayShowCustomEnabled(true);
+//        actionBar.setCustomView(actionBarLayout);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open_string,R.string.close_string);
         actionBarDrawerToggle.syncState();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         // set up btn_login_logout
-        LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login_logout);
+        LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,8 +129,8 @@ public class MapsActivity extends AppCompatActivity implements
     // for login Dialog
     private void showLoginDialog() {
 
-        DialogFragment newFragment = new LoginDialog();
-        newFragment.show(getSupportFragmentManager(), "LoginDialog");
+        DialogFragment loginDialog = new LoginDialog();
+        loginDialog.show(getSupportFragmentManager(), "LoginDialog");
     }
 
     // for Setup Dialog
@@ -179,6 +185,8 @@ public class MapsActivity extends AppCompatActivity implements
     private void findViewsAndSetListener() {
         mFabCreatEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
         mFabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);
+        mFabRefreshMap = (FloatingActionButton) findViewById(R.id.fab_refresh_map);
+
         mFabCreatEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,6 +205,13 @@ public class MapsActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getApplicationContext(), "ToGetHer Searched!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        mFabRefreshMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 new RefreshEventTask().execute();
             }
         });

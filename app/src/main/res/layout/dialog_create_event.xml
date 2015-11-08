@@ -39,6 +39,7 @@
         <EditText android:id="@+id/Et_input_people_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="需求人數"/>
     </android.support.design.widget.TextInputLayout>
 
