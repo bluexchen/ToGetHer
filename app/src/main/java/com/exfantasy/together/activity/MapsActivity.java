@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.exfantasy.together.R;
+import com.exfantasy.together.components.adapter.MarkerInfoWindowAdapter;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
 import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
@@ -271,8 +272,8 @@ public class MapsActivity extends AppCompatActivity implements
         });
         new RefreshEventTask().execute();
 
+        mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
     }
-
 
     private void handleNewLocation(Location location) {
         Log.d(TAG, location.toString());
@@ -301,19 +302,20 @@ public class MapsActivity extends AppCompatActivity implements
         int attendeeNum;
         long eventTime;
 
-        for(Event event: eventsNearby) {
+        for (Event event: eventsNearby) {
             lat = event.getLatitude();
             lng = event.getLongitude();
             eventName = event.getName();
             attendeeNum = event.getAttendeeNum();
             eventTime = event.getTime();
 
-            mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(lat, lng))
-                            .title(eventName + ", " + attendeeNum + "人, " + eventTime));
+            MarkerOptions options =
+                    new MarkerOptions().position(new LatLng(lat, lng))
+                                       .title(eventName)
+                                       .snippet(attendeeNum + ";" + eventTime);
 
+            mMap.addMarker(options);
         }
-
     }
 
     //獲取地圖中央定位點的座標
