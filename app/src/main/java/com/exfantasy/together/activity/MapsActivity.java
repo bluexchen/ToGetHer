@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.exfantasy.together.R;
+import com.exfantasy.together.components.adapter.MarkerInfoWindowAdapter;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
 import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
@@ -285,9 +286,9 @@ public class MapsActivity extends AppCompatActivity implements
         new RefreshEventTask().execute();
 
         // Example: InfoWindowAdapter
-//        mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
+        mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
 
-        // Example: Snackbar
+        // Example: show snackbar
 //        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 //            @Override
 //            public boolean onMarkerClick(Marker marker) {
@@ -316,13 +317,14 @@ public class MapsActivity extends AppCompatActivity implements
 //            }
 //        });
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                showEventDialog(marker);
-                return true;
-            }
-        });
+        // Example: show dialog
+//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//            @Override
+//            public boolean onMarkerClick(Marker marker) {
+//                showEventDialog(marker);
+//                return true;
+//            }
+//        });
     }
 
     private void showEventDialog(Marker marker) {
@@ -337,12 +339,6 @@ public class MapsActivity extends AppCompatActivity implements
         double currentLongitude = location.getLongitude();
 
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
-
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(currentLatitude, currentLongitude)).title("Current Location"));
-//        MarkerOptions options = new MarkerOptions()
-//                .position(latLng)
-//                .title("I am here!");
-//        mMap.addMarker(options);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
@@ -374,7 +370,7 @@ public class MapsActivity extends AppCompatActivity implements
     //獲取地圖中央定位點的座標
     private LatLng getCenterLatLng() {
         LatLng latLng = mMap.getCameraPosition().target;
-        Log.i("daniel", "Center LatLng = " + latLng);
+//        Log.d("daniel", "Center LatLng = " + latLng);
         return latLng;
     }
 
