@@ -74,7 +74,7 @@
             android:padding="12dp"
             android:background="@drawable/btn_shape_selector_orange5"
             android:enabled="false"
-            android:layout_marginRight="160dp"
+            android:layout_marginRight="130dp"
             />
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_clear_at_dlg_register"
