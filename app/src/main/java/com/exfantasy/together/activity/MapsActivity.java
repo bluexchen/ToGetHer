@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.exfantasy.together.R;
-import com.exfantasy.together.components.adapter.MarkerInfoWindowAdapter;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
 import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
@@ -63,10 +61,11 @@ public class MapsActivity extends AppCompatActivity implements
         LocationListener {
 
     public static final String TAG = MapsActivity.class.getSimpleName();
-    DrawerLayout drawerLayout;
-    FloatingActionButton mFabCreatEvent;
-    FloatingActionButton mFabSearchEvent;
-    FloatingActionButton mFabRefreshMap;
+
+    private DrawerLayout drawerLayout;
+    private FloatingActionButton mFabCreatEvent;
+    private FloatingActionButton mFabSearchEvent;
+    private FloatingActionButton mFabRefreshMap;
 
     /*
      * Define a request code to send to Google Play services
@@ -140,28 +139,25 @@ public class MapsActivity extends AppCompatActivity implements
             }
         });
     }
+
     // for login Dialog
     private void showLoginDialog() {
-
         DialogFragment loginDialog = new LoginDialog();
         loginDialog.show(getSupportFragmentManager(), "LoginDialog");
     }
 
     // for Setup Dialog
     private void showMyEventsRecordDialog() {
-
         DialogFragment eventsRecordDialog = new MyEventRecordDialog();
         eventsRecordDialog.show(getSupportFragmentManager(), "MyEventRecordDialog");
     }
 
     // for Setup Dialog
     private void showSetupDialog() {
-
         DialogFragment settingDialog = new SettingDialog();
         settingDialog.show(getSupportFragmentManager(), "SettingDialog");
     }
 
-    //
     private  void showImDialog(){
         UploadImgDialog uploadImgDialog = new UploadImgDialog();
         uploadImgDialog.setmImg(profileIcon);
@@ -190,15 +186,13 @@ public class MapsActivity extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            if(  drawerLayout.isDrawerOpen(GravityCompat.START)
-                    ){
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawers();
-            }else{
+            } else {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -239,7 +233,6 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void initMapFr(){
-
         MapFragment mapFragment
                 = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
@@ -255,7 +248,6 @@ public class MapsActivity extends AppCompatActivity implements
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-
     }
 
     /**
@@ -291,34 +283,50 @@ public class MapsActivity extends AppCompatActivity implements
         });
         new RefreshEventTask().execute();
 
+        // Example: InfoWindowAdapter
 //        mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
+
+        // Example: Snackbar
+//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//            @Override
+//            public boolean onMarkerClick(Marker marker) {
+//                LatLng latLng = marker.getPosition();
+//                String snippet = marker.getSnippet();
+//                String[] split = snippet.split(";");
+//
+//                String showStr = "Title: " + marker.getTitle() +
+//                        "\nLatitude: " + latLng.latitude +
+//                        "\nLongitude: " + latLng.longitude +
+//                        "\nAttendeeNum: " + split[0] +
+//                        "\nEvent Time: " + split[1];
+//
+//                Snackbar snackbar = Snackbar
+//                        .make(drawerLayout, showStr, Snackbar.LENGTH_LONG)
+//                        .setAction("UNDO", new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                Snackbar snackbar1 = Snackbar.make(drawerLayout, "Message is restored!", Snackbar.LENGTH_SHORT);
+//                                snackbar1.show();
+//                            }
+//                        });
+//
+//                snackbar.show();
+//                return true;
+//            }
+//        });
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                LatLng latLng = marker.getPosition();
-                String snippet = marker.getSnippet();
-                String[] split = snippet.split(";");
-
-                String showStr = "Title: " + marker.getTitle() +
-                        "\nLatitude: " + latLng.latitude +
-                        "\nLongitude: " + latLng.longitude +
-                        "\nAttendeeNum: " + split[0] +
-                        "\nEvent Time: " + split[1];
-
-                Snackbar snackbar = Snackbar
-                        .make(drawerLayout, showStr, Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Snackbar snackbar1 = Snackbar.make(drawerLayout, "Message is restored!", Snackbar.LENGTH_SHORT);
-                                snackbar1.show();
-                            }
-                        });
-
-                snackbar.show();
+                showEventDialog(marker);
                 return true;
             }
         });
+    }
+
+    private void showEventDialog(Marker marker) {
+        DialogFragment loginDialog = new LoginDialog();
+        loginDialog.show(getSupportFragmentManager(), "LoginDialog");
     }
 
     private void handleNewLocation(Location location) {
@@ -338,9 +346,7 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
-
     public void showMarkerOnMap(Event[] eventsNearby) {
-
         mMap.clear();
         double lat;
         double lng;
@@ -368,10 +374,8 @@ public class MapsActivity extends AppCompatActivity implements
     private LatLng getCenterLatLng() {
         LatLng latLng = mMap.getCameraPosition().target;
         Log.i("daniel", "Center LatLng = " + latLng);
-
         return latLng;
     }
-
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -410,11 +414,9 @@ public class MapsActivity extends AppCompatActivity implements
             }
         } else {
             /*
-             * If no resolution is available, display a dialog to the
-             * user with the error.
-             */
-            Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
-            Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
+                     * If no resolution is available, display a dialog to the
+                    * user with the error.
+                      */
             Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
         }
     }
@@ -473,18 +475,10 @@ public class MapsActivity extends AppCompatActivity implements
             return null;
         }
 
-
         @Override
         protected void onPostExecute(Event[] RefreshEvents) {
             if (RefreshEvents != null) {
-//               for (Event event : RefreshEvents) {
-//                    Log.i(TAG, "EvendId:" + event.getId() + ", EventName:" + event.getName() +
-//                            ", EventContent:" + event.getContent() + ", AttendeeNum:" + event.getAttendeeNum() +
-//                            ", Latitude:" + event.getLatitude() + ", Lontitude:" + event.getLongitude() +
-//                            ", Time:" + event.getTime());
-//                }
                 showMarkerOnMap(RefreshEvents);
-
             }
         }
     }

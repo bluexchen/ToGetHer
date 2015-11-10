@@ -61,7 +61,11 @@ public class LoginDialog extends DialogFragment {
 
         resources = getActivity().getResources();
 
-        return builder.create();
+        AlertDialog dialog = builder.create();
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dlg_animation;
+
+        return dialog;
     }
 
     private void findViews(LayoutInflater inflater) {
