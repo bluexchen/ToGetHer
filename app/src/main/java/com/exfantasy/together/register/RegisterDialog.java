@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -85,14 +86,14 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
 
         mBtnRegister = (Button) registerView.findViewById(R.id.btn_register_at_dlg_register);
         mBtnClear  = (Button) registerView.findViewById(R.id.btn_clear_at_dlg_register);
-      //  mImgBtnUpload = (ImageButton) registerView.findViewById(R.id.ImgBtnUploadImg);
+
         mImg = (ImageView) registerView.findViewById(R.id.profile_image);
     }
 
     private void setListener() {
         mBtnRegister.setOnClickListener(this);
         mBtnClear.setOnClickListener(this);
-        //mImgBtnUpload.setOnClickListener(this);
+
     }
 
     @Override
@@ -110,10 +111,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
                 clearData();
                 break;
 
-//            case R.id.ImgBtnUploadImg:
-//                Log.d(TAG, "Image upload button clicked!");
-//                showImDialog();
-//                break;
+
         }
     }
 
@@ -167,7 +165,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
+              Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -181,13 +179,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         });
     }
 
-    // for login Dialog
-//    private void showImDialog() {
-//
-//        UploadImgDialog newFragment = new UploadImgDialog();
-//        newFragment.setmImg(mImg);
-//        newFragment.show(getFragmentManager(), "UploadImgDialog");
-//    }
 
     private class RegisterTask extends AsyncTask<Void, Void, OpResult> { // Params, Progress, Result
         private String email;
