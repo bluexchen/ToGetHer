@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.exfantasy.together.R;
 import com.exfantasy.together.util.DateTimeUtil;
@@ -38,24 +39,23 @@ import java.util.Collections;
 /**
  * Created by DanielChen on 15/11/2.
  */
-public class  CreateEventDialog extends DialogFragment implements OnClickListener{
+public class CreateEventDialog extends DialogFragment implements OnClickListener {
 
     private String TAG = this.getClass().getSimpleName();
 
     private Resources resources;
 
     //Views
-    View mCreateEventView;
-    EditText mEtEventName;     //事件名稱
-    EditText mEtEventContent;  //事件內容
-    EditText mEtAttendeeNum;   //事件人數
-    EditText mEteventTime;  //暫時用手動輸入
-    Button   mBtnCreateEvent;
-//    DatePickerDialog datePickerDialog;
+    private View mCreateEventView;
+    private EditText mEtEventName;    // 事件名稱
+    private EditText mEtEventContent;  // 事件內容
+    private EditText mEtAttendeeNum;   // 事件人數
+    private EditText mEtEventTime;     // 事件時間
+    private Button   mBtnCreateEvent;
 
     //values
-    Double centerLat;
-    Double centerLng;
+    private Double centerLat;
+    private Double centerLng;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,31 +90,19 @@ public class  CreateEventDialog extends DialogFragment implements OnClickListene
         mEtEventName = (EditText) mCreateEventView.findViewById(R.id.Et_input_event_name);
         mEtEventContent = (EditText) mCreateEventView.findViewById(R.id.Et_input_event_content);
         mEtAttendeeNum  = (EditText) mCreateEventView.findViewById(R.id.Et_input_people_num);
-        mEteventTime = (EditText) mCreateEventView.findViewById(R.id.Et_input_event_time);
+        mEtEventTime = (EditText) mCreateEventView.findViewById(R.id.Et_input_event_time);
         mBtnCreateEvent = (Button) mCreateEventView.findViewById(R.id.btn_create_evnet);
 
-        mEteventTime.setKeyListener(null);
-        mEteventTime.setFocusable(false);
-        mEteventTime.setClickable(true);
+        mEtEventTime.setKeyListener(null);
+        mEtEventTime.setFocusable(false);
+        mEtEventTime.setClickable(true);
     }
 
     private void setListener(AlertDialog.Builder builder) {
-
-        mEteventTime.setOnClickListener(new OnClickListener() {
+        mEtEventTime.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Calendar now = Calendar.getInstance();
-//
-//                datePickerDialog = DatePickerDialog.newInstance(
-//                        getActivity(),
-//                        now.get(Calendar.YEAR),
-//                        now.get(Calendar.MONTH),
-//                        now.get(Calendar.DAY_OF_MONTH)
-//                );
-//
-//                datePickerDialog.show(getActivity().getFragmentManager(), "datePickerDialog");
-
-
+                showTimePicker();
             }
         });
 
@@ -131,6 +119,23 @@ public class  CreateEventDialog extends DialogFragment implements OnClickListene
                 CreateEventDialog.this.getDialog().cancel();
             }
         });
+    }
+
+    private void showTimePicker() {
+
+    }
+
+    private void showMsgWithToast(final String msg) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void closeDialog() {
+        this.dismiss();
     }
 
     private class CreateEventTask extends AsyncTask<Void, Void, OpResult> {   //Params, Progress, Result
@@ -195,13 +200,15 @@ public class  CreateEventDialog extends DialogFragment implements OnClickListene
             switch (resultCode) {
                 case ResultCode.SUCCEED:
                     Log.i(TAG, "Create " + eventToCreate + " succeed");
+                    showMsgWithToast("建立活動成功");
                     break;
 
                 default:
                     Log.e(TAG, "Create " + eventToCreate + " failed");
+                    showMsgWithToast("建立活動失敗");
                     break;
             }
+            closeDialog();
         }
     }
-
 }
