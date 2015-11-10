@@ -63,8 +63,6 @@ public class LoginDialog extends DialogFragment {
 
         AlertDialog dialog = builder.create();
 
-        dialog.getWindow().getAttributes().windowAnimations = R.style.dlg_animation;
-
         return dialog;
     }
 

@@ -21,6 +21,7 @@ import com.exfantasy.together.components.floatingActionButton.FloatingActionButt
 import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
 import com.exfantasy.together.login.LoginDialog;
+import com.exfantasy.together.mapInfoEvent.EventDialog;
 import com.exfantasy.together.register.UploadImgDialog;
 import com.exfantasy.together.setting.SettingDialog;
 import com.exfantasy.together.vo.Event;
@@ -325,8 +326,8 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void showEventDialog(Marker marker) {
-        DialogFragment loginDialog = new LoginDialog();
-        loginDialog.show(getSupportFragmentManager(), "LoginDialog");
+        EventDialog eventDialog = new EventDialog();
+        eventDialog.show(getSupportFragmentManager(), "EventDialog");
     }
 
     private void handleNewLocation(Location location) {
