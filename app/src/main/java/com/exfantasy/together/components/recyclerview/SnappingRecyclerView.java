@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL;
 import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_FLING;
 
+/**
+ * https://gist.github.com/lauw/fc84f7d04f8c54e56d56
+ */
 public class SnappingRecyclerView extends RecyclerView {
 	private boolean mSnapEnabled = false;
 	private boolean mUserScrolling = false;
