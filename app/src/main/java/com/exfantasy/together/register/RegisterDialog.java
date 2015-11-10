@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 
 import com.exfantasy.together.R;
 import com.exfantasy.together.vo.OpResult;
+import com.exfantasy.together.vo.ResultCode;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -93,7 +93,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     private void setListener() {
         mBtnRegister.setOnClickListener(this);
         mBtnClear.setOnClickListener(this);
-
     }
 
     @Override
@@ -110,8 +109,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
                 Log.d(TAG, "Clear button clicked!");
                 clearData();
                 break;
-
-
         }
     }
 
@@ -165,12 +162,12 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-              Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void showReplyMsg(final String replyMsg) {
+    private void showMsgWithToast(final String replyMsg) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -179,6 +176,9 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         });
     }
 
+    private void closeDialog() {
+        this.dismiss();
+    }
 
     private class RegisterTask extends AsyncTask<Void, Void, OpResult> { // Params, Progress, Result
         private String email;
@@ -215,8 +215,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
                     = new HttpEntity<MultiValueMap<String, Object>>(formData, requestHeaders);
             try {
                 ResponseEntity<OpResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, OpResult.class);
-                showReplyMsg(getString(R.string.hint_register_success));
-                closeRegisterDialog();
                 return response.getBody();
             } catch (HttpClientErrorException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
@@ -228,11 +226,18 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
 
         @Override
         protected void onPostExecute(OpResult result) {
-            System.out.println(result);
-        }
+            int resultCode = result.getResultCode();
+            switch (resultCode) {
+                case ResultCode.SUCCEED:
+                    showMsgWithToast(getString(R.string.hint_register_success));
+                    closeDialog();
+                    break;
 
-        private void closeRegisterDialog(){
-            RegisterDialog.this.getDialog().cancel();
+                case ResultCode.REGISTER_FAEILD_EMAIL_ALREADY_USED:
+                    showMsgWithToast(getString(R.string.hint_register_failed_with_dupilcate_email));
+                    mEtInputEmail.requestFocus();
+                    break;
+            }
         }
     }
 }
