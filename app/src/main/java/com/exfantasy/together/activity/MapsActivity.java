@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -38,6 +39,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.springframework.http.HttpEntity;
@@ -289,7 +291,34 @@ public class MapsActivity extends AppCompatActivity implements
         });
         new RefreshEventTask().execute();
 
-        mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
+//        mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                LatLng latLng = marker.getPosition();
+                String snippet = marker.getSnippet();
+                String[] split = snippet.split(";");
+
+                String showStr = "Title: " + marker.getTitle() +
+                        "\nLatitude: " + latLng.latitude +
+                        "\nLongitude: " + latLng.longitude +
+                        "\nAttendeeNum: " + split[0] +
+                        "\nEvent Time: " + split[1];
+
+                Snackbar snackbar = Snackbar
+                        .make(drawerLayout, showStr, Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Snackbar snackbar1 = Snackbar.make(drawerLayout, "Message is restored!", Snackbar.LENGTH_SHORT);
+                                snackbar1.show();
+                            }
+                        });
+
+                snackbar.show();
+                return true;
+            }
+        });
     }
 
     private void handleNewLocation(Location location) {
