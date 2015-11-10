@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -52,13 +50,14 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
 
     private Button mBtnRegister;
     private Button mBtnClear;
-    private ImageButton mImgBtnUpload;
+
     private ImageView mImg;
     // Value
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -66,7 +65,8 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         final LayoutInflater inflater = getActivity().getLayoutInflater();
-        registerView = inflater.inflate(R.layout.dialog_register, null);
+        Log.d("yuanyu ","before create Dialog");
+        registerView = inflater.inflate(R.layout.new_register_dialog, null);
         builder.setView(registerView);
 
         resources = getActivity().getResources();
@@ -83,37 +83,37 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         mEtInputPwdAgain = (EditText) registerView.findViewById(R.id.Et_input_password_again);
         mEtInputName = (EditText) registerView.findViewById(R.id.Et_input_name);
 
-        mBtnRegister = (Button) registerView.findViewById(R.id.Btn_register);
-        mBtnClear  = (Button) registerView.findViewById(R.id.Btn_clear);
-        mImgBtnUpload = (ImageButton) registerView.findViewById(R.id.ImgBtnUploadImg);
-        mImg = (ImageView) registerView.findViewById(R.id.imageView2);
+        mBtnRegister = (Button) registerView.findViewById(R.id.btn_register_at_dlg_register);
+        mBtnClear  = (Button) registerView.findViewById(R.id.btn_clear_at_dlg_register);
+      //  mImgBtnUpload = (ImageButton) registerView.findViewById(R.id.ImgBtnUploadImg);
+        mImg = (ImageView) registerView.findViewById(R.id.profile_image);
     }
 
     private void setListener() {
         mBtnRegister.setOnClickListener(this);
         mBtnClear.setOnClickListener(this);
-        mImgBtnUpload.setOnClickListener(this);
+        //mImgBtnUpload.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.Btn_register:
+            case R.id.btn_register_at_dlg_register:
                 Log.d(TAG, "Register button clicked!");
                 if (verifyInput()) {
                     new RegisterTask().execute();
                 }
                 break;
 
-            case R.id.Btn_clear:
+            case R.id.btn_clear_at_dlg_register:
                 Log.d(TAG, "Clear button clicked!");
                 clearData();
                 break;
 
-            case R.id.ImgBtnUploadImg:
-                Log.d(TAG, "Image upload button clicked!");
-                showImDialog();
-                break;
+//            case R.id.ImgBtnUploadImg:
+//                Log.d(TAG, "Image upload button clicked!");
+//                showImDialog();
+//                break;
         }
     }
 
@@ -182,12 +182,12 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     }
 
     // for login Dialog
-    private void showImDialog() {
-
-        UploadImgDialog newFragment = new UploadImgDialog();
-        newFragment.setmImg(mImg);
-        newFragment.show(getFragmentManager(), "UploadImgDialog");
-    }
+//    private void showImDialog() {
+//
+//        UploadImgDialog newFragment = new UploadImgDialog();
+//        newFragment.setmImg(mImg);
+//        newFragment.show(getFragmentManager(), "UploadImgDialog");
+//    }
 
     private class RegisterTask extends AsyncTask<Void, Void, OpResult> { // Params, Progress, Result
         private String email;

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.exfantasy.together.R;
@@ -21,6 +22,7 @@ import com.exfantasy.together.components.floatingActionButton.FloatingActionButt
 import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
 import com.exfantasy.together.login.LoginDialog;
+import com.exfantasy.together.register.UploadImgDialog;
 import com.exfantasy.together.setting.SettingDialog;
 import com.exfantasy.together.vo.Event;
 import com.google.android.gms.common.ConnectionResult;
@@ -75,7 +77,7 @@ public class MapsActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Resources resources;
-
+    private ImageView profileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +128,15 @@ public class MapsActivity extends AppCompatActivity implements
 
         findViewsAndSetListener();
         initMapFr();
+
+        // set up image Handler
+        profileIcon = (ImageView) findViewById(R.id.menu_icon);
+        profileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImDialog();
+            }
+        });
     }
     // for login Dialog
     private void showLoginDialog() {
@@ -148,6 +159,12 @@ public class MapsActivity extends AppCompatActivity implements
         settingDialog.show(getSupportFragmentManager(), "SettingDialog");
     }
 
+    //
+    private  void showImDialog(){
+        UploadImgDialog uploadImgDialog = new UploadImgDialog();
+        uploadImgDialog.setmImg(profileIcon);
+        uploadImgDialog.show(getSupportFragmentManager(), "UploadImageDialog");
+    }
 
     @Override
     protected void onResume() {

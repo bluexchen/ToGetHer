@@ -42,4 +42,6 @@
     <string name="warn_pls_input_name">請輸入暱稱</string>
     <string name="hint_register_success">註冊成功，請到登入畫面登入</string>
     <string name="hint_login_success">登入成功，歡迎開始使用</string>
+    <string name="fb_register_btn">以FB註冊</string>
+    <string name="facebook_app_id">1675407852702220</string>
 </resources>

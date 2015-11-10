@@ -6,8 +6,6 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,8 +81,9 @@ public class LoginDialog extends DialogFragment {
         tvLinkRegister.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginDialog.this.getDialog().cancel();
                 showRegisterDialog();
+                LoginDialog.this.getDialog().cancel();
+
             }
         });
 
@@ -105,14 +104,14 @@ public class LoginDialog extends DialogFragment {
 
     }
 
-    //Daniel保留，後續測試用
-    public void replaceFrtoBackStack(Fragment fragment,String tag) {
-        FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
-        t.replace(R.id.register_dialog_layout, fragment, tag);
-        t.addToBackStack(null);
-        t.commit();
-
-    }
+//    //Daniel保留，後續測試用
+//    public void replaceFrtoBackStack(Fragment fragment,String tag) {
+//        FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
+//        t.replace(R.id.new_register_dialog_1, fragment, tag);
+//        t.addToBackStack(null);
+//        t.commit();
+//
+//    }
 
     private class LoginTask extends AsyncTask<Void, Void, LoginResult> { //Params, Progress, Result
         private String email;

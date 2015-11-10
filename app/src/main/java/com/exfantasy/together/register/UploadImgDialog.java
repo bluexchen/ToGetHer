@@ -48,7 +48,7 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("onActivityResult","requestCode: "+requestCode);
+        Log.d("onActivityResult", "requestCode: " + requestCode);
         Log.d("intent data", String.valueOf((data!= null)));
         //藉由requestCode判斷是否為開啟相機或開啟相簿而呼叫的，且data不為null
         if ((requestCode == CAMERA || requestCode == PHOTO ) && data != null)
@@ -83,18 +83,14 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
                     ScalePic(bitmap, mPhone.widthPixels);
                 }
             }
-
+            CloseDialog();
         }
     }
 
     private void ScalePic(Bitmap bitmap, int phone) {
         //縮放比例預設為1
         float mScale = 1 ;
-        if(mImg == null){
-            Log.d("ScalePic mImg is null",String.valueOf(mImg == null));
 
-            Log.d("ScalePic mImg is null",String.valueOf(mImg == null));
-        }
         //如果圖片寬度大於手機寬度則進行縮放，否則直接將圖片放入ImageView內
         if(bitmap.getWidth() > phone )
         {
@@ -126,8 +122,7 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             Log.d("Photo", "intent");
-            Bundle photoArgs = new Bundle();
-            photoArgs.putParcelable("PHOTO",intent);
+
             startActivityForResult(intent, PHOTO);
         }
         else if(R.id.cameraImg == v.getId()){
@@ -137,8 +132,7 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri.getPath());
             Log.d("Camera", "intent");
-            Bundle cameraArgs = new Bundle();
-            cameraArgs.putParcelable("CAMERA", cameraArgs);
+
             startActivityForResult(intent, CAMERA);
         }
     }
@@ -165,5 +159,9 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
         btn2.setOnClickListener(this);
         builder.setView(view);
         return builder.create();
+    }
+
+    private void CloseDialog(){
+        UploadImgDialog.this.getDialog().cancel();
     }
 }
