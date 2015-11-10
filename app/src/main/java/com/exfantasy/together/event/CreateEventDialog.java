@@ -1,6 +1,7 @@
 package com.exfantasy.together.event;
 
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.exfantasy.together.R;
@@ -33,13 +35,16 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  * Created by DanielChen on 15/11/2.
  */
-public class CreateEventDialog extends DialogFragment implements OnClickListener {
+public class CreateEventDialog extends DialogFragment {
 
     private String TAG = this.getClass().getSimpleName();
 
@@ -57,6 +62,8 @@ public class CreateEventDialog extends DialogFragment implements OnClickListener
     private Double centerLat;
     private Double centerLng;
 
+    private final SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm");
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,17 +79,12 @@ public class CreateEventDialog extends DialogFragment implements OnClickListener
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        resources = getActivity().getResources();
+
         findViews(inflater);
         setListener(builder);
 
-        resources = getActivity().getResources();
-
         return builder.create();
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     private void findViews(LayoutInflater inflater) {
@@ -109,7 +111,9 @@ public class CreateEventDialog extends DialogFragment implements OnClickListener
         mBtnCreateEvent.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CreateEventTask().execute();
+                if (verifyInput()) {
+                    new CreateEventTask().execute();
+                }
             }
         });
 
@@ -121,8 +125,50 @@ public class CreateEventDialog extends DialogFragment implements OnClickListener
         });
     }
 
-    private void showTimePicker() {
+    private boolean verifyInput() {
+        String eventName = mEtEventName.getText().toString();
+        if (eventName.isEmpty()) {
+            showMsgWithToast(resources.getString(R.string.warn_pls_input_event_name));
+            mEtEventName.requestFocus();
+            return false;
+        }
+        String eventContent = mEtEventContent.getText().toString();
+        if (eventContent.isEmpty()) {
+            showMsgWithToast(resources.getString(R.string.warn_pls_input_event_content));
+            mEtEventContent.requestFocus();
+            return false;
+        }
+        String attendeeNum = mEtAttendeeNum.getText().toString();
+        if (attendeeNum.isEmpty()) {
+            showMsgWithToast(resources.getString(R.string.warn_pls_input_attendee_num));
+            mEtAttendeeNum.requestFocus();
+            return false;
+        }
+        String eventTime = mEtEventTime.getText().toString();
+        if (eventTime.isEmpty()) {
+            showMsgWithToast(resources.getString(R.string.warn_pls_input_event_time));
+            return false;
+        }
+        return true;
+    }
 
+    private void showTimePicker() {
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+        TimePickerDialog timePicker
+                = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        cal.set(Calendar.MINUTE, selectedMinute);
+                        String showTime = mTimeFormat.format(cal.getTime());
+
+                        mEtEventTime.setText(showTime);
+                    }
+        }, hour, minute, false);
+        timePicker.show();
     }
 
     private void showMsgWithToast(final String msg) {
@@ -152,9 +198,19 @@ public class CreateEventDialog extends DialogFragment implements OnClickListener
             this.eventContent = mEtEventContent.getText().toString();
             this.attendeeNum = Integer.parseInt(mEtAttendeeNum.getText().toString());
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            this.eventTime = DateTimeUtil.dateTimeValue(calendar);
+            String sEventTime = mEtEventTime.getText().toString();
+            Calendar calToGetEventTime = Calendar.getInstance();
+            try {
+                Date time = mTimeFormat.parse(sEventTime);
+                Calendar tempCal = Calendar.getInstance();
+                tempCal.setTime(time);
+
+                calToGetEventTime.set(Calendar.HOUR_OF_DAY, tempCal.get(Calendar.HOUR_OF_DAY));
+                calToGetEventTime.set(Calendar.MINUTE, tempCal.get(Calendar.MINUTE));
+            } catch (ParseException e) {
+                Log.e(TAG, "Parse event time got exception, msg: " + e.getMessage());
+            }
+            this.eventTime = DateTimeUtil.dateTimeValue(calToGetEventTime);
 
             eventToCreate = new Event(centerLat, centerLng, eventName, eventContent, attendeeNum, eventTime);
         }

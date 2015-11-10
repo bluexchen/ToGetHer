@@ -119,32 +119,32 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         String inputName = mEtInputName.getText().toString();
 
         if (inputEmail.isEmpty()) {
-            showErrorMsg(resources.getString(R.string.warn_pls_input_email));
+            showMsgWithToast(resources.getString(R.string.warn_pls_input_email));
             mEtInputEmail.requestFocus();
             return false;
         }
         if (inputPwd.isEmpty()) {
-            showErrorMsg(resources.getString(R.string.warn_pls_input_password));
+            showMsgWithToast(resources.getString(R.string.warn_pls_input_password));
             mEtInputPwd.requestFocus();
             return false;
         }
         if (inputPwd.length() < 6) {
-            showErrorMsg(resources.getString(R.string.warn_input_password_length));
+            showMsgWithToast(resources.getString(R.string.warn_input_password_length));
             mEtInputPwd.requestFocus();
             return false;
         }
         if (inputPwdAgain.isEmpty()) {
-            showErrorMsg(resources.getString(R.string.warn_pls_input_password_again));
+            showMsgWithToast(resources.getString(R.string.warn_pls_input_password_again));
             mEtInputPwdAgain.requestFocus();
             return false;
         }
         if (!inputPwd.equals(inputPwdAgain)) {
-            showErrorMsg(resources.getString(R.string.warn_pls_verify_passwrod));
+            showMsgWithToast(resources.getString(R.string.warn_pls_verify_passwrod));
             mEtInputPwdAgain.requestFocus();
             return false;
         }
         if (inputName.isEmpty()) {
-            showErrorMsg(resources.getString(R.string.warn_pls_input_name));
+            showMsgWithToast(resources.getString(R.string.warn_pls_input_name));
             mEtInputName.requestFocus();
             return false;
         }
@@ -158,20 +158,11 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         mEtInputName.setText("");
     }
 
-    private void showErrorMsg(final String errorMsg) {
+    private void showMsgWithToast(final String msg) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void showMsgWithToast(final String replyMsg) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getActivity(), replyMsg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }

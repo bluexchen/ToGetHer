@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">ToGetHer</string>
 
+    <!--- Server 位址 -->
     <string name="base_url">http://114.34.95.168:8080/</string>
+
+    <!-- method -->
     <string name="api_login">user/login/</string>
     <string name="api_register">user/register/</string>
     <string name="api_create_event">event/create/</string>
@@ -34,6 +37,7 @@
         <item>"修改密碼"></item>
     </string-array>
 
+    <!-- 註冊畫面 -->
     <string name="warn_pls_input_email">請輸入Email</string>
     <string name="warn_pls_input_password">請輸入密碼</string>
     <string name="warn_input_password_length">密碼長度必須大於6</string>
@@ -47,4 +51,10 @@
     <string name="hint_login_success">登入成功，歡迎開始使用</string>
     <string name="fb_register_btn">以FB註冊</string>
     <string name="facebook_app_id">1675407852702220</string>
+
+    <!--- 建立事件畫面 -->
+    <string name="warn_pls_input_event_name">請輸入活動名稱</string>
+    <string name="warn_pls_input_event_content">請簡介活動內容</string>
+    <string name="warn_pls_input_attendee_num">請輸入參與人數</string>
+    <string name="warn_pls_input_event_time">請輸入活動時間</string>
 </resources>
