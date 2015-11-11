@@ -29,15 +29,6 @@
             android:src="@drawable/mapmarker_marker_inside_pink1"
             android:layout_centerInParent="true"/>
 
-        <com.exfantasy.together.components.recyclerview.SnappingRecyclerView
-            android:id="@+id/event_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="16dp" >
-
-        </com.exfantasy.together.components.recyclerview.SnappingRecyclerView>
-
         <com.exfantasy.together.components.floatingActionButton.FloatingActionsMenu
             android:id="@+id/fab_menu"
             android:layout_width="wrap_content"
@@ -49,7 +40,7 @@
             fab:fab_addButtonColorPressed="@color/orange_pressed"
             fab:fab_addButtonPlusIconColor="@color/white"
             fab:fab_labelStyle="@style/menu_labels_style"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="30dp"
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp">
 
@@ -78,6 +69,15 @@
                 fab:fab_icon="@drawable/icon_refresh_orange"/>
 
         </com.exfantasy.together.components.floatingActionButton.FloatingActionsMenu>
+
+        <com.exfantasy.together.components.recyclerview.SnappingRecyclerView
+            android:id="@+id/event_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp" >
+
+        </com.exfantasy.together.components.recyclerview.SnappingRecyclerView>
 
     </RelativeLayout>
 
