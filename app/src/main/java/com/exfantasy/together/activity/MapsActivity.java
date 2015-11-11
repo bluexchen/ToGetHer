@@ -70,20 +70,18 @@ public class MapsActivity extends AppCompatActivity implements
     public static final String TAG = MapsActivity.class.getSimpleName();
 
     private DrawerLayout drawerLayout;
+
+    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private GoogleMap mMap;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+
     private FloatingActionButton mFabCreatEvent;
     private FloatingActionButton mFabSearchEvent;
     private FloatingActionButton mFabRefreshMap;
 
-    /*
-     * Define a request code to send to Google Play services
-     * This code is returned in Activity.onActivityResult
-     */
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private SnappingRecyclerView mRecyclerView;
 
-    private GoogleMap mMap;
-
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
     private Resources resources;
     private ImageView profileIcon;
 
@@ -92,19 +90,47 @@ public class MapsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         resources = this.getResources();
         drawerLayout= (DrawerLayout) findViewById(R.id.drawer);
 
+        // set up action bar
+        setupActionBar();
+
+        // set up menu buttons
+        setupMenuButtons();
+
+        // set up floating action buttons
+        setupFloatingActionButton();
+
+        // set up google map
+        setupGoogleMap();
+
+        // set up recycler view
+        setupRecyclerView();
+    }
+
+    private void setupActionBar() {
 //        ViewGroup actionBarLayout = (ViewGroup) getLayoutInflater().inflate(R.layout.layout_action_bar, null);
 //        ActionBar actionBar = getSupportActionBar();
 //        actionBar.setDisplayShowCustomEnabled(true);
 //        actionBar.setCustomView(actionBarLayout);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open_string,R.string.close_string);
+        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout, R.string.open_string, R.string.close_string);
         actionBarDrawerToggle.syncState();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+    }
+
+    private void setupMenuButtons() {
+        // set up profile icon
+        profileIcon = (ImageView) findViewById(R.id.menu_icon);
+        profileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImDialog();
+            }
+        });
+
         // set up btn_login_logout
         LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +149,6 @@ public class MapsActivity extends AppCompatActivity implements
             }
         });
 
-
         // set up btn_setup
         LinearLayout btnSetup = (LinearLayout) findViewById(R.id.btn_setup);
         btnSetup.setOnClickListener(new View.OnClickListener() {
@@ -132,99 +157,9 @@ public class MapsActivity extends AppCompatActivity implements
                 showSetupDialog();
             }
         });
-
-
-        findViewsAndSetListener();
-        initMapFr();
-
-        // set up image Handler
-        profileIcon = (ImageView) findViewById(R.id.menu_icon);
-        profileIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showImDialog();
-            }
-        });
-
-        // initial recyclerView
-        SnappingRecyclerView recyclerView = (SnappingRecyclerView) findViewById(R.id.event_recycler_view);
-        recyclerView.setSnapEnabled(true);
-
-        ItemData itemsData[] = {
-                new ItemData("Luffy",R.drawable.icon_onepiece_luffy),
-                new ItemData("Zoro",R.drawable.icon_onepiece_zoro),
-                new ItemData("Nami",R.drawable.icon_onepiece_nami),
-                new ItemData("Sanji",R.drawable.icon_onepiece_sanji),
-                new ItemData("Ussop",R.drawable.icon_onepiece_ussop),
-                new ItemData("Chopper",R.drawable.icon_onepiece_chopper),
-                new ItemData("Nico",R.drawable.icon_onepiece_nico),
-                new ItemData("Franck",R.drawable.icon_onepiece_franck),
-                new ItemData("Brook",R.drawable.icon_onepiece_brook)
-        };
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        MyAdapter mAdapter = new MyAdapter(itemsData);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    // for login Dialog
-    private void showLoginDialog() {
-        DialogFragment loginDialog = new LoginDialog();
-        loginDialog.show(getSupportFragmentManager(), "LoginDialog");
-    }
-
-    // for Setup Dialog
-    private void showMyEventsRecordDialog() {
-        DialogFragment eventsRecordDialog = new MyEventRecordDialog();
-        eventsRecordDialog.show(getSupportFragmentManager(), "MyEventRecordDialog");
-    }
-
-    // for Setup Dialog
-    private void showSetupDialog() {
-        DialogFragment settingDialog = new SettingDialog();
-        settingDialog.show(getSupportFragmentManager(), "SettingDialog");
-    }
-
-    private  void showImDialog(){
-        UploadImgDialog uploadImgDialog = new UploadImgDialog();
-        uploadImgDialog.setmImg(profileIcon);
-        uploadImgDialog.show(getSupportFragmentManager(), "UploadImageDialog");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-            mGoogleApiClient.disconnect();
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == android.R.id.home) {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawers();
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void findViewsAndSetListener() {
+    private void setupFloatingActionButton() {
         mFabCreatEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
         mFabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);
         mFabRefreshMap = (FloatingActionButton) findViewById(R.id.fab_refresh_map);
@@ -257,12 +192,12 @@ public class MapsActivity extends AppCompatActivity implements
                 new RefreshEventTask().execute();
             }
         });
-
     }
 
-    private void initMapFr(){
+    private void setupGoogleMap(){
         MapFragment mapFragment
                 = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
+
         mapFragment.getMapAsync(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -276,6 +211,84 @@ public class MapsActivity extends AppCompatActivity implements
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+    }
+
+    private void setupRecyclerView() {
+        mRecyclerView = (SnappingRecyclerView) findViewById(R.id.event_recycler_view);
+        mRecyclerView.setSnapEnabled(true);
+
+        ItemData itemsData[] = {
+                new ItemData("Luffy",R.drawable.icon_onepiece_luffy),
+                new ItemData("Zoro",R.drawable.icon_onepiece_zoro),
+                new ItemData("Nami",R.drawable.icon_onepiece_nami),
+                new ItemData("Sanji",R.drawable.icon_onepiece_sanji),
+                new ItemData("Ussop",R.drawable.icon_onepiece_ussop),
+                new ItemData("Chopper",R.drawable.icon_onepiece_chopper),
+                new ItemData("Nico",R.drawable.icon_onepiece_nico),
+                new ItemData("Franck",R.drawable.icon_onepiece_franck),
+                new ItemData("Brook",R.drawable.icon_onepiece_brook)
+        };
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        MyAdapter mAdapter = new MyAdapter(itemsData);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    private  void showImDialog(){
+        UploadImgDialog uploadImgDialog = new UploadImgDialog();
+        uploadImgDialog.setmImg(profileIcon);
+        uploadImgDialog.show(getSupportFragmentManager(), "UploadImageDialog");
+    }
+
+    // for login Dialog
+    private void showLoginDialog() {
+        DialogFragment loginDialog = new LoginDialog();
+        loginDialog.show(getSupportFragmentManager(), "LoginDialog");
+    }
+
+    // for Setup Dialog
+    private void showMyEventsRecordDialog() {
+        DialogFragment eventsRecordDialog = new MyEventRecordDialog();
+        eventsRecordDialog.show(getSupportFragmentManager(), "MyEventRecordDialog");
+    }
+
+    // for Setup Dialog
+    private void showSetupDialog() {
+        DialogFragment settingDialog = new SettingDialog();
+        settingDialog.show(getSupportFragmentManager(), "SettingDialog");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawers();
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
