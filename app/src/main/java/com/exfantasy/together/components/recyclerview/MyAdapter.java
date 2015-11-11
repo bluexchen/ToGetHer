@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.exfantasy.together.R;
 
+/**
+ * http://hmkcode.com/android-simple-recyclerview-widget-example/
+ */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private ItemData[] itemsData;
 
@@ -18,29 +21,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View itemLayoutView = LayoutInflater.from(parent.getContext())
-                               .inflate(R.layout.recycler_item, null);
+        View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, null);
 
         // create ViewHolder
-       
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);
+
         return viewHolder;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        
     	// - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
 
         viewHolder.txtViewTitle.setText(itemsData[position].getTitle());
     	viewHolder.imgViewIcon.setImageResource(itemsData[position].getImageUrl());
-
-
     }
     
     // inner class to hold a reference to each item of RecyclerView 
@@ -55,10 +53,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             imgViewIcon = (ImageView) itemLayoutView.findViewById(R.id.item_icon);
         }
     }
-
-   
-
-   
 
     // Return the size of your itemsData (invoked by the layout manager)
     @Override
