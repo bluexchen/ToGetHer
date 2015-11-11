@@ -226,7 +226,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
                     closeDialog();
                     break;
 
-                case ResultCode.REGISTER_FAEILD_EMAIL_ALREADY_USED:
+                case ResultCode.REGISTER_FAILED_EMAIL_ALREADY_USED:
                     showMsgWithToast(getString(R.string.hint_register_failed_with_dupilcate_email));
                     mEtInputEmail.requestFocus();
                     break;
