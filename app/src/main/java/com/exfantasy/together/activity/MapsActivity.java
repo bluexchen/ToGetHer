@@ -216,6 +216,8 @@ public class MapsActivity extends AppCompatActivity implements
     private void setupRecyclerView() {
         mRecyclerView = (SnappingRecyclerView) findViewById(R.id.event_recycler_view);
         mRecyclerView.setSnapEnabled(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         ItemData itemsData[] = {
                 new ItemData("Luffy",R.drawable.icon_onepiece_luffy),
@@ -228,11 +230,9 @@ public class MapsActivity extends AppCompatActivity implements
                 new ItemData("Franck",R.drawable.icon_onepiece_franck),
                 new ItemData("Brook",R.drawable.icon_onepiece_brook)
         };
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         MyAdapter mAdapter = new MyAdapter(itemsData);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     private  void showImDialog(){
