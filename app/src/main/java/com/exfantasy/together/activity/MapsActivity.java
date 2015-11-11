@@ -27,7 +27,6 @@ import com.exfantasy.together.components.recyclerview.SnappingRecyclerView;
 import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
 import com.exfantasy.together.login.LoginDialog;
-import com.exfantasy.together.mapInfoEvent.EventDialog;
 import com.exfantasy.together.register.UploadImgDialog;
 import com.exfantasy.together.setting.SettingDialog;
 import com.exfantasy.together.vo.Event;
@@ -44,7 +43,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.springframework.http.HttpEntity;
@@ -360,15 +358,9 @@ public class MapsActivity extends AppCompatActivity implements
 //        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 //            @Override
 //            public boolean onMarkerClick(Marker marker) {
-//                showEventDialog(marker);
 //                return true;
 //            }
 //        });
-    }
-
-    private void showEventDialog(Marker marker) {
-        EventDialog eventDialog = new EventDialog();
-        eventDialog.show(getSupportFragmentManager(), "EventDialog");
     }
 
     private void handleNewLocation(Location location) {
