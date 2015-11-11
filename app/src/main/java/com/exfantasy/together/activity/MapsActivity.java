@@ -10,6 +10,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,9 @@ import android.widget.LinearLayout;
 import com.exfantasy.together.R;
 import com.exfantasy.together.components.adapter.MarkerInfoWindowAdapter;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
+import com.exfantasy.together.components.recyclerview.ItemData;
+import com.exfantasy.together.components.recyclerview.MyAdapter;
+import com.exfantasy.together.components.recyclerview.SnappingRecyclerView;
 import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
 import com.exfantasy.together.login.LoginDialog;
@@ -140,6 +145,26 @@ public class MapsActivity extends AppCompatActivity implements
                 showImDialog();
             }
         });
+
+        // initial recyclerView
+        SnappingRecyclerView recyclerView = (SnappingRecyclerView) findViewById(R.id.event_recycler_view);
+        ItemData itemsData[] = {
+                new ItemData("Luffy",R.drawable.icon_onepiece_luffy),
+                new ItemData("Zoro",R.drawable.icon_onepiece_zoro),
+                new ItemData("Nami",R.drawable.icon_onepiece_nami),
+                new ItemData("Sanji",R.drawable.icon_onepiece_sanji),
+                new ItemData("Ussop",R.drawable.icon_onepiece_ussop),
+                new ItemData("Chopper",R.drawable.icon_onepiece_chopper),
+                new ItemData("Nico",R.drawable.icon_onepiece_nico),
+                new ItemData("Franck",R.drawable.icon_onepiece_franck),
+                new ItemData("Brook",R.drawable.icon_onepiece_brook)
+        };
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        MyAdapter mAdapter = new MyAdapter(itemsData);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     // for login Dialog

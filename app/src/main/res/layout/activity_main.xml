@@ -29,6 +29,15 @@
             android:src="@drawable/mapmarker_marker_inside_pink1"
             android:layout_centerInParent="true"/>
 
+        <com.exfantasy.together.components.recyclerview.SnappingRecyclerView
+            android:id="@+id/event_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp" >
+
+        </com.exfantasy.together.components.recyclerview.SnappingRecyclerView>
+
         <com.exfantasy.together.components.floatingActionButton.FloatingActionsMenu
             android:id="@+id/fab_menu"
             android:layout_width="wrap_content"
