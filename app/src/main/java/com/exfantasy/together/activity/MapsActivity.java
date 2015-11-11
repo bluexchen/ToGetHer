@@ -377,18 +377,13 @@ public class MapsActivity extends AppCompatActivity implements
 
     public void showMarkerOnMap(Event[] eventsNearby) {
         mMap.clear();
-        double lat;
-        double lng;
-        String eventName;
-        int attendeeNum;
-        long eventTime;
 
         for (Event event: eventsNearby) {
-            lat = event.getLatitude();
-            lng = event.getLongitude();
-            eventName = event.getName();
-            attendeeNum = event.getAttendeeNum();
-            eventTime = event.getTime();
+            double lat = event.getLatitude();
+            double lng = event.getLongitude();
+            String eventName = event.getName();
+            int attendeeNum = event.getAttendeeNum();
+            long eventTime = event.getTime();
 
             MarkerOptions options =
                     new MarkerOptions().position(new LatLng(lat, lng))
@@ -399,10 +394,9 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
-    //獲取地圖中央定位點的座標
+    // 獲取地圖中央定位點的座標
     private LatLng getCenterLatLng() {
         LatLng latLng = mMap.getCameraPosition().target;
-//        Log.d("daniel", "Center LatLng = " + latLng);
         return latLng;
     }
 
@@ -424,19 +418,19 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         /*
-         * Google Play services can resolve some errors it detects.
-         * If the error has a resolution, try sending an Intent to
-         * start a Google Play services activity that can resolve
-         * error.
-         */
+              * Google Play services can resolve some errors it detects.
+              * If the error has a resolution, try sending an Intent to
+              * start a Google Play services activity that can resolve
+              * error.
+              */
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
                 connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
                 /*
-                 * Thrown if Google Play services canceled the original
-                 * PendingIntent
-                 */
+                            * Thrown if Google Play services canceled the original
+                            * PendingIntent
+                            */
             } catch (IntentSender.SendIntentException e) {
                 // Log the error
                 e.printStackTrace();
@@ -453,13 +447,11 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public void onLocationChanged(Location location) {
 //        handleNewLocation(location);
-
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
     }
 
     private class RefreshEventTask extends AsyncTask<Void, Void, Event[]> {   //Params, Progress, Result
@@ -505,9 +497,9 @@ public class MapsActivity extends AppCompatActivity implements
         }
 
         @Override
-        protected void onPostExecute(Event[] RefreshEvents) {
-            if (RefreshEvents != null) {
-                showMarkerOnMap(RefreshEvents);
+        protected void onPostExecute(Event[] refreshEvents) {
+            if (refreshEvents != null) {
+                showMarkerOnMap(refreshEvents);
             }
         }
     }
