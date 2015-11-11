@@ -24,7 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
@@ -196,8 +196,8 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
             requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
             // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate(true);
-            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
             MultiValueMap<String, Object> formData = new LinkedMultiValueMap<String, Object>();
             formData.add("email", email);
