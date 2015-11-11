@@ -39,12 +39,12 @@ import java.util.Collections;
 public class LoginDialog extends DialogFragment {
     private String TAG = this.getClass().getSimpleName();
 
-    private Resources resources;
+    private Resources mResource;
 
     // View
-    private View loginView;
-    private Button btnLogin;
-    private TextView tvLinkRegister;
+    private View mLoginView;
+    private Button mBtnLogin;
+    private TextView mTvLinkRegister;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +56,11 @@ public class LoginDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        findViews(inflater);
-        setListener(builder);
+        mResource = getActivity().getResources();
 
-        resources = getActivity().getResources();
+        findViews(inflater);
+
+        setListener(builder);
 
         AlertDialog dialog = builder.create();
 
@@ -67,20 +68,20 @@ public class LoginDialog extends DialogFragment {
     }
 
     private void findViews(LayoutInflater inflater) {
-        loginView = inflater.inflate(R.layout.dialog_login, null);
-        btnLogin = (Button) loginView.findViewById(R.id.btn_login_at_dlg_login);
-        tvLinkRegister = (TextView) loginView.findViewById(R.id.link_signup_at_dlg_login);
+        mLoginView = inflater.inflate(R.layout.dialog_login, null);
+        mBtnLogin = (Button) mLoginView.findViewById(R.id.btn_login_at_dlg_login);
+        mTvLinkRegister = (TextView) mLoginView.findViewById(R.id.link_signup_at_dlg_login);
     }
 
     private void setListener(AlertDialog.Builder builder) {
-        btnLogin.setOnClickListener(new OnClickListener() {
+        mBtnLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 new LoginTask().execute();
             }
         });
 
-        tvLinkRegister.setOnClickListener(new OnClickListener() {
+        mTvLinkRegister.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 showRegisterDialog();
@@ -89,7 +90,7 @@ public class LoginDialog extends DialogFragment {
             }
         });
 
-        builder.setView(loginView).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        builder.setView(mLoginView).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 LoginDialog.this.getDialog().cancel();
@@ -131,7 +132,7 @@ public class LoginDialog extends DialogFragment {
 
         @Override
         protected LoginResult doInBackground(Void... params) {
-            String url = resources.getString(R.string.base_url) + resources.getString(R.string.api_login);
+            String url = mResource.getString(R.string.base_url) + mResource.getString(R.string.api_login);
 
             // Populate the HTTP Basic Authentitcation header with the username and password
             // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
