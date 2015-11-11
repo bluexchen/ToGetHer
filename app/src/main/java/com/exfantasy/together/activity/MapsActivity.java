@@ -69,6 +69,8 @@ public class MapsActivity extends AppCompatActivity implements
 
     private DrawerLayout drawerLayout;
 
+    private ImageView mProfileIcon;
+
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -80,15 +82,14 @@ public class MapsActivity extends AppCompatActivity implements
 
     private SnappingRecyclerView mRecyclerView;
 
-    private Resources resources;
-    private ImageView profileIcon;
+    private Resources mResources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        resources = this.getResources();
+        mResources = this.getResources();
         drawerLayout= (DrawerLayout) findViewById(R.id.drawer);
 
         // set up action bar
@@ -121,8 +122,8 @@ public class MapsActivity extends AppCompatActivity implements
 
     private void setupMenuButtons() {
         // set up profile icon
-        profileIcon = (ImageView) findViewById(R.id.menu_icon);
-        profileIcon.setOnClickListener(new View.OnClickListener() {
+        mProfileIcon = (ImageView) findViewById(R.id.menu_icon);
+        mProfileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showImDialog();
@@ -235,7 +236,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     private  void showImDialog(){
         UploadImgDialog uploadImgDialog = new UploadImgDialog();
-        uploadImgDialog.setmImg(profileIcon);
+        uploadImgDialog.setmImg(mProfileIcon);
         uploadImgDialog.show(getSupportFragmentManager(), "UploadImageDialog");
     }
 
@@ -474,7 +475,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         @Override
         protected Event[] doInBackground(Void... params) {
-            String url = resources.getString(R.string.base_url) + resources.getString(R.string.api_refresh_event);
+            String url = mResources.getString(R.string.base_url) + mResources.getString(R.string.api_refresh_event);
 
             // Populate the HTTP Basic Authentitcation header with the username and password
             // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
