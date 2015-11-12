@@ -126,7 +126,7 @@ public class MapsActivity extends AppCompatActivity implements
         mProfileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showImDialog();
+                showUploadImageDialog();
             }
         });
 
@@ -234,7 +234,7 @@ public class MapsActivity extends AppCompatActivity implements
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private  void showImDialog(){
+    private  void showUploadImageDialog(){
         UploadImgDialog uploadImgDialog = new UploadImgDialog();
         uploadImgDialog.setImgView(mProfileIcon);
         uploadImgDialog.show(getSupportFragmentManager(), "UploadImageDialog");

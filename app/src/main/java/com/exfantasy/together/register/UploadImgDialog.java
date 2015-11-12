@@ -32,8 +32,8 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
 
     private final String TAG = this.getClass().getSimpleName();
 
-    private static final int PHOTO = 1;
-    private static final int CAMERA = 2;
+    private static final int PICK_FROM_GALLERY = 1;
+    private static final int PICK_FROM_CAMERA = 2;
 
     private DisplayMetrics mPhone;
 
@@ -83,7 +83,7 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
 
-            startActivityForResult(intent, PHOTO);
+            startActivityForResult(intent, PICK_FROM_GALLERY);
         }
         else if (R.id.cameraImg == v.getId()) {
             ContentValues value = new ContentValues();
@@ -93,7 +93,7 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri.getPath());
 
-            startActivityForResult(intent, CAMERA);
+            startActivityForResult(intent, PICK_FROM_CAMERA);
         }
     }
 
@@ -103,10 +103,10 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
         Log.d(TAG, "onActivityResult --> Intent: " + String.valueOf((data != null)));
 
         // 藉由requestCode判斷是否為開啟相機或開啟相簿而呼叫的，且data不為null
-        if ((requestCode == CAMERA || requestCode == PHOTO ) && data != null) {
+        if ((requestCode == PICK_FROM_CAMERA || requestCode == PICK_FROM_GALLERY) && data != null) {
             Bitmap bitmap = null;
             // 讀取照片，型態為Bitmap
-            if (requestCode == PHOTO) {
+            if (requestCode == PICK_FROM_GALLERY) {
                 // 取得照片路徑uri
                 Uri uri = data.getData();
                 Log.d(TAG, "onActivityResult --> File uri" + uri.toString());
@@ -118,7 +118,7 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
                     Log.w(TAG, "onActivityResult --> File not found exception raised, file uri: " + uri.toString());
                 }
             }
-            else if (requestCode == CAMERA) {
+            else if (requestCode == PICK_FROM_CAMERA) {
                 Log.d(TAG, "onActivityResult --> from camera");
 
                 bitmap = (Bitmap) data.getExtras().get("data");
