@@ -236,7 +236,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     private  void showImDialog(){
         UploadImgDialog uploadImgDialog = new UploadImgDialog();
-        uploadImgDialog.setmImg(mProfileIcon);
+        uploadImgDialog.setImgView(mProfileIcon);
         uploadImgDialog.show(getSupportFragmentManager(), "UploadImageDialog");
     }
 
