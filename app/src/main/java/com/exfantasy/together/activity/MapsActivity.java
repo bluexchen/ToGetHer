@@ -40,9 +40,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.springframework.http.HttpEntity;
@@ -302,71 +302,56 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Double toLat = 120.982024;
-        Double toLng = 23.973875;
+
+        // 設定畫面初始位置
+        double initLat = 23.942314;
+        double initLng = 121.048767;
+        CameraUpdate center=
+                CameraUpdateFactory.newLatLngZoom(new LatLng(initLat, initLng), 8);
+        mMap.moveCamera(center);
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setMyLocationEnabled(true);
-        UiSettings mapSetting = mMap.getUiSettings();
-//        mapSetting.setZoomControlsEnabled(true);
-        mapSetting.setAllGesturesEnabled(true);
-        mapSetting.setMyLocationButtonEnabled(true);
 
-        CameraUpdate center=
-                CameraUpdateFactory.newLatLngZoom(new LatLng(toLat, toLng), 15);
-        mMap.moveCamera(center);
+        mMap.getUiSettings().setAllGesturesEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
+
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
                 getCenterLatLng();
             }
         });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                LatLng latLng = marker.getPosition();
+
+                CameraUpdate cameraUpdate =
+                        CameraUpdateFactory.newLatLngZoom(latLng, 17);
+
+                mMap.animateCamera(cameraUpdate, 800, new GoogleMap.CancelableCallback() {
+                    @Override
+                    public void onFinish() {
+                        marker.showInfoWindow();
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
+                return true;
+            }
+        });
+
         new RefreshEventTask().execute();
-
-        // Example: InfoWindowAdapter
-        mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
-
-        // Example: show snackbar
-//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//                LatLng latLng = marker.getPosition();
-//                String snippet = marker.getSnippet();
-//                String[] split = snippet.split(";");
-//
-//                String showStr = "Title: " + marker.getTitle() +
-//                        "\nLatitude: " + latLng.latitude +
-//                        "\nLongitude: " + latLng.longitude +
-//                        "\nAttendeeNum: " + split[0] +
-//                        "\nEvent Time: " + split[1];
-//
-//                Snackbar snackbar = Snackbar
-//                        .make(drawerLayout, showStr, Snackbar.LENGTH_LONG)
-//                        .setAction("UNDO", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                Snackbar snackbar1 = Snackbar.make(drawerLayout, "Message is restored!", Snackbar.LENGTH_SHORT);
-//                                snackbar1.show();
-//                            }
-//                        });
-//
-//                snackbar.show();
-//                return true;
-//            }
-//        });
-
-        // Example: show dialog
-//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//                return true;
-//            }
-//        });
     }
 
     private void handleNewLocation(Location location) {
-        Log.d(TAG, location.toString());
-
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
 
