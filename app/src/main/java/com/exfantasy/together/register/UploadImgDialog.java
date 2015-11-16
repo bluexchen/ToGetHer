@@ -18,12 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.exfantasy.together.R;
 
 import java.io.FileNotFoundException;
+
+import info.hoang8f.widget.FButton;
 
 /**
  * Created by user on 2015/11/1.
@@ -55,11 +56,11 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
         mPhone = new DisplayMetrics();
         mActivity.getWindow().getWindowManager().getDefaultDisplay().getMetrics(mPhone);
 
-        ImageButton btnChooserPic = (ImageButton) view.findViewById(R.id.picImg);
-        btnChooserPic.setOnClickListener(this);
+        FButton btnPickFromGallery = (FButton) view.findViewById(R.id.btn_pick_from_gallery_at_upload_img_dlg);
+        btnPickFromGallery.setOnClickListener(this);
 
-        ImageButton btnOpenCamera = (ImageButton) view.findViewById(R.id.cameraImg);
-        btnOpenCamera.setOnClickListener(this);
+        FButton btnPickFromCamera = (FButton) view.findViewById(R.id.btn_pick_from_carema_at_upload_img_dlg);
+        btnPickFromCamera.setOnClickListener(this);
 
         builder.setView(view);
 
@@ -78,14 +79,14 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (R.id.picImg == v.getId()) {
+        if (R.id.btn_pick_from_gallery_at_upload_img_dlg == v.getId()) {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
 
             startActivityForResult(intent, PICK_FROM_GALLERY);
         }
-        else if (R.id.cameraImg == v.getId()) {
+        else if (R.id.btn_pick_from_carema_at_upload_img_dlg == v.getId()) {
             ContentValues value = new ContentValues();
             value.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
 
