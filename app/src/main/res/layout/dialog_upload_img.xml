@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <info.hoang8f.widget.FButton
-        android:id="@+id/btn_pick_from_gallery_at_upload_img_dlg"
+        android:id="@+id/btn_pick_from_gallery_at_dlg_upload_img"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/flat_button_min_height"
@@ -18,7 +18,7 @@
         fbutton:shadowEnabled="true" />
 
     <info.hoang8f.widget.FButton
-        android:id="@+id/btn_pick_from_carema_at_upload_img_dlg"
+        android:id="@+id/btn_pick_from_carema_at_dlg_upload_img"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"

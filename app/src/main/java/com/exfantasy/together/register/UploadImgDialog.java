@@ -56,10 +56,10 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
         mPhone = new DisplayMetrics();
         mActivity.getWindow().getWindowManager().getDefaultDisplay().getMetrics(mPhone);
 
-        FButton btnPickFromGallery = (FButton) view.findViewById(R.id.btn_pick_from_gallery_at_upload_img_dlg);
+        FButton btnPickFromGallery = (FButton) view.findViewById(R.id.btn_pick_from_gallery_at_dlg_upload_img);
         btnPickFromGallery.setOnClickListener(this);
 
-        FButton btnPickFromCamera = (FButton) view.findViewById(R.id.btn_pick_from_carema_at_upload_img_dlg);
+        FButton btnPickFromCamera = (FButton) view.findViewById(R.id.btn_pick_from_carema_at_dlg_upload_img);
         btnPickFromCamera.setOnClickListener(this);
 
         builder.setView(view);
@@ -79,14 +79,14 @@ public class UploadImgDialog extends DialogFragment implements OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (R.id.btn_pick_from_gallery_at_upload_img_dlg == v.getId()) {
+        if (R.id.btn_pick_from_gallery_at_dlg_upload_img == v.getId()) {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
 
             startActivityForResult(intent, PICK_FROM_GALLERY);
         }
-        else if (R.id.btn_pick_from_carema_at_upload_img_dlg == v.getId()) {
+        else if (R.id.btn_pick_from_carema_at_dlg_upload_img == v.getId()) {
             ContentValues value = new ContentValues();
             value.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
 
