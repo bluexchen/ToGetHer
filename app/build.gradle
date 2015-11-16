@@ -49,6 +49,8 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'info.hoang8f:fbutton:1.0.5'
 
+    compile 'com.soundcloud.android:android-crop:1.0.1@aar'
+
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
     compile 'com.google.code.gson:gson:2.3.1'
 

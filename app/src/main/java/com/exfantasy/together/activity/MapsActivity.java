@@ -63,7 +63,8 @@ public class MapsActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener,
+        View.OnClickListener {
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -90,7 +91,7 @@ public class MapsActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         mResources = this.getResources();
-        drawerLayout= (DrawerLayout) findViewById(R.id.drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         // set up action bar
         setupActionBar();
@@ -123,74 +124,30 @@ public class MapsActivity extends AppCompatActivity implements
     private void setupMenuButtons() {
         // set up profile icon
         mProfileIcon = (ImageView) findViewById(R.id.menu_icon);
-        mProfileIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showUploadImageDialog();
-            }
-        });
+        mProfileIcon.setOnClickListener(this);
 
         // set up btn_login
         LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLoginDialog();
-            }
-        });
+        btnLogin.setOnClickListener(this);
 
         // set up btn_recently_action
         LinearLayout btnRecentlyAction = (LinearLayout) findViewById(R.id.btn_recently_action);
-        btnRecentlyAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMyEventsRecordDialog();
-            }
-        });
+        btnRecentlyAction.setOnClickListener(this);
 
         // set up btn_setup
         LinearLayout btnSetup = (LinearLayout) findViewById(R.id.btn_setup);
-        btnSetup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSetupDialog();
-            }
-        });
+        btnSetup.setOnClickListener(this);
     }
 
     private void setupFloatingActionButton() {
         mFabCreatEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
+        mFabCreatEvent.setOnClickListener(this);
+
         mFabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);
+        mFabSearchEvent.setOnClickListener(this);
+
         mFabRefreshMap = (FloatingActionButton) findViewById(R.id.fab_refresh_map);
-
-        mFabCreatEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "ToGetHer Created!", Toast.LENGTH_SHORT).show();
-                DialogFragment createEventFr = new CreateEventDialog();
-                LatLng centerLatLng = getCenterLatLng();
-                Bundle latlngBundle = new Bundle();
-                latlngBundle.putDouble("lat", centerLatLng.latitude);
-                latlngBundle.putDouble("lng", centerLatLng.longitude);
-                createEventFr.setArguments(latlngBundle);
-                createEventFr.show(getSupportFragmentManager(), "CreateEventDialog");
-            }
-        });
-
-        mFabSearchEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "ToGetHer Searched!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        mFabRefreshMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new RefreshEventTask().execute();
-            }
-        });
+        mFabRefreshMap.setOnClickListener(this);
     }
 
     private void setupGoogleMap(){
@@ -240,22 +197,29 @@ public class MapsActivity extends AppCompatActivity implements
         uploadImgDialog.show(getSupportFragmentManager(), "UploadImageDialog");
     }
 
-    // for login Dialog
     private void showLoginDialog() {
         DialogFragment loginDialog = new LoginDialog();
         loginDialog.show(getSupportFragmentManager(), "LoginDialog");
     }
 
-    // for Setup Dialog
     private void showMyEventsRecordDialog() {
         DialogFragment eventsRecordDialog = new MyEventRecordDialog();
         eventsRecordDialog.show(getSupportFragmentManager(), "MyEventRecordDialog");
     }
 
-    // for Setup Dialog
     private void showSetupDialog() {
         DialogFragment settingDialog = new SettingDialog();
         settingDialog.show(getSupportFragmentManager(), "SettingDialog");
+    }
+
+    private void showCreateEventDialog() {
+        DialogFragment createEventFr = new CreateEventDialog();
+        LatLng centerLatLng = getCenterLatLng();
+        Bundle latlngBundle = new Bundle();
+        latlngBundle.putDouble("lat", centerLatLng.latitude);
+        latlngBundle.putDouble("lng", centerLatLng.longitude);
+        createEventFr.setArguments(latlngBundle);
+        createEventFr.show(getSupportFragmentManager(), "CreateEventDialog");
     }
 
     @Override
@@ -381,8 +345,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     // 獲取地圖中央定位點的座標
     private LatLng getCenterLatLng() {
-        LatLng latLng = mMap.getCameraPosition().target;
-        return latLng;
+        return mMap.getCameraPosition().target;
     }
 
     @Override
@@ -437,6 +400,38 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.menu_icon:
+                break;
+
+            case R.id.btn_login:
+                showLoginDialog();
+                break;
+
+            case R.id.btn_recently_action:
+                showMyEventsRecordDialog();
+                break;
+
+            case R.id.btn_setup:
+                showSetupDialog();
+                break;
+
+            case R.id.fab_create_event:
+                showCreateEventDialog();
+                break;
+
+            case R.id.fab_search_event:
+                // TODO
+                break;
+
+            case R.id.fab_refresh_map:
+                new RefreshEventTask().execute();
+                break;
+        }
     }
 
     private class RefreshEventTask extends AsyncTask<Void, Void, Event[]> {   //Params, Progress, Result
