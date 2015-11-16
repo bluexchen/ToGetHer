@@ -130,7 +130,7 @@ public class MapsActivity extends AppCompatActivity implements
             }
         });
 
-        // set up btn_login_logout
+        // set up btn_login
         LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

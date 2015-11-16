@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="200dp"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:padding="15dp">
-
 
     <!-- Email Label -->
     <android.support.design.widget.TextInputLayout
@@ -35,6 +37,7 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <!--
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_login_at_dlg_login"
         android:layout_width="fill_parent"
@@ -44,6 +47,20 @@
         android:text="Login"
         android:textColor="#FFFFFF"
         android:background="@drawable/btn_shape_selector_orange5"/>
+        -->
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/btn_login_at_dlg_login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:minHeight="@dimen/flat_button_min_height"
+        android:minWidth="@dimen/flat_button_min_width"
+        android:text="Login"
+        android:textColor="#FFFFFF"
+        fbutton:buttonColor="@color/fbutton_color_orange"
+        fbutton:shadowEnabled="true"
+    />
 
     <TextView android:id="@+id/link_signup_at_dlg_login"
         android:layout_width="fill_parent"
