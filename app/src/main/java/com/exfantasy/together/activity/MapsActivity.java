@@ -77,10 +77,6 @@ public class MapsActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
 
-    private FloatingActionButton mFabCreatEvent;
-    private FloatingActionButton mFabSearchEvent;
-    private FloatingActionButton mFabRefreshMap;
-
     private SnappingRecyclerView mRecyclerView;
 
     private Resources mResources;
@@ -140,14 +136,14 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void setupFloatingActionButton() {
-        mFabCreatEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
-        mFabCreatEvent.setOnClickListener(this);
+        FloatingActionButton fabCreatEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
+        fabCreatEvent.setOnClickListener(this);
 
-        mFabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);
-        mFabSearchEvent.setOnClickListener(this);
+        FloatingActionButton fabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);
+        fabSearchEvent.setOnClickListener(this);
 
-        mFabRefreshMap = (FloatingActionButton) findViewById(R.id.fab_refresh_map);
-        mFabRefreshMap.setOnClickListener(this);
+        FloatingActionButton fabRefreshMap = (FloatingActionButton) findViewById(R.id.fab_refresh_map);
+        fabRefreshMap.setOnClickListener(this);
     }
 
     private void setupGoogleMap(){
