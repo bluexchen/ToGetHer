@@ -377,14 +377,14 @@ public class MapsActivity extends AppCompatActivity implements
                             */
             } catch (IntentSender.SendIntentException e) {
                 // Log the error
-                e.printStackTrace();
+                Log.e(TAG, "Google map onConnectionFailed, cannot resolve by google play service activity, msg: " + e.getMessage(), e);
             }
         } else {
             /*
                      * If no resolution is available, display a dialog to the
                     * user with the error.
                       */
-            Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
+            Log.e(TAG, "Google map onConnectionFailed with code " + connectionResult.getErrorCode());
         }
     }
 
