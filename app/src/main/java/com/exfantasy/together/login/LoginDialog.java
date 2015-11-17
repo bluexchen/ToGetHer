@@ -14,10 +14,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.exfantasy.together.R;
 import com.exfantasy.together.register.RegisterDialog;
 import com.exfantasy.together.vo.LoginResult;
+import com.exfantasy.together.vo.ResultCode;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -36,13 +38,15 @@ import java.util.Collections;
 /**
  * Created by user on 2015/10/27.
  */
-public class LoginDialog extends DialogFragment {
+public class LoginDialog extends DialogFragment implements View.OnClickListener, DialogInterface.OnClickListener {
     private String TAG = this.getClass().getSimpleName();
 
     private Resources mResource;
 
     // View
     private View mLoginView;
+    private EditText mEdtEmail;
+    private EditText mEdtPassword;
     private Button mBtnLogin;
     private TextView mTvLinkRegister;
 
@@ -69,38 +73,39 @@ public class LoginDialog extends DialogFragment {
 
     private void findViews(LayoutInflater inflater) {
         mLoginView = inflater.inflate(R.layout.dialog_login, null);
+        mEdtEmail = (EditText) mLoginView.findViewById(R.id.input_email);
+        mEdtPassword = (EditText) mLoginView.findViewById(R.id.input_password);
         mBtnLogin = (Button) mLoginView.findViewById(R.id.btn_login_at_dlg_login);
         mTvLinkRegister = (TextView) mLoginView.findViewById(R.id.link_signup_at_dlg_login);
     }
 
     private void setListener(AlertDialog.Builder builder) {
-        mBtnLogin.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mBtnLogin.setOnClickListener(this);
+        mTvLinkRegister.setOnClickListener(this);
+        builder.setView(mLoginView).setNegativeButton(R.string.cancel, this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_login_at_dlg_login:
                 new LoginTask().execute();
-            }
-        });
+                break;
 
-        mTvLinkRegister.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            case R.id.link_signup_at_dlg_login:
                 showRegisterDialog();
-                LoginDialog.this.getDialog().cancel();
+                closeDialog();
+                break;
+        }
+    }
 
-            }
-        });
-
-        builder.setView(mLoginView).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                LoginDialog.this.getDialog().cancel();
-            }
-        });
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        closeDialog();
     }
 
     // for login Dialog
     private void showRegisterDialog() {
-
         RegisterDialog registerDialogFragment = new RegisterDialog();
         registerDialogFragment.show(getFragmentManager(),"registerDialog");
 //        replaceFrtoBackStack(registerDialogFragment, "registerDialog");
@@ -116,18 +121,27 @@ public class LoginDialog extends DialogFragment {
 //
 //    }
 
+    private void showMsgWithToast(final String msg) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void closeDialog() {
+        this.dismiss();
+    }
+
     private class LoginTask extends AsyncTask<Void, Void, LoginResult> { //Params, Progress, Result
         private String email;
-
         private String password;
 
         @Override
         protected void onPreExecute() {
-            EditText editText = (EditText) getDialog().findViewById(R.id.input_email);
-            this.email = editText.getText().toString();
-
-            editText = (EditText) getDialog().findViewById(R.id.input_password);
-            this.password = editText.getText().toString();
+            this.email = mEdtEmail.getText().toString();
+            this.password = mEdtPassword.getText().toString();
         }
 
         @Override
@@ -163,7 +177,23 @@ public class LoginDialog extends DialogFragment {
 
         @Override
         protected void onPostExecute(LoginResult result) {
-            System.out.println(result);
+            int resultCode = result.getResultCode();
+            switch (resultCode) {
+                case ResultCode.SUCCEED:
+                    showMsgWithToast(getString(R.string.hint_login_success));
+                    closeDialog();
+                    break;
+
+                case ResultCode.LOGIN_FAILED_CANNOT_FIND_USER_BY_EMAIL:
+                    showMsgWithToast(getString(R.string.hint_login_failed_with_email_not_existed));
+                    mEdtEmail.requestFocus();
+                    break;
+
+                case ResultCode.LOGIN_FAILED_PASSWORD_INVALID:
+                    showMsgWithToast(getString(R.string.hint_login_failed_with_error_password));
+                    mEdtPassword.requestFocus();
+                    break;
+            }
         }
     }
 }

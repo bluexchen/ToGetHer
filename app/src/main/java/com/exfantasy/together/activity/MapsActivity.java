@@ -141,8 +141,8 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void setupFloatingActionButton() {
-        FloatingActionButton fabCreatEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
-        fabCreatEvent.setOnClickListener(this);
+        FloatingActionButton fabCreateEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
+        fabCreateEvent.setOnClickListener(this);
 
         FloatingActionButton fabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);
         fabSearchEvent.setOnClickListener(this);

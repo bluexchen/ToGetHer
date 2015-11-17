@@ -256,12 +256,12 @@ public class CreateEventDialog extends DialogFragment {
             switch (resultCode) {
                 case ResultCode.SUCCEED:
                     Log.i(TAG, "Create " + eventToCreate + " succeed");
-                    showMsgWithToast("建立活動成功");
+                    showMsgWithToast(getString(R.string.hint_create_event_succeed));
                     break;
 
-                default:
+                case ResultCode.CREATE_EVENT_FAILED:
                     Log.e(TAG, "Create " + eventToCreate + " failed");
-                    showMsgWithToast("建立活動失敗");
+                    showMsgWithToast(getString(R.string.hint_create_event_failed));
                     break;
             }
             closeDialog();

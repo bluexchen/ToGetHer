@@ -141,7 +141,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
             return false;
         }
         if (!inputPwd.equals(inputPwdAgain)) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_verify_passwrod));
+            showMsgWithToast(mResources.getString(R.string.warn_pls_verify_password));
             mEtInputPwdAgain.requestFocus();
             return false;
         }
