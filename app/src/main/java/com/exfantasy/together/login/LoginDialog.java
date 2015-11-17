@@ -139,7 +139,9 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
     }
 
     private void saveLoginSucceedToSharedPreferences() {
-        // TODO
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(SharedPreferencesKey.ALREADY_LOGINED, true);
+        editor.commit();
     }
 
     private class LoginTask extends AsyncTask<Void, Void, LoginResult> { //Params, Progress, Result

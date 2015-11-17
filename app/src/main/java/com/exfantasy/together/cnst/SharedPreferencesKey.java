@@ -7,6 +7,8 @@ public interface SharedPreferencesKey {
     public static final String TOGEHER_KEY = "together";
 
     public static final String ALREADY_REGISTERED = "alreadyRegistered";
-    public static final String LOGIN_EMAIL = "loginEmail";
-    public static final String LOGIN_PASSWORD = "loginPassword";
+    public static final String ALREADY_LOGINED = "alreadyLogined";
+
+    public static final String EMAIL = "email";
+    public static final String PASSWORD = "password";
 }
