@@ -2,6 +2,8 @@ package com.exfantasy.together.register;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.exfantasy.together.R;
+import com.exfantasy.together.cnst.SharedPreferencesKey;
 import com.exfantasy.together.vo.OpResult;
 import com.exfantasy.together.vo.ResultCode;
 
@@ -41,10 +44,10 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     private final String TAG = this.getClass().getSimpleName();
 
     private Resources mResources;
+    private SharedPreferences mSharedPreferences;
 
     // View
     private View mRegisterView;
-
     private EditText mEtInputEmail;
     private EditText mEtInputPwd;
     private EditText mEtInputPwdAgain;
@@ -65,22 +68,22 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         final LayoutInflater inflater = getActivity().getLayoutInflater();
-        Log.d("yuanyu ","before create Dialog");
-        mRegisterView = inflater.inflate(R.layout.new_register_dialog, null);
-        builder.setView(mRegisterView);
 
         mResources = getActivity().getResources();
+        mSharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
 
-        findViews();
+        findViews(builder, inflater);
 
         setListener();
 
         return builder.create();
     }
 
-    private void findViews() {
+    private void findViews(AlertDialog.Builder builder, LayoutInflater inflater) {
+        mRegisterView = inflater.inflate(R.layout.new_register_dialog, null);
+        builder.setView(mRegisterView);
+
         mEtInputEmail = (EditText) mRegisterView.findViewById(R.id.Et_input_email);
         mEtInputPwd = (EditText) mRegisterView.findViewById(R.id.Et_input_password);
         mEtInputPwdAgain = (EditText) mRegisterView.findViewById(R.id.Et_input_password_again);
@@ -101,14 +104,12 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_register_at_dlg_register:
-                Log.d(TAG, "Register button clicked!");
                 if (verifyInput()) {
                     new RegisterTask().execute();
                 }
                 break;
 
             case R.id.btn_clear_at_dlg_register:
-                Log.d(TAG, "Clear button clicked!");
                 clearData();
                 break;
         }
@@ -173,6 +174,10 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         this.dismiss();
     }
 
+    private void saveRegisterSucceedToSharedPreferences() {
+        // TODO
+    }
+
     private class RegisterTask extends AsyncTask<Void, Void, OpResult> { // Params, Progress, Result
         private String email;
         private String password;
@@ -223,6 +228,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
             switch (resultCode) {
                 case ResultCode.SUCCEED:
                     showMsgWithToast(getString(R.string.hint_register_success));
+                    saveRegisterSucceedToSharedPreferences();
                     closeDialog();
                     break;
 
