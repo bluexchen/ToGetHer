@@ -1,7 +1,9 @@
 package com.exfantasy.together.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.location.Location;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.exfantasy.together.R;
+import com.exfantasy.together.cnst.SharedPreferencesKey;
 import com.exfantasy.together.components.adapter.MarkerInfoWindowAdapter;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
 import com.exfantasy.together.components.recyclerview.ItemData;
@@ -73,25 +76,29 @@ public class MapsActivity extends AppCompatActivity implements
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
+    private Resources mResources;
+    private SharedPreferences mSharedPreferences;
+
     private DrawerLayout drawerLayout;
 
     private ImageView mProfileIcon;
 
+    private SnappingRecyclerView mRecyclerView;
+
+    // google map related
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-
-    private SnappingRecyclerView mRecyclerView;
-
-    private Resources mResources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mResources = this.getResources();
+        mResources = getResources();
+        mSharedPreferences = getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         // set up action bar
