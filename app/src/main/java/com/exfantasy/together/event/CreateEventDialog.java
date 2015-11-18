@@ -2,7 +2,9 @@ package com.exfantasy.together.event;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,13 +13,13 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.exfantasy.together.R;
+import com.exfantasy.together.cnst.SharedPreferencesKey;
 import com.exfantasy.together.util.DateTimeUtil;
 import com.exfantasy.together.vo.Event;
 import com.exfantasy.together.vo.OpResult;
@@ -44,11 +46,11 @@ import java.util.Date;
 /**
  * Created by DanielChen on 15/11/2.
  */
-public class CreateEventDialog extends DialogFragment {
-
+public class CreateEventDialog extends DialogFragment implements View.OnClickListener, DialogInterface.OnClickListener {
     private String TAG = this.getClass().getSimpleName();
 
-    private Resources resources;
+    private Resources mResources;
+    private SharedPreferences mSharedPreferences;
 
     //Views
     private View mCreateEventView;
@@ -59,8 +61,8 @@ public class CreateEventDialog extends DialogFragment {
     private Button   mBtnCreateEvent;
 
     //values
-    private Double centerLat;
-    private Double centerLng;
+    private Double mCenterLat;
+    private Double mCenterLng;
 
     private final SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm");
 
@@ -69,9 +71,9 @@ public class CreateEventDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         Bundle latlngBundle = getArguments();
-        centerLat = latlngBundle.getDouble("lat");
-        centerLng = latlngBundle.getDouble("lng");
-        Log.i(TAG, "CreateEventDialog gets center LatLng = " + centerLat + ", " + centerLng);
+        mCenterLat = latlngBundle.getDouble("lat");
+        mCenterLng = latlngBundle.getDouble("lng");
+        Log.i(TAG, "CreateEventDialog gets center LatLng = " + mCenterLat + ", " + mCenterLng);
     }
 
     @Override
@@ -79,21 +81,24 @@ public class CreateEventDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        resources = getActivity().getResources();
+        mResources = getActivity().getResources();
+        mSharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
 
-        findViews(inflater);
+        findViews(builder, inflater);
         setListener(builder);
 
         return builder.create();
     }
 
-    private void findViews(LayoutInflater inflater) {
+    private void findViews(AlertDialog.Builder builder, LayoutInflater inflater) {
         mCreateEventView = inflater.inflate(R.layout.dialog_create_event, null);
-        mEtEventName = (EditText) mCreateEventView.findViewById(R.id.Et_input_event_name);
-        mEtEventContent = (EditText) mCreateEventView.findViewById(R.id.Et_input_event_content);
-        mEtAttendeeNum  = (EditText) mCreateEventView.findViewById(R.id.Et_input_people_num);
-        mEtEventTime = (EditText) mCreateEventView.findViewById(R.id.Et_input_event_time);
-        mBtnCreateEvent = (Button) mCreateEventView.findViewById(R.id.btn_create_evnet);
+        builder.setView(mCreateEventView);
+
+        mEtEventName = (EditText) mCreateEventView.findViewById(R.id.et_event_name_at_dlg_create_event);
+        mEtEventContent = (EditText) mCreateEventView.findViewById(R.id.et_event_content_at_dlg_create_event);
+        mEtAttendeeNum  = (EditText) mCreateEventView.findViewById(R.id.et_people_num_at_dlg_create_event);
+        mEtEventTime = (EditText) mCreateEventView.findViewById(R.id.et_event_time_at_dlg_create_event);
+        mBtnCreateEvent = (Button) mCreateEventView.findViewById(R.id.btn_create_evnet_at_dlg_create_event);
 
         mEtEventTime.setKeyListener(null);
         mEtEventTime.setFocusable(false);
@@ -101,52 +106,53 @@ public class CreateEventDialog extends DialogFragment {
     }
 
     private void setListener(AlertDialog.Builder builder) {
-        mEtEventTime.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTimePicker();
-            }
-        });
+        mEtEventTime.setOnClickListener(this);
+        mBtnCreateEvent.setOnClickListener(this);
+        builder.setView(mCreateEventView).setNegativeButton(R.string.cancel, this);
+    }
 
-        mBtnCreateEvent.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.et_event_time_at_dlg_create_event:
+                showTimePicker();
+                break;
+
+            case R.id.btn_create_evnet_at_dlg_create_event:
                 if (verifyInput()) {
                     new CreateEventTask().execute();
                 }
-            }
-        });
+                break;
+        }
+    }
 
-        builder.setView(mCreateEventView).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                CreateEventDialog.this.getDialog().cancel();
-            }
-        });
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        closeDialog();
     }
 
     private boolean verifyInput() {
         String eventName = mEtEventName.getText().toString();
         if (eventName.isEmpty()) {
-            showMsgWithToast(resources.getString(R.string.warn_pls_input_event_name));
+            showMsgWithToast(mResources.getString(R.string.warn_pls_input_event_name));
             mEtEventName.requestFocus();
             return false;
         }
         String eventContent = mEtEventContent.getText().toString();
         if (eventContent.isEmpty()) {
-            showMsgWithToast(resources.getString(R.string.warn_pls_input_event_content));
+            showMsgWithToast(mResources.getString(R.string.warn_pls_input_event_content));
             mEtEventContent.requestFocus();
             return false;
         }
         String attendeeNum = mEtAttendeeNum.getText().toString();
         if (attendeeNum.isEmpty()) {
-            showMsgWithToast(resources.getString(R.string.warn_pls_input_attendee_num));
+            showMsgWithToast(mResources.getString(R.string.warn_pls_input_attendee_num));
             mEtAttendeeNum.requestFocus();
             return false;
         }
         String eventTime = mEtEventTime.getText().toString();
         if (eventTime.isEmpty()) {
-            showMsgWithToast(resources.getString(R.string.warn_pls_input_event_time));
+            showMsgWithToast(mResources.getString(R.string.warn_pls_input_event_time));
             return false;
         }
         return true;
@@ -175,7 +181,7 @@ public class CreateEventDialog extends DialogFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -185,18 +191,20 @@ public class CreateEventDialog extends DialogFragment {
     }
 
     private class CreateEventTask extends AsyncTask<Void, Void, OpResult> {   //Params, Progress, Result
-        private String eventName;
-        private String eventContent;
-        private int attendeeNum;
-        private long eventTime;
+        private long mUserId;
+        private String mEventName;
+        private String mEventContent;
+        private int mAttendeeNum;
+        private long mEventTime;
 
-        private Event eventToCreate;
+        private Event mEventToCreate;
 
         @Override
         protected void onPreExecute() {
-            this.eventName = mEtEventName.getText().toString();
-            this.eventContent = mEtEventContent.getText().toString();
-            this.attendeeNum = Integer.parseInt(mEtAttendeeNum.getText().toString());
+            mUserId = mSharedPreferences.getLong(SharedPreferencesKey.USER_ID, -1);
+            mEventName = mEtEventName.getText().toString();
+            mEventContent = mEtEventContent.getText().toString();
+            mAttendeeNum = Integer.parseInt(mEtAttendeeNum.getText().toString());
 
             String sEventTime = mEtEventTime.getText().toString();
             Calendar calToGetEventTime = Calendar.getInstance();
@@ -210,14 +218,14 @@ public class CreateEventDialog extends DialogFragment {
             } catch (ParseException e) {
                 Log.e(TAG, "Parse event time got exception, msg: " + e.getMessage());
             }
-            this.eventTime = DateTimeUtil.dateTimeValue(calToGetEventTime);
+            mEventTime = DateTimeUtil.dateTimeValue(calToGetEventTime);
 
-            eventToCreate = new Event(centerLat, centerLng, eventName, eventContent, attendeeNum, eventTime);
+            mEventToCreate = new Event(mCenterLat, mCenterLng, mEventName, mEventContent, mAttendeeNum, mEventTime);
         }
 
         @Override
         protected OpResult doInBackground(Void... params) {
-            String url = resources.getString(R.string.base_url) + resources.getString(R.string.api_create_event);
+            String url = mResources.getString(R.string.base_url) + mResources.getString(R.string.api_create_event);
 
             // Populate the HTTP Basic Authentitcation header with the username and password
             // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
@@ -230,12 +238,13 @@ public class CreateEventDialog extends DialogFragment {
             restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
             MultiValueMap<String, String> formData = new LinkedMultiValueMap<String, String>();
-            formData.add("latitude", centerLat + "");
-            formData.add("longitude", centerLng + "");
-            formData.add("name", eventName);
-            formData.add("content", eventContent);
-            formData.add("attendeeNum", attendeeNum + "");
-            formData.add("time", eventTime + "");
+            formData.add("userId", mUserId + "");
+            formData.add("latitude", mCenterLat + "");
+            formData.add("longitude", mCenterLng + "");
+            formData.add("name", mEventName);
+            formData.add("content", mEventContent);
+            formData.add("attendeeNum", mAttendeeNum + "");
+            formData.add("time", mEventTime + "");
 
             HttpEntity<MultiValueMap<String, String>> requestEntity
                     = new HttpEntity<MultiValueMap<String, String>>(formData, requestHeaders);
@@ -269,12 +278,12 @@ public class CreateEventDialog extends DialogFragment {
             int resultCode = result.getResultCode();
             switch (resultCode) {
                 case ResultCode.SUCCEED:
-                    Log.i(TAG, "Create " + eventToCreate + " succeed");
+                    Log.i(TAG, "Create " + mEventToCreate + " succeed");
                     showMsgWithToast(getString(R.string.hint_create_event_succeed));
                     break;
 
                 case ResultCode.CREATE_EVENT_FAILED:
-                    Log.e(TAG, "Create " + eventToCreate + " failed");
+                    Log.e(TAG, "Create " + mEventToCreate + " failed");
                     showMsgWithToast(getString(R.string.hint_create_event_failed));
                     break;
 

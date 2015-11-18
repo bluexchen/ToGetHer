@@ -48,8 +48,8 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
     private SharedPreferences mSharedPreferences;
 
     private View mLoginView;
-    private EditText mEdtEmail;
-    private EditText mEdtPassword;
+    private EditText mEtEmail;
+    private EditText mEtPassword;
     private Button mBtnLoginAtDlgLogin;
     private TextView mTvLinkRegister;
 
@@ -80,11 +80,11 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         mLoginView = inflater.inflate(R.layout.dialog_login, null);
         builder.setView(mLoginView);
 
-        mEdtEmail = (EditText) mLoginView.findViewById(R.id.input_email);
-        mEdtPassword = (EditText) mLoginView.findViewById(R.id.input_password);
+        mEtEmail = (EditText) mLoginView.findViewById(R.id.et_email_at_dlg_login);
+        mEtPassword = (EditText) mLoginView.findViewById(R.id.et_password_at_dlg_login);
         mBtnLoginAtDlgLogin = (Button) mLoginView.findViewById(R.id.btn_login_at_dlg_login);
 
-        mTvLinkRegister = (TextView) mLoginView.findViewById(R.id.link_signup_at_dlg_login);
+        mTvLinkRegister = (TextView) mLoginView.findViewById(R.id.tv_signup_at_dlg_login);
 
         mBtnLoginAtMenu = (LinearLayout) getActivity().findViewById(R.id.btn_login_at_menu);
         mBtnLogoutAtMenu = (LinearLayout) getActivity().findViewById(R.id.btn_logout_at_menu);
@@ -103,7 +103,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
                 new LoginTask().execute();
                 break;
 
-            case R.id.link_signup_at_dlg_login:
+            case R.id.tv_signup_at_dlg_login:
                 showRegisterDialog();
                 closeDialog();
                 break;
@@ -166,8 +166,8 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
 
         @Override
         protected void onPreExecute() {
-            this.email = mEdtEmail.getText().toString();
-            this.password = mEdtPassword.getText().toString();
+            this.email = mEtEmail.getText().toString();
+            this.password = mEtPassword.getText().toString();
         }
 
         @Override
@@ -228,12 +228,12 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
 
                 case ResultCode.LOGIN_FAILED_CANNOT_FIND_USER_BY_EMAIL:
                     showMsgWithToast(getString(R.string.hint_login_failed_with_email_not_existed));
-                    mEdtEmail.requestFocus();
+                    mEtEmail.requestFocus();
                     break;
 
                 case ResultCode.LOGIN_FAILED_PASSWORD_INVALID:
                     showMsgWithToast(getString(R.string.hint_login_failed_with_error_password));
-                    mEdtPassword.requestFocus();
+                    mEtPassword.requestFocus();
                     break;
 
                 case ResultCode.COMMUNICATION_ERROR:

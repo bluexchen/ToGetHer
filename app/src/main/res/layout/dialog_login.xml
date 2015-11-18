@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
 
-        <EditText android:id="@+id/input_email"
+        <EditText android:id="@+id/et_email_at_dlg_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -29,7 +29,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
 
-        <EditText android:id="@+id/input_password"
+        <EditText android:id="@+id/et_password_at_dlg_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -62,7 +62,7 @@
         fbutton:shadowEnabled="true"
     />
 
-    <TextView android:id="@+id/link_signup_at_dlg_login"
+    <TextView android:id="@+id/tv_signup_at_dlg_login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/Et_input_event_name"
+        <EditText android:id="@+id/et_event_name_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/Et_input_event_content"
+        <EditText android:id="@+id/et_event_content_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="活動內容"/>
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/Et_input_people_num"
+        <EditText android:id="@+id/et_people_num_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/Et_input_event_time"
+        <EditText android:id="@+id/et_event_time_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ToGetHer時間"/>
@@ -57,7 +57,7 @@
 
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btn_create_evnet"
+        android:id="@+id/btn_create_evnet_at_dlg_create_event"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
