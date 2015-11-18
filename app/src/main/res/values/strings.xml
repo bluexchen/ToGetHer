@@ -64,4 +64,7 @@
 
     <string name="hint_create_event_succeed">建立活動成功</string>
     <string name="hint_create_event_failed">建立活動失敗</string>
+
+    <!-- 網路異常或伺服器發生異常 -->
+    <string name="warn_network_error">網路異常或伺服器發生異常</string>
 </resources>
