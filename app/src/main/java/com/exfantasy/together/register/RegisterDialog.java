@@ -215,15 +215,29 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity
                     = new HttpEntity<MultiValueMap<String, Object>>(formData, requestHeaders);
+
+            OpResult registerResult = null;
             try {
                 ResponseEntity<OpResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, OpResult.class);
-                return response.getBody();
+
+                registerResult = response.getBody();
+
+                return registerResult;
             } catch (HttpClientErrorException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
+
+                registerResult = new OpResult();
+                registerResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+
+                return registerResult;
             } catch (ResourceAccessException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
+
+                registerResult = new OpResult();
+                registerResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+
+                return registerResult;
             }
-            return null;
         }
 
         @Override
@@ -239,6 +253,10 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
                 case ResultCode.REGISTER_FAILED_EMAIL_ALREADY_USED:
                     showMsgWithToast(getString(R.string.hint_register_failed_with_dupilcate_email));
                     mEtInputEmail.requestFocus();
+                    break;
+
+                case ResultCode.COMMUNICATION_ERROR:
+                    showMsgWithToast(getString(R.string.warn_network_error));
                     break;
             }
         }

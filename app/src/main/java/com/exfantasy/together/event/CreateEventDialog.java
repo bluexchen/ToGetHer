@@ -239,15 +239,29 @@ public class CreateEventDialog extends DialogFragment {
 
             HttpEntity<MultiValueMap<String, String>> requestEntity
                     = new HttpEntity<MultiValueMap<String, String>>(formData, requestHeaders);
+
+            OpResult createEventResult = null;
             try {
                 ResponseEntity<OpResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, OpResult.class);
-                return response.getBody();
+
+                createEventResult = response.getBody();
+
+                return createEventResult;
             } catch (HttpClientErrorException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
+
+                createEventResult = new OpResult();
+                createEventResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+
+                return createEventResult;
             } catch (ResourceAccessException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
+
+                createEventResult = new OpResult();
+                createEventResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+
+                return createEventResult;
             }
-            return null;
         }
 
         @Override
@@ -262,6 +276,10 @@ public class CreateEventDialog extends DialogFragment {
                 case ResultCode.CREATE_EVENT_FAILED:
                     Log.e(TAG, "Create " + eventToCreate + " failed");
                     showMsgWithToast(getString(R.string.hint_create_event_failed));
+                    break;
+
+                case ResultCode.COMMUNICATION_ERROR:
+                    showMsgWithToast(getString(R.string.warn_network_error));
                     break;
             }
             closeDialog();

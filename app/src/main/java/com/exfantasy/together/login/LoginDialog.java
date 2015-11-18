@@ -80,7 +80,12 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         mEdtEmail = (EditText) mLoginView.findViewById(R.id.input_email);
         mEdtPassword = (EditText) mLoginView.findViewById(R.id.input_password);
         mBtnLogin = (Button) mLoginView.findViewById(R.id.btn_login_at_dlg_login);
+
+        final boolean alreadyRegistered = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_REGISTERED, false);
         mTvLinkRegister = (TextView) mLoginView.findViewById(R.id.link_signup_at_dlg_login);
+        if (alreadyRegistered) {
+            mTvLinkRegister.setVisibility(View.GONE);
+        }
     }
 
     private void setListener(AlertDialog.Builder builder) {
@@ -174,15 +179,29 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity
                     = new HttpEntity<MultiValueMap<String, Object>>(formData, requestHeaders);
+
+            LoginResult loginResult = null;
             try {
                 ResponseEntity<LoginResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, LoginResult.class);
-                return response.getBody();
+
+                loginResult = response.getBody();
+
+                return loginResult;
             } catch (HttpClientErrorException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
+
+                loginResult = new LoginResult();
+                loginResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+
+                return loginResult;
             } catch (ResourceAccessException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
+
+                loginResult = new LoginResult();
+                loginResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+
+                return loginResult;
             }
-            return null;
         }
 
         @Override
@@ -203,6 +222,10 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
                 case ResultCode.LOGIN_FAILED_PASSWORD_INVALID:
                     showMsgWithToast(getString(R.string.hint_login_failed_with_error_password));
                     mEdtPassword.requestFocus();
+                    break;
+
+                case ResultCode.COMMUNICATION_ERROR:
+                    showMsgWithToast(getString(R.string.warn_network_error));
                     break;
             }
         }

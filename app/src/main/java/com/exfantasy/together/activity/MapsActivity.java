@@ -134,9 +134,16 @@ public class MapsActivity extends AppCompatActivity implements
         mProfileIcon = (ImageView) findViewById(R.id.menu_icon);
         mProfileIcon.setOnClickListener(this);
 
+        final boolean alreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
+
         // set up btn_login
         LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login);
-        btnLogin.setOnClickListener(this);
+        if (alreadyLogined) {
+            btnLogin.setVisibility(View.GONE);
+        }
+        else {
+            btnLogin.setOnClickListener(this);
+        }
 
         // set up btn_recently_action
         LinearLayout btnRecentlyAction = (LinearLayout) findViewById(R.id.btn_recently_action);
@@ -145,6 +152,15 @@ public class MapsActivity extends AppCompatActivity implements
         // set up btn_setup
         LinearLayout btnSetup = (LinearLayout) findViewById(R.id.btn_setup);
         btnSetup.setOnClickListener(this);
+
+        // set up btn_logout
+        LinearLayout btnLogout = (LinearLayout) findViewById(R.id.btn_logout);
+        if (!alreadyLogined) {
+            btnLogout.setVisibility(View.GONE);
+        }
+        else {
+            btnLogout.setOnClickListener(this);
+        }
     }
 
     private void setupFloatingActionButton() {
@@ -430,6 +446,10 @@ public class MapsActivity extends AppCompatActivity implements
                 showSetupDialog();
                 break;
 
+            case R.id.btn_logout:
+                // TODO
+                break;
+
             case R.id.fab_create_event:
                 showCreateEventDialog();
                 break;
@@ -467,6 +487,15 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
+    private void showMsgWithToast(final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private class RefreshEventTask extends AsyncTask<Void, Void, Event[]> {   //Params, Progress, Result
         private String Lat;
         private String Lng;
@@ -498,9 +527,14 @@ public class MapsActivity extends AppCompatActivity implements
 
             HttpEntity<MultiValueMap<String, String>> requestEntity
                     = new HttpEntity<MultiValueMap<String, String>>(formData, requestHeaders);
+
+            Event[] events = null;
             try {
                 ResponseEntity<Event[]> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Event[].class);
-                return response.getBody();
+
+                events = response.getBody();
+
+                return events;
             } catch (HttpClientErrorException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
             } catch (ResourceAccessException e) {
@@ -513,6 +547,9 @@ public class MapsActivity extends AppCompatActivity implements
         protected void onPostExecute(Event[] refreshEvents) {
             if (refreshEvents != null) {
                 showMarkerOnMap(refreshEvents);
+            }
+            else {
+                showMsgWithToast(getString(R.string.warn_network_error));
             }
         }
     }
