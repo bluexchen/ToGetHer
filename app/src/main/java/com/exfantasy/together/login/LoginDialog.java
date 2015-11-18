@@ -81,11 +81,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         mEdtPassword = (EditText) mLoginView.findViewById(R.id.input_password);
         mBtnLogin = (Button) mLoginView.findViewById(R.id.btn_login_at_dlg_login);
 
-        final boolean alreadyRegistered = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_REGISTERED, false);
         mTvLinkRegister = (TextView) mLoginView.findViewById(R.id.link_signup_at_dlg_login);
-        if (alreadyRegistered) {
-            mTvLinkRegister.setVisibility(View.GONE);
-        }
     }
 
     private void setListener(AlertDialog.Builder builder) {
@@ -143,9 +139,13 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         this.dismiss();
     }
 
-    private void saveLoginSucceedToSharedPreferences() {
+    private void saveLoginSucceedToSharedPreferences(long userId, String email, String name, String userIconUrl) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean(SharedPreferencesKey.ALREADY_LOGINED, true);
+        editor.putLong(SharedPreferencesKey.USER_ID, userId);
+        editor.putString(SharedPreferencesKey.EMAIL, email);
+        editor.putString(SharedPreferencesKey.NAME, name);
+        editor.putString(SharedPreferencesKey.USER_ICON_URL, userIconUrl);
         editor.commit();
     }
 
@@ -210,7 +210,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
             switch (resultCode) {
                 case ResultCode.SUCCEED:
                     showMsgWithToast(getString(R.string.hint_login_success));
-                    saveLoginSucceedToSharedPreferences();
+                    saveLoginSucceedToSharedPreferences(result.getUserId(), result.getEmail(), result.getName(), result.getUserIconUrl());
                     closeDialog();
                     break;
 

@@ -44,7 +44,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     private final String TAG = this.getClass().getSimpleName();
 
     private Resources mResources;
-    private SharedPreferences mSharedPreferences;
 
     // View
     private View mRegisterView;
@@ -71,7 +70,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
         mResources = getActivity().getResources();
-        mSharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
 
         findViews(builder, inflater);
 
@@ -174,15 +172,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         this.dismiss();
     }
 
-    private void saveRegisterSucceedToSharedPreferences(String email, String password, String name) {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putBoolean(SharedPreferencesKey.ALREADY_REGISTERED, true);
-        editor.putString(SharedPreferencesKey.EMAIL, email);
-        editor.putString(SharedPreferencesKey.PASSWORD, password);
-        editor.putString(SharedPreferencesKey.NAME, name);
-        editor.commit();
-    }
-
     private class RegisterTask extends AsyncTask<Void, Void, OpResult> { // Params, Progress, Result
         private String email;
         private String password;
@@ -247,7 +236,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
             switch (resultCode) {
                 case ResultCode.SUCCEED:
                     showMsgWithToast(getString(R.string.hint_register_success));
-                    saveRegisterSucceedToSharedPreferences(email, password, name);
                     closeDialog();
                     break;
 

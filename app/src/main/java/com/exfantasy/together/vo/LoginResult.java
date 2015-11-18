@@ -10,17 +10,21 @@ public class LoginResult {
 	 */
 	private String resultMsg;
 	/**
+	 * User Id
+	 */
+	private long userId;
+	/**
 	 * 暱稱
 	 */
 	private String name;
 	/**
-	 * 頭像 url
-	 */
-	private String userIconUrl;
-	/**
 	 * 發起活動需要
 	 */
 	private String email;
+	/**
+	 * 頭像 url
+	 */
+	private String userIconUrl;
 
 	public LoginResult() {
 	}
@@ -41,20 +45,20 @@ public class LoginResult {
 		this.resultMsg = resultMsg;
 	}
 
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getUserIconUrl() {
-		return userIconUrl;
-	}
-
-	public void setUserIconUrl(String userIconUrl) {
-		this.userIconUrl = userIconUrl;
 	}
 
 	public String getEmail() {
@@ -65,9 +69,17 @@ public class LoginResult {
 		this.email = email;
 	}
 
+	public String getUserIconUrl() {
+		return userIconUrl;
+	}
+
+	public void setUserIconUrl(String userIconUrl) {
+		this.userIconUrl = userIconUrl;
+	}
+
 	@Override
 	public String toString() {
-		return "LoginResult [resultCode=" + resultCode + ", resultMsg=" + resultMsg + ", name=" + name
-				+ ", userIconUrl=" + userIconUrl + ", email=" + email + "]";
+		return "LoginResult [resultCode=" + resultCode + ", resultMsg=" + resultMsg + ", userId=" + userId + ", name="
+				+ name + ", email=" + email + ", userIconUrl=" + userIconUrl + "]";
 	}
 }
