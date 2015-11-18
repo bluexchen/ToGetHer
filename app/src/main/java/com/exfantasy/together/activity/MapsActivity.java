@@ -133,6 +133,8 @@ public class MapsActivity extends AppCompatActivity implements
     private void setupMenuItems() {
         final boolean alreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
 
+        Log.i(TAG, "Already logined: " + alreadyLogined);
+
         // set up profile icon
         mProfileIcon = (ImageView) findViewById(R.id.menu_icon);
         mProfileIcon.setOnClickListener(this);
