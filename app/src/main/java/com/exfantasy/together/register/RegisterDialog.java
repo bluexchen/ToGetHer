@@ -174,11 +174,12 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         this.dismiss();
     }
 
-    private void saveRegisterSucceedToSharedPreferences(String email, String password) {
+    private void saveRegisterSucceedToSharedPreferences(String email, String password, String name) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean(SharedPreferencesKey.ALREADY_REGISTERED, true);
         editor.putString(SharedPreferencesKey.EMAIL, email);
         editor.putString(SharedPreferencesKey.PASSWORD, password);
+        editor.putString(SharedPreferencesKey.NAME, name);
         editor.commit();
     }
 
@@ -246,7 +247,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
             switch (resultCode) {
                 case ResultCode.SUCCEED:
                     showMsgWithToast(getString(R.string.hint_register_success));
-                    saveRegisterSucceedToSharedPreferences(email, password);
+                    saveRegisterSucceedToSharedPreferences(email, password, name);
                     closeDialog();
                     break;
 

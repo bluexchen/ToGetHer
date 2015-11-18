@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.exfantasy.together.R;
@@ -105,7 +106,7 @@ public class MapsActivity extends AppCompatActivity implements
         setupActionBar();
 
         // set up menu buttons
-        setupMenuButtons();
+        setupMenuItems();
 
         // set up floating action buttons
         setupFloatingActionButton();
@@ -129,12 +130,22 @@ public class MapsActivity extends AppCompatActivity implements
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
     }
 
-    private void setupMenuButtons() {
+    private void setupMenuItems() {
+        final boolean alreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
+
         // set up profile icon
         mProfileIcon = (ImageView) findViewById(R.id.menu_icon);
         mProfileIcon.setOnClickListener(this);
 
-        final boolean alreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
+        // set up menu_username
+        String name = mSharedPreferences.getString(SharedPreferencesKey.NAME, "");
+        TextView tvUserName = (TextView) findViewById(R.id.menu_username);
+        tvUserName.setText(name);
+
+        // set up menu_user_email
+        String email = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
+        TextView tvEmail = (TextView) findViewById(R.id.menu_user_email);
+        tvEmail.setText(email);
 
         // set up btn_login
         LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login);
