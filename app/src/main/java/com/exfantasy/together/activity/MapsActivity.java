@@ -139,16 +139,16 @@ public class MapsActivity extends AppCompatActivity implements
 
         // set up menu_username
         String name = mSharedPreferences.getString(SharedPreferencesKey.NAME, "");
-        TextView tvUserName = (TextView) findViewById(R.id.menu_username);
+        TextView tvUserName = (TextView) findViewById(R.id.tv_username_at_menu);
         tvUserName.setText(name);
 
         // set up menu_user_email
         String email = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
-        TextView tvEmail = (TextView) findViewById(R.id.menu_user_email);
+        TextView tvEmail = (TextView) findViewById(R.id.tv_user_email_at_menu);
         tvEmail.setText(email);
 
         // set up btn_login
-        LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login);
+        LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login_at_menu);
         if (alreadyLogined) {
             btnLogin.setVisibility(View.GONE);
         }
@@ -157,15 +157,15 @@ public class MapsActivity extends AppCompatActivity implements
         }
 
         // set up btn_recently_action
-        LinearLayout btnRecentlyAction = (LinearLayout) findViewById(R.id.btn_recently_action);
+        LinearLayout btnRecentlyAction = (LinearLayout) findViewById(R.id.btn_recently_action_at_menu);
         btnRecentlyAction.setOnClickListener(this);
 
         // set up btn_setup
-        LinearLayout btnSetup = (LinearLayout) findViewById(R.id.btn_setup);
+        LinearLayout btnSetup = (LinearLayout) findViewById(R.id.btn_setup_at_menu);
         btnSetup.setOnClickListener(this);
 
         // set up btn_logout
-        LinearLayout btnLogout = (LinearLayout) findViewById(R.id.btn_logout);
+        LinearLayout btnLogout = (LinearLayout) findViewById(R.id.btn_logout_at_menu);
         if (!alreadyLogined) {
             btnLogout.setVisibility(View.GONE);
         }
@@ -237,7 +237,7 @@ public class MapsActivity extends AppCompatActivity implements
         loginDialog.show(getSupportFragmentManager(), "LoginDialog");
     }
 
-    private void showMyEventsRecordDialog() {
+    private void showRecentlyActions() {
         DialogFragment eventsRecordDialog = new MyEventRecordDialog();
         eventsRecordDialog.show(getSupportFragmentManager(), "MyEventRecordDialog");
     }
@@ -445,19 +445,19 @@ public class MapsActivity extends AppCompatActivity implements
                 Crop.pickImage(this);
                 break;
 
-            case R.id.btn_login:
+            case R.id.btn_login_at_menu:
                 showLoginDialog();
                 break;
 
-            case R.id.btn_recently_action:
-                showMyEventsRecordDialog();
+            case R.id.btn_recently_action_at_menu:
+                showRecentlyActions();
                 break;
 
-            case R.id.btn_setup:
+            case R.id.btn_setup_at_menu:
                 showSetupDialog();
                 break;
 
-            case R.id.btn_logout:
+            case R.id.btn_logout_at_menu:
                 // TODO
                 break;
 

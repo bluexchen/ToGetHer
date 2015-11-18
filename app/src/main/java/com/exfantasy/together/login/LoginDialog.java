@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,12 +47,14 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
     private Resources mResource;
     private SharedPreferences mSharedPreferences;
 
-    // View
     private View mLoginView;
     private EditText mEdtEmail;
     private EditText mEdtPassword;
-    private Button mBtnLogin;
+    private Button mBtnLoginAtDlgLogin;
     private TextView mTvLinkRegister;
+
+    private LinearLayout mBtnLoginAtMenu;
+    private LinearLayout mBtnLogoutAtMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,13 +82,16 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
 
         mEdtEmail = (EditText) mLoginView.findViewById(R.id.input_email);
         mEdtPassword = (EditText) mLoginView.findViewById(R.id.input_password);
-        mBtnLogin = (Button) mLoginView.findViewById(R.id.btn_login_at_dlg_login);
+        mBtnLoginAtDlgLogin = (Button) mLoginView.findViewById(R.id.btn_login_at_dlg_login);
 
         mTvLinkRegister = (TextView) mLoginView.findViewById(R.id.link_signup_at_dlg_login);
+
+        mBtnLoginAtMenu = (LinearLayout) getActivity().findViewById(R.id.btn_login_at_menu);
+        mBtnLogoutAtMenu = (LinearLayout) getActivity().findViewById(R.id.btn_logout_at_menu);
     }
 
     private void setListener(AlertDialog.Builder builder) {
-        mBtnLogin.setOnClickListener(this);
+        mBtnLoginAtDlgLogin.setOnClickListener(this);
         mTvLinkRegister.setOnClickListener(this);
         builder.setNegativeButton(R.string.cancel, this);
     }
@@ -147,6 +153,11 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         editor.putString(SharedPreferencesKey.NAME, name);
         editor.putString(SharedPreferencesKey.USER_ICON_URL, userIconUrl);
         editor.commit();
+    }
+
+    private void changeMenuButtonsStatus() {
+        mBtnLoginAtMenu.setVisibility(View.GONE);
+        mBtnLogoutAtMenu.setVisibility(View.VISIBLE);
     }
 
     private class LoginTask extends AsyncTask<Void, Void, LoginResult> { //Params, Progress, Result
@@ -211,6 +222,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
                 case ResultCode.SUCCEED:
                     showMsgWithToast(getString(R.string.hint_login_success));
                     saveLoginSucceedToSharedPreferences(result.getUserId(), result.getEmail(), result.getName(), result.getUserIconUrl());
+                    changeMenuButtonsStatus();
                     closeDialog();
                     break;
 

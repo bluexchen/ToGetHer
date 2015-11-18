@@ -132,9 +132,8 @@
                 android:background="#FFFFFF"
                 android:layout_height="wrap_content">
 
-
                 <TextView
-                    android:id="@+id/menu_username"
+                    android:id="@+id/tv_username_at_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -144,7 +143,7 @@
                     android:textColor="#000000"/>
 
                 <TextView
-                    android:id="@+id/menu_user_email"
+                    android:id="@+id/tv_user_email_at_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -171,11 +170,6 @@ m
 
             </LinearLayout>
 
-
-
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -187,7 +181,7 @@ m
             <!--按鈕-->
 
             <LinearLayout
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_login_at_menu"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_height="48dp"
@@ -196,14 +190,12 @@ m
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/img_login"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/icon_login_grey" />
 
                 <TextView
-                    android:id="@+id/txt_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -215,7 +207,7 @@ m
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/btn_recently_action"
+                android:id="@+id/btn_recently_action_at_menu"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_height="48dp"
@@ -224,14 +216,12 @@ m
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/img_recently_action"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/icon_myevents_grey" />
 
                 <TextView
-                    android:id="@+id/txt_recently_action"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -243,7 +233,7 @@ m
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/btn_setup"
+                android:id="@+id/btn_setup_at_menu"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
@@ -252,14 +242,12 @@ m
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/img_setup"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/icon_settings_grey" />
 
                 <TextView
-                    android:id="@+id/txt_setup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -271,7 +259,7 @@ m
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/btn_logout"
+                android:id="@+id/btn_logout_at_menu"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_height="48dp"
@@ -280,14 +268,12 @@ m
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/img_logout"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/icon_logout_grey" />
 
                 <TextView
-                    android:id="@+id/txt_logout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
