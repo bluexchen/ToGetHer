@@ -149,11 +149,9 @@ public class MapsActivity extends AppCompatActivity implements
 
         // set up btn_login
         LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login_at_menu);
+        btnLogin.setOnClickListener(this);
         if (mAlreadyLogined) {
             btnLogin.setVisibility(View.GONE);
-        }
-        else {
-            btnLogin.setOnClickListener(this);
         }
 
         // set up btn_recently_action
@@ -166,21 +164,17 @@ public class MapsActivity extends AppCompatActivity implements
 
         // set up btn_logout
         LinearLayout btnLogout = (LinearLayout) findViewById(R.id.btn_logout_at_menu);
+        btnLogout.setOnClickListener(this);
         if (!mAlreadyLogined) {
             btnLogout.setVisibility(View.GONE);
-        }
-        else {
-            btnLogout.setOnClickListener(this);
         }
     }
 
     private void setupFloatingActionButton() {
         FloatingActionButton fabCreateEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
+        fabCreateEvent.setOnClickListener(this);
         if (!mAlreadyLogined) {
             fabCreateEvent.setVisibility(View.GONE);
-        }
-        else {
-            fabCreateEvent.setOnClickListener(this);
         }
 
         FloatingActionButton fabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);

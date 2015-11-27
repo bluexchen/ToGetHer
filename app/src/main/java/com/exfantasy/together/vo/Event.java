@@ -7,7 +7,11 @@ public class Event {
     /**
      * 事件 ID
      */
-    private long id;
+    private long eventId;
+    /**
+     * 建立事件使用者 ID
+     */
+    private long createUserId;
     /**
      * 緯度
      */
@@ -37,11 +41,12 @@ public class Event {
     }
 
     public Event(double latitude, double longitude, String name, String content, int attendeeNum, long time) {
-        this(0, latitude, longitude, name, content, attendeeNum, time);
+        this(0, 0, latitude, longitude, name, content, attendeeNum, time);
     }
 
-    public Event(long id, double latitude, double longitude, String name, String content, int attendeeNum, long time) {
-        this.id = id;
+    public Event(long eventId, long createUserId, double latitude, double longitude, String name, String content, int attendeeNum, long time) {
+        this.eventId = eventId;
+        this.createUserId = createUserId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
@@ -50,12 +55,20 @@ public class Event {
         this.time = time;
     }
 
-    public long getId() {
-        return id;
+    public long getEventId() {
+        return eventId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setEventId(long eventId) {
+        this.eventId = eventId;
+    }
+
+    public long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(long createUserId) {
+        this.createUserId = createUserId;
     }
 
     public double getLatitude() {
@@ -108,7 +121,9 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event [id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", name=" + name
-                + ", content=" + content + ", attendeeNum=" + attendeeNum + ", time=" + time + "]";
+        return "Event [eventId=" + eventId + ", createUserId=" + createUserId + ", latitude=" + latitude
+                + ", longitude=" + longitude + ", name=" + name + ", content=" + content + ", attendeeNum="
+                + attendeeNum + ", time=" + time + "]";
     }
 }
+
