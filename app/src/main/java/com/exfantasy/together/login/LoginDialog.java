@@ -54,6 +54,8 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
     private Button mBtnLoginAtDlgLogin;
     private TextView mTvLinkRegister;
 
+    private TextView mTvNameAtMenu;
+    private TextView mTvEmailAtMenu;
     private LinearLayout mBtnLoginAtMenu;
     private LinearLayout mBtnLogoutAtMenu;
 
@@ -89,6 +91,8 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
 
         mTvLinkRegister = (TextView) mLoginView.findViewById(R.id.tv_signup_at_dlg_login);
 
+        mTvNameAtMenu = (TextView) getActivity().findViewById(R.id.tv_username_at_menu);
+        mTvEmailAtMenu = (TextView) getActivity().findViewById(R.id.tv_user_email_at_menu);
         mBtnLoginAtMenu = (LinearLayout) getActivity().findViewById(R.id.btn_login_at_menu);
         mBtnLogoutAtMenu = (LinearLayout) getActivity().findViewById(R.id.btn_logout_at_menu);
 
@@ -160,7 +164,9 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         editor.commit();
     }
 
-    private void changeButtonsWithLoginSucceed() {
+    private void changeUiStatusWithLoginSucceed(String name, String email) {
+        mTvNameAtMenu.setText(name);
+        mTvEmailAtMenu.setText(email);
         mBtnLoginAtMenu.setVisibility(View.GONE);
         mBtnLogoutAtMenu.setVisibility(View.VISIBLE);
         mFabCreateEvent.setVisibility(View.VISIBLE);
@@ -228,7 +234,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
                 case ResultCode.SUCCEED:
                     showMsgWithToast(getString(R.string.hint_login_success));
                     saveLoginSucceedToSharedPreferences(result.getUserId(), result.getEmail(), result.getName(), result.getUserIconUrl());
-                    changeButtonsWithLoginSucceed();
+                    changeUiStatusWithLoginSucceed(result.getName(), result.getEmail());
                     closeDialog();
                     break;
 
