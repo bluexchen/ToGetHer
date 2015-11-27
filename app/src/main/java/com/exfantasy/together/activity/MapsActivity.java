@@ -79,6 +79,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     private Resources mResources;
     private SharedPreferences mSharedPreferences;
+    private boolean mAlreadyLogined;
 
     private DrawerLayout drawerLayout;
 
@@ -99,6 +100,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         mResources = getResources();
         mSharedPreferences = getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
+        mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
@@ -131,10 +133,6 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void setupMenuItems() {
-        final boolean alreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
-
-        Log.i(TAG, "Already logined: " + alreadyLogined);
-
         // set up profile icon
         mProfileIcon = (ImageView) findViewById(R.id.menu_icon);
         mProfileIcon.setOnClickListener(this);
@@ -151,7 +149,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         // set up btn_login
         LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login_at_menu);
-        if (alreadyLogined) {
+        if (mAlreadyLogined) {
             btnLogin.setVisibility(View.GONE);
         }
         else {
@@ -168,7 +166,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         // set up btn_logout
         LinearLayout btnLogout = (LinearLayout) findViewById(R.id.btn_logout_at_menu);
-        if (!alreadyLogined) {
+        if (!mAlreadyLogined) {
             btnLogout.setVisibility(View.GONE);
         }
         else {
@@ -178,7 +176,12 @@ public class MapsActivity extends AppCompatActivity implements
 
     private void setupFloatingActionButton() {
         FloatingActionButton fabCreateEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
-        fabCreateEvent.setOnClickListener(this);
+        if (!mAlreadyLogined) {
+            fabCreateEvent.setVisibility(View.GONE);
+        }
+        else {
+            fabCreateEvent.setOnClickListener(this);
+        }
 
         FloatingActionButton fabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);
         fabSearchEvent.setOnClickListener(this);
@@ -510,14 +513,14 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private class RefreshEventTask extends AsyncTask<Void, Void, Event[]> {   //Params, Progress, Result
-        private String Lat;
-        private String Lng;
+        private String currentLat;
+        private String currentLng;
 
         @Override
         protected void onPreExecute() {
             LatLng latLng = getCenterLatLng();
-            this.Lat = latLng.latitude + "";
-            this.Lng = latLng.longitude + "";
+            this.currentLat = latLng.latitude + "";
+            this.currentLng = latLng.longitude + "";
         }
 
         @Override
@@ -535,8 +538,8 @@ public class MapsActivity extends AppCompatActivity implements
             restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
             MultiValueMap<String, String> formData = new LinkedMultiValueMap<String, String>();
-            formData.add("latitude", Lat);
-            formData.add("longitude", Lng);
+            formData.add("latitude", currentLat);
+            formData.add("longitude", currentLng);
 
             HttpEntity<MultiValueMap<String, String>> requestEntity
                     = new HttpEntity<MultiValueMap<String, String>>(formData, requestHeaders);

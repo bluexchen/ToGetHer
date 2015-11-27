@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.exfantasy.together.R;
 import com.exfantasy.together.cnst.SharedPreferencesKey;
+import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
 import com.exfantasy.together.register.RegisterDialog;
 import com.exfantasy.together.vo.LoginResult;
 import com.exfantasy.together.vo.ResultCode;
@@ -56,6 +57,8 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
     private LinearLayout mBtnLoginAtMenu;
     private LinearLayout mBtnLogoutAtMenu;
 
+    private FloatingActionButton mFabCreateEvent;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +91,8 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
 
         mBtnLoginAtMenu = (LinearLayout) getActivity().findViewById(R.id.btn_login_at_menu);
         mBtnLogoutAtMenu = (LinearLayout) getActivity().findViewById(R.id.btn_logout_at_menu);
+
+        mFabCreateEvent = (FloatingActionButton) getActivity().findViewById(R.id.fab_create_event);
     }
 
     private void setListener(AlertDialog.Builder builder) {
@@ -136,7 +141,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -155,9 +160,10 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         editor.commit();
     }
 
-    private void changeMenuButtonsStatus() {
+    private void changeButtonsWithLoginSucceed() {
         mBtnLoginAtMenu.setVisibility(View.GONE);
         mBtnLogoutAtMenu.setVisibility(View.VISIBLE);
+        mFabCreateEvent.setVisibility(View.VISIBLE);
     }
 
     private class LoginTask extends AsyncTask<Void, Void, LoginResult> { //Params, Progress, Result
@@ -222,7 +228,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
                 case ResultCode.SUCCEED:
                     showMsgWithToast(getString(R.string.hint_login_success));
                     saveLoginSucceedToSharedPreferences(result.getUserId(), result.getEmail(), result.getName(), result.getUserIconUrl());
-                    changeMenuButtonsStatus();
+                    changeButtonsWithLoginSucceed();
                     closeDialog();
                     break;
 
