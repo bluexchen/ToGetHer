@@ -25,23 +25,31 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoContents(Marker marker) {
-        TextView tvTitle = (TextView) mView.findViewById(R.id.dlg_marker_title);
+        TextView tvEventId = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_id);
+        TextView tvCreateUserId = (TextView) mView.findViewById(R.id.dlg_marker_tv_create_user_id);
+        TextView tvTitle = (TextView) mView.findViewById(R.id.dlg_marker_tv_title);
         TextView tvLat = (TextView) mView.findViewById(R.id.dlg_marker_tv_lat);
         TextView tvLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_lng);
         TextView tvAttendeeNum = (TextView) mView.findViewById(R.id.dlg_marker_tv_attendee_num);
         TextView tvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
 
         LatLng latLng = marker.getPosition();
-
-        tvTitle.setText("Title: " + marker.getTitle());
-        tvLat.setText("Latitude: " + latLng.latitude);
-        tvLng.setText("Longitude: " + latLng.longitude);
+        String eventTitle = marker.getTitle();
 
         String snippet = marker.getSnippet();
         String[] split = snippet.split(";");
+        String eventId = split[0];
+        String createUserId = split[1];
+        String attendeeNum = split[2];
+        String eventTime = split[3];
 
-        tvAttendeeNum.setText("AttendeeNum: " + split[0]);
-        tvEventTime.setText("Event Time: " + split[1]);
+        tvEventId.setText("EventId: " + eventId);
+        tvCreateUserId.setText("CreateUserId: " + createUserId);
+        tvTitle.setText("Title: " + eventTitle);
+        tvLat.setText("Latitude: " + latLng.latitude);
+        tvLng.setText("Longitude: " + latLng.longitude);
+        tvAttendeeNum.setText("AttendeeNum: " + attendeeNum);
+        tvEventTime.setText("Event Time: " + eventTime);
 
         return mView;
     }

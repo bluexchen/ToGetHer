@@ -362,6 +362,8 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.clear();
 
         for (Event event: eventsNearby) {
+            long eventId = event.getEventId();
+            long createUserId = event.getCreateUserId();
             double lat = event.getLatitude();
             double lng = event.getLongitude();
             String eventName = event.getName();
@@ -371,7 +373,7 @@ public class MapsActivity extends AppCompatActivity implements
             MarkerOptions options =
                     new MarkerOptions().position(new LatLng(lat, lng))
                                        .title(eventName)
-                                       .snippet(attendeeNum + ";" + eventTime);
+                                       .snippet(eventId + ";" + createUserId + ";" + attendeeNum + ";" + eventTime);
 
             mMap.addMarker(options);
         }
