@@ -328,7 +328,7 @@ public class MapsActivity extends AppCompatActivity implements
             @Override
             public void onInfoWindowClick(Marker marker) {
                 // TODO show a detail dialog
-                Log.d(TAG, ">>>>> you clicked on a marker info window");
+                Log.i(TAG, ">>>>> you clicked on a marker info window");
             }
         });
 
