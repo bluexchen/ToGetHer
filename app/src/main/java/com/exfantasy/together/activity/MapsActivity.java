@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,7 +27,6 @@ import android.widget.Toast;
 
 import com.exfantasy.together.R;
 import com.exfantasy.together.cnst.SharedPreferencesKey;
-import com.exfantasy.together.components.adapter.MarkerInfoWindowAdapter;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
 import com.exfantasy.together.components.recyclerview.ItemData;
 import com.exfantasy.together.components.recyclerview.MyAdapter;
@@ -127,7 +127,7 @@ public class MapsActivity extends AppCompatActivity implements
 //        actionBar.setCustomView(actionBarLayout);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout, R.string.open_string, R.string.close_string);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout, R.string.open_string, R.string.close_string);
         actionBarDrawerToggle.syncState();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
     }
@@ -506,6 +506,50 @@ public class MapsActivity extends AppCompatActivity implements
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+        private View mView;
+
+        public MarkerInfoWindowAdapter(Context context) {
+            mView = LayoutInflater.from(context).inflate(R.layout.dialog_marker, null);
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            TextView tvEventId = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_id);
+            TextView tvCreateUserId = (TextView) mView.findViewById(R.id.dlg_marker_tv_create_user_id);
+            TextView tvTitle = (TextView) mView.findViewById(R.id.dlg_marker_tv_title);
+            TextView tvLat = (TextView) mView.findViewById(R.id.dlg_marker_tv_lat);
+            TextView tvLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_lng);
+            TextView tvAttendeeNum = (TextView) mView.findViewById(R.id.dlg_marker_tv_attendee_num);
+            TextView tvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
+
+            LatLng latLng = marker.getPosition();
+            String eventTitle = marker.getTitle();
+
+            String snippet = marker.getSnippet();
+            String[] split = snippet.split(";");
+            String eventId = split[0];
+            String createUserId = split[1];
+            String attendeeNum = split[2];
+            String eventTime = split[3];
+
+            tvEventId.setText("EventId: " + eventId);
+            tvCreateUserId.setText("CreateUserId: " + createUserId);
+            tvTitle.setText("Title: " + eventTitle);
+            tvLat.setText("Latitude: " + latLng.latitude);
+            tvLng.setText("Longitude: " + latLng.longitude);
+            tvAttendeeNum.setText("AttendeeNum: " + attendeeNum);
+            tvEventTime.setText("Event Time: " + eventTime);
+
+            return mView;
+        }
     }
 
     private class RefreshEventTask extends AsyncTask<Void, Void, Event[]> {   //Params, Progress, Result
