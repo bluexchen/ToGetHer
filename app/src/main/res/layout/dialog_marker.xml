@@ -45,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <!-- Info Window cannot add buttons, please reference: http://stackoverflow.com/questions/25058165/android-custom-info-window-google-map-v2-onclick-button
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -76,5 +77,5 @@
             fbutton:shadowEnabled="true" />
 
     </LinearLayout>
-
+    -->
 </LinearLayout>

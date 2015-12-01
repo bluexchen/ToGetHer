@@ -203,8 +203,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
             formData.add("password", password);
             formData.add("name", name);
 
-            HttpEntity<MultiValueMap<String, Object>> requestEntity
-                    = new HttpEntity<MultiValueMap<String, Object>>(formData, requestHeaders);
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
 
             OpResult registerResult = null;
             try {

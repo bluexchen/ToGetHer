@@ -200,8 +200,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
             formData.add("email", email);
             formData.add("password", password);
 
-            HttpEntity<MultiValueMap<String, Object>> requestEntity
-                    = new HttpEntity<MultiValueMap<String, Object>>(formData, requestHeaders);
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
 
             LoginResult loginResult = null;
             try {

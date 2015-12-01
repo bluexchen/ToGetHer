@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -89,8 +90,6 @@ public class MapsActivity extends AppCompatActivity implements
 
     private ImageView mProfileIcon;
 
-    private SnappingRecyclerView mRecyclerView;
-
     // google map related
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private GoogleMap mMap;
@@ -128,14 +127,15 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void setupActionBar() {
-//        ViewGroup actionBarLayout = (ViewGroup) getLayoutInflater().inflate(R.layout.layout_action_bar, null);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayShowCustomEnabled(true);
-//        actionBar.setCustomView(actionBarLayout);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setHomeButtonEnabled(true);
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout, R.string.open_string, R.string.close_string);
         actionBarDrawerToggle.syncState();
+
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
     }
 
@@ -204,17 +204,19 @@ public class MapsActivity extends AppCompatActivity implements
                 .build();
 
         // Create the LocationRequest object
+        int interval = 10 * 1000;
+        int fastestInterval = 1000;
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+                .setInterval(interval)        // 10 seconds, in milliseconds
+                .setFastestInterval(fastestInterval); // 1 second, in milliseconds
     }
 
     private void setupRecyclerView() {
-        mRecyclerView = (SnappingRecyclerView) findViewById(R.id.event_recycler_view);
-        mRecyclerView.setSnapEnabled(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        SnappingRecyclerView snappingRecyclerView = (SnappingRecyclerView) findViewById(R.id.event_recycler_view);
+        snappingRecyclerView.setSnapEnabled(true);
+        snappingRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        snappingRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         ItemData itemsData[] = {
                 new ItemData("Luffy",R.drawable.icon_onepiece_luffy),
@@ -229,7 +231,7 @@ public class MapsActivity extends AppCompatActivity implements
         };
 
         MyAdapter mAdapter = new MyAdapter(itemsData);
-        mRecyclerView.setAdapter(mAdapter);
+        snappingRecyclerView.setAdapter(mAdapter);
     }
 
     private  void showUploadImageDialog(){
@@ -322,6 +324,13 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                // TODO show a detail dialog
+                Log.d(TAG, ">>>>> you clicked on a marker info window");
+            }
+        });
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
@@ -345,9 +354,7 @@ public class MapsActivity extends AppCompatActivity implements
                     }
 
                     @Override
-                    public void onCancel() {
-
-                    }
+                    public void onCancel() {}
                 });
                 return true;
             }
@@ -513,6 +520,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     private class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         private View mView;
+
         private TextView mTvEventId;
         private TextView mTvCreateUserId;
         private TextView mTvTitle;
@@ -611,8 +619,7 @@ public class MapsActivity extends AppCompatActivity implements
             formData.add("latitude", currentLat);
             formData.add("longitude", currentLng);
 
-            HttpEntity<MultiValueMap<String, String>> requestEntity
-                    = new HttpEntity<MultiValueMap<String, String>>(formData, requestHeaders);
+            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
 
             Event[] events = null;
             try {

@@ -246,8 +246,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
             formData.add("attendeeNum", mAttendeeNum + "");
             formData.add("time", mEventTime + "");
 
-            HttpEntity<MultiValueMap<String, String>> requestEntity
-                    = new HttpEntity<MultiValueMap<String, String>>(formData, requestHeaders);
+            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
 
             OpResult createEventResult = null;
             try {
