@@ -37,6 +37,7 @@ import com.exfantasy.together.login.LoginDialog;
 import com.exfantasy.together.register.UploadImgDialog;
 import com.exfantasy.together.setting.SettingDialog;
 import com.exfantasy.together.vo.Event;
+import com.exfantasy.together.vo.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -67,6 +68,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class MapsActivity extends AppCompatActivity implements
         OnMapReadyCallback,
@@ -92,6 +96,9 @@ public class MapsActivity extends AppCompatActivity implements
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+
+    // Recrod marker info
+    private Map<Marker, Event> mEventsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -360,22 +367,18 @@ public class MapsActivity extends AppCompatActivity implements
 
     public void showMarkerOnMap(Event[] eventsNearby) {
         mMap.clear();
+        mEventsMap.clear();
 
         for (Event event: eventsNearby) {
-            long eventId = event.getEventId();
-            long createUserId = event.getCreateUserId();
             double lat = event.getLatitude();
             double lng = event.getLongitude();
             String eventName = event.getName();
-            int attendeeNum = event.getAttendeeNum();
-            long eventTime = event.getTime();
 
             MarkerOptions options =
-                    new MarkerOptions().position(new LatLng(lat, lng))
-                                       .title(eventName)
-                                       .snippet(eventId + ";" + createUserId + ";" + attendeeNum + ";" + eventTime);
+                    new MarkerOptions().position(new LatLng(lat, lng)).title(eventName);
 
-            mMap.addMarker(options);
+            Marker marker = mMap.addMarker(options);
+            mEventsMap.put(marker, event);
         }
     }
 
@@ -510,9 +513,30 @@ public class MapsActivity extends AppCompatActivity implements
 
     private class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         private View mView;
+        private TextView mTvEventId;
+        private TextView mTvCreateUserId;
+        private TextView mTvTitle;
+        private TextView mTvLat;
+        private TextView mTvLng;
+        private TextView mTvAttendeeNum;
+        private TextView mTvAttendee;
+        private TextView mTvEventTime;
 
         public MarkerInfoWindowAdapter(Context context) {
+            findViews(context);
+        }
+
+        private void findViews(Context context) {
             mView = LayoutInflater.from(context).inflate(R.layout.dialog_marker, null);
+
+            mTvEventId = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_id);
+            mTvCreateUserId = (TextView) mView.findViewById(R.id.dlg_marker_tv_create_user_id);
+            mTvTitle = (TextView) mView.findViewById(R.id.dlg_marker_tv_title);
+            mTvLat = (TextView) mView.findViewById(R.id.dlg_marker_tv_lat);
+            mTvLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_lng);
+            mTvAttendeeNum = (TextView) mView.findViewById(R.id.dlg_marker_tv_attendee_num);
+            mTvAttendee = (TextView) mView.findViewById(R.id.dlg_marker_tv_attendee);
+            mTvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
         }
 
         @Override
@@ -522,31 +546,37 @@ public class MapsActivity extends AppCompatActivity implements
 
         @Override
         public View getInfoContents(Marker marker) {
-            TextView tvEventId = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_id);
-            TextView tvCreateUserId = (TextView) mView.findViewById(R.id.dlg_marker_tv_create_user_id);
-            TextView tvTitle = (TextView) mView.findViewById(R.id.dlg_marker_tv_title);
-            TextView tvLat = (TextView) mView.findViewById(R.id.dlg_marker_tv_lat);
-            TextView tvLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_lng);
-            TextView tvAttendeeNum = (TextView) mView.findViewById(R.id.dlg_marker_tv_attendee_num);
-            TextView tvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
+            Event event = mEventsMap.get(marker);
+
+            String eventId = String.valueOf(event.getEventId());
+            mTvEventId.setText("活動ID: " + eventId);
+
+            String createUserId = String.valueOf(event.getCreateUserId());
+            mTvCreateUserId.setText("建立者ID: " + createUserId);
+
+            String eventTitle = marker.getTitle();
+            mTvTitle.setText("名稱: " + eventTitle);
 
             LatLng latLng = marker.getPosition();
-            String eventTitle = marker.getTitle();
+            String latitude = String.valueOf(latLng.latitude);
+            mTvLat.setText("緯度: " + latitude);
 
-            String snippet = marker.getSnippet();
-            String[] split = snippet.split(";");
-            String eventId = split[0];
-            String createUserId = split[1];
-            String attendeeNum = split[2];
-            String eventTime = split[3];
+            String longitude = String.valueOf(latLng.longitude);
+            mTvLng.setText("經度: " + longitude);
 
-            tvEventId.setText("EventId: " + eventId);
-            tvCreateUserId.setText("CreateUserId: " + createUserId);
-            tvTitle.setText("Title: " + eventTitle);
-            tvLat.setText("Latitude: " + latLng.latitude);
-            tvLng.setText("Longitude: " + latLng.longitude);
-            tvAttendeeNum.setText("AttendeeNum: " + attendeeNum);
-            tvEventTime.setText("Event Time: " + eventTime);
+            String attendeeNum = String.valueOf(event.getAttendeeNum());
+            mTvAttendeeNum.setText("活動人數: " + attendeeNum);
+
+            Iterator<User> it = event.getUsers().iterator();
+            StringBuilder buffer = new StringBuilder();
+            while (it.hasNext()) {
+                User user = it.next();
+                buffer.append("<").append(user.getUserId()).append("-").append(user.getName()).append(">");
+            }
+            mTvAttendee.setText("參與者: " + buffer.toString());
+
+            String eventTime = String.valueOf(event.getTime());
+            mTvEventTime.setText("活動時間: " + eventTime);
 
             return mView;
         }
