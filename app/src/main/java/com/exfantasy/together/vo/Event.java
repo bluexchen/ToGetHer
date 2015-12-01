@@ -1,5 +1,8 @@
 package com.exfantasy.together.vo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by Tommy on 2015/11/4.
  */
@@ -36,6 +39,10 @@ public class Event {
      * 事件時間
      */
     private long time;
+    /**
+     * 參與活動的使用者
+     */
+    private Set<User> users;
 
     public Event() {
     }
@@ -119,11 +126,26 @@ public class Event {
         this.time = time;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public void addUser(User user) {
+        if (users == null) {
+            users = new HashSet<>();
+        }
+        users.add(user);
+    }
+
     @Override
     public String toString() {
         return "Event [eventId=" + eventId + ", createUserId=" + createUserId + ", latitude=" + latitude
                 + ", longitude=" + longitude + ", name=" + name + ", content=" + content + ", attendeeNum="
-                + attendeeNum + ", time=" + time + "]";
+                + attendeeNum + ", time=" + time + ", users=" + users + "]";
     }
 }
 
