@@ -1,4 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -42,5 +44,37 @@
         android:id="@+id/dlg_marker_tv_event_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/dlg_marker_btn_join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:minHeight="@dimen/flat_button_min_height_at_adapter"
+            android:minWidth="@dimen/flat_button_min_width_at_adapter"
+            android:text="@string/join"
+            android:textColor="#FFFFFF"
+            fbutton:buttonColor="@color/fbutton_color_peter_river"
+            fbutton:shadowEnabled="true" />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/dlg_marker_btn_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:minHeight="@dimen/flat_button_min_height_at_adapter"
+            android:minWidth="@dimen/flat_button_min_width_at_adapter"
+            android:text="@string/detail"
+            android:textColor="#FFFFFF"
+            fbutton:buttonColor="@color/fbutton_color_turquoise"
+            fbutton:shadowEnabled="true" />
+
+    </LinearLayout>
 
 </LinearLayout>

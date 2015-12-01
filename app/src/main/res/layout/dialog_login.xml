@@ -56,11 +56,10 @@
         android:layout_marginTop="24dp"
         android:minHeight="@dimen/flat_button_min_height"
         android:minWidth="@dimen/flat_button_min_width"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="#FFFFFF"
         fbutton:buttonColor="@color/fbutton_color_orange"
-        fbutton:shadowEnabled="true"
-    />
+        fbutton:shadowEnabled="true" />
 
     <TextView android:id="@+id/tv_signup_at_dlg_login"
         android:layout_width="fill_parent"
@@ -71,7 +70,5 @@
         android:gravity="center"
         android:textColor="#F44336"
         android:textSize="16dip"/>
-
-
 
 </LinearLayout>
