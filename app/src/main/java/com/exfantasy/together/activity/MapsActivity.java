@@ -97,7 +97,7 @@ public class MapsActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
 
-    // Recrod marker info
+    // Record events information
     private Map<Marker, Event> mEventsMap = new HashMap<>();
 
     @Override
