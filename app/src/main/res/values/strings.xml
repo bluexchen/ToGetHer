@@ -7,7 +7,6 @@
     <!--- Gcm -->
     <string name="gcm_defaultSenderId">978444275273</string>
 
-
     <!-- method -->
     <string name="api_login">user/login/</string>
     <string name="api_register">user/register/</string>
