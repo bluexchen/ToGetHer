@@ -4,6 +4,10 @@
     <!--- Server 位址 -->
     <string name="base_url">http://114.34.95.168:8080/</string>
 
+    <!--- Gcm -->
+    <string name="gcm_defaultSenderId">978444275273</string>
+
+
     <!-- method -->
     <string name="api_login">user/login/</string>
     <string name="api_register">user/register/</string>

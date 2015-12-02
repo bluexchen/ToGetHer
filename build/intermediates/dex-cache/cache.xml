@@ -2,263 +2,270 @@
 <items version="2" >
 
     <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.5.0\jars\classes.jar"
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.5.0/jars/classes.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-f949288f31ec56ae416b127e5bca07b8840e8ca5.jar" />
-    </item>
-    <item
-        jar="C:\Users\Lab\.gradle\caches\modules-2\files-2.1\org.springframework.android\spring-android-rest-template\1.0.1.RELEASE\e132d929bd181941f79b0d63edafb8a86ae6fd33\spring-android-rest-template-1.0.1.RELEASE.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e132d929bd181941f79b0d63edafb8a86ae6fd33">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\spring-android-rest-template-1.0.1.RELEASE-ddff82b40360dfe0873e9ef5ea141ed7c3cafda4.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
+        revision="23.0.1"
         sha1="f02127a85abd52a2cd526d4c2409f21969f80ee8">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-09e8bbae77bcf5edf05db06013ebc5a0b1445c9f.jar" />
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-4d86f54a964323659a21f27c036abb1fae4f1313.jar" />
     </item>
     <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.5.0\jars\classes.jar"
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.5.0/jars/classes.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-7d17011d5369d020535e38ad7eeae5a03060b8ba.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-88bc4074165a89556bfbed158b294437139e6cad.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="8e3a972f28b8bae817e382257ba177a31bcadbbc">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-8b9ff6c4ec5fa7427b4e33cbbfcb4a58f614d67c.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-8d254f0115d1362f267f46abebc43378d8916871.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ba3df4eb0a630d7de294f0e48d3f9267d279b784">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-3d1933822ef1bd16ca33900ec28952417c6e8762.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.7.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="5bdb38b7e4b6094891648c1dc4dc08589b460f97">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-d6c20da174ee1b3959a1d0d18dd45a407fb02d3d.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-03da17c2ae13beef8c6f90fbd7b8d4ef083f8f16.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.4\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4b1a7fac58cc85b115adee653a10b6300f90951a">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-632b15fbf21ed8c7f81623b3c329d188a657de07.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-814df80eca32846ad74a6ec008b64153963432d2.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-cd52f2b4385313133bddf3cf398cbde8f0964e6a.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="5b37cf49773f7f17aca9830efd3053b0cac56728">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-9ac2e6084316dec5a8d1b3d09a48c66221924735.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-eb5c93e6ebfb008c40f4c948df3a70922f5afbbe.jar" />
-    </item>
-    <item
-        jar="C:\Users\Lab\.gradle\caches\modules-2\files-2.1\org.codehaus.jackson\jackson-core-asl\1.9.11\e32303ef8bd18a5c9272780d49b81c95e05ddf43\jackson-core-asl-1.9.11.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e32303ef8bd18a5c9272780d49b81c95e05ddf43">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\jackson-core-asl-1.9.11-347150c2d3ac0e1931563a68a77f20938c5909b6.jar" />
-    </item>
-    <item
-        jar="D:\User\Lab\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.1-9b3fc0522ca1403fa74b3decfeaefad9ff77cc24.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a1372c17fccacca753d3951d3ad820571cbce075">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-a0c1f799d150c6f4ab9c777696be7644abacb351.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-cc1459c17a972de9968d1eed88ddc593f9c3b1d9.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\2.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="031e8b3ab2df4ab43b1017f84417d7e10dfbb8d2">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-a31bc4416a4b8df8f7f4058a2424408a81652d40.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a78183f30e769a98ab4820794f597763088d3065">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-c73e324fb6030ced6bf368c6c672aa221ba03490.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-9ac67e67e069f53b5a8c5630f3b3538d2c85c35f.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-cf739465ca73bdf1c384dabafc7d44ce0dfce991.jar" />
-    </item>
-    <item
-        jar="C:\Users\Lab\.gradle\caches\modules-2\files-2.1\org.codehaus.jackson\jackson-mapper-asl\1.9.11\45d70862fa016993193075a1e8e32a01dcf438e8\jackson-mapper-asl-1.9.11.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="45d70862fa016993193075a1e8e32a01dcf438e8">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\jackson-mapper-asl-1.9.11-d9790c46438d682d7761ad7e1c4ef6aa09c5436f.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-bef6cef1aeecbdf5077a2b41bc3c4873ec8ef32e.jar" />
-    </item>
-    <item
-        jar="C:\Users\Lab\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.2.0\6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd\bolts-android-1.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-bdbbe3192d2201a9bd2e3b89d1f7ea4a699a4c58.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-0e8c57ac6b42c18b38d1aa1b477afebb471e84af.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a172852a35ff919e85b9b7f14bbc15c5bee25520">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-1e1100950b55dd4fd83fdb3970756b4bc49ca3fa.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.android.support\design\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-21913334f2943093a5d647eb3e67d896ca32cd1a.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-d87837fdbe5b84db01dbc5a761bb165688a934df.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
+        revision="23.0.1"
         sha1="68c140702c7242d914655bcb3164d9e8c45b84cb">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-a1d35461d94646ebf8897728ac3a9decc0f5c453.jar" />
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-184e6f81706dd9f579d38e0492544ebcf490f584.jar" />
     </item>
     <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.5.0\jars\classes.jar"
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.5.0/jars/classes.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-8276dab0355a65d2b7f642d5defcbdc26509b768.jar" />
-    </item>
-    <item
-        jar="C:\Users\Lab\.gradle\caches\modules-2\files-2.1\org.springframework.android\spring-android-core\1.0.1.RELEASE\e68f0e8e4b636ee30c4de58953be38d9b72a5e3b\spring-android-core-1.0.1.RELEASE.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e68f0e8e4b636ee30c4de58953be38d9b72a5e3b">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\spring-android-core-1.0.1.RELEASE-195bb7c5f38c41eb1b869409f406c4e419aa384e.jar" />
-    </item>
-    <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
+        revision="23.0.1"
         sha1="d405025c600055237c171a0bbabaa49d69696573">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-55cab317149ac05f0049583a8fd422462dcb364b.jar" />
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-1f497cfd4543da01625490de553d2e27fffb096e.jar" />
     </item>
     <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/jars/classes.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="f8efd0096475e0daf054267b61544e10dc776503">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-50df0a69b85eff120e2fc396dee6132dc27145c0.jar" />
+        revision="23.0.1"
+        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-db4d72faf888fdbc07652d35d9193c888094856b.jar" />
     </item>
     <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.github.siyamed\android-shape-imageview\0.9.3\jars\classes.jar"
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/jars/libs/internal_impl-22.0.0.jar"
         jumboMode="false"
-        revision="22.0.1"
+        revision="23.0.1"
+        sha1="ba3df4eb0a630d7de294f0e48d3f9267d279b784">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-995019286366c33a69dcbd15797c3066ae675fbb.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-d6672d572d0aa2f37f48b50f7eb85697c8eee20c.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-074115245d8c24a4dd4b15a6ea7313f638823e23.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/.gradle/caches/modules-2/files-2.1/org.springframework.android/spring-android-rest-template/2.0.0.M1/6abb1e22445a4e4571c74632804e4179b43d82b5/spring-android-rest-template-2.0.0.M1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6abb1e22445a4e4571c74632804e4179b43d82b5">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/spring-android-rest-template-2.0.0.M1-e6e3905200bb750f99d0c5e846b0cf2f04de9ec5.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1-ca7ed657e706aef0cf4abc71fea1906906d6e4ba.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5bdb38b7e4b6094891648c1dc4dc08589b460f97">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-49a34c531005411ee0e71ddaca6b8bc18733066b.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a172852a35ff919e85b9b7f14bbc15c5bee25520">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-3c61a4a6f9564c54e84d4dbda7aba19ce0077cff.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.soundcloud.android/android-crop/1.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="11a65cf2b30c192b38a881d626fa771a78a2293d">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-ac4fdadb14253953330b74a6df0f46745baca6ae.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/.gradle/caches/modules-2/files-2.1/org.springframework.android/spring-android-core/2.0.0.M1/26b2d3262a0c5f8de663deeb6481d132d871fffa/spring-android-core-2.0.0.M1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="26b2d3262a0c5f8de663deeb6481d132d871fffa">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/spring-android-core-2.0.0.M1-254bd6fa30bcec6e461127c9693b7f02f6f79ea8.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.github.siyamed/android-shape-imageview/0.9.3/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
         sha1="ee07783aa59eefdeacc107abf472f45f60272302">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-491791c3da95a284dfc3604effbd39f79d53a483.jar" />
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-ad9506bd47fb99ec7c75b8716251c8c134c571eb.jar" />
     </item>
     <item
-        jar="D:\ToGetHer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.5.0\jars\classes.jar"
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
         jumboMode="false"
-        revision="22.0.1"
+        revision="23.0.1"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-e9d2bdafef40683511f6c22ad50238576eb2c08a.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a1372c17fccacca753d3951d3ad820571cbce075">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-e1617a8c36918e3aa0dab8bcfd27912dcf8288b2.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-1c52c5895ed22d650e92a128d8200a97b66a1486.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
         sha1="29ebc7e04d877062317c8cc0e68b20f0c1fcda66">
-        <dex dex="D:\ToGetHer\app\build\intermediates\pre-dexed\debug\classes-6926f1247d88201392681cbbc1a3a3ec31eddb8c.jar" />
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-20f37c342409a7cbc52b35157b66812dddfa8eee.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-6df8501924485420bc720936cd40da05c5c410f1.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/de.hdodenhof/circleimageview/2.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="031e8b3ab2df4ab43b1017f84417d7e10dfbb8d2">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-032243f747bd2707e279f401b34c638490429de5.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-e72760348b16fd6829ba687985252895745f1d30.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.maps.android/android-maps-utils/0.4/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4b1a7fac58cc85b115adee653a10b6300f90951a">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-cf6268c74cc4977ef1066b8822a201e18e0ab269.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-08c76414c034d0f9f37aeea1fe10e7cd26f77a2f.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/info.hoang8f/fbutton/1.0.5/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2c12397a785c3b1868fbebeffc9553457b27803f">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-8fea014389430ea3c0627345182aca4947150d21.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-df67c5414feb09ec2b1291992670508e27c089d8.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-cb5ef57b8d6d9780d2a1955e0c198e7695bb78c0.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-d834206a2b1ab7e971facdb09a64601e1b7a4f33.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-6937073791cdabc427bd57eca356b9b5369ada25.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1-9f5ff04ca2023e8a5843838a93548f5c9e051384.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a78183f30e769a98ab4820794f597763088d3065">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-cdfa606b56481601ec84e9c5714cd4c8d1ad54b8.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/gson-2.3.1-bc79c0e13f1f8bdb8b023629cdb8c4ad4dca81c1.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-a67d4edae79874e338a82388e0c79b4e9f0ef1eb.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-a1ecca6c80b5698cd743e190b028832bcba1978d.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8e3a972f28b8bae817e382257ba177a31bcadbbc">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-85513c3c5abf2ccaedf1fe8855456d12c5601adf.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-b893e6b43ae2fca376246ecdf63f69e012b46d52.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-408aeef39d988eaf63368a410c2ec7455c778995.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-14a220e09496d54cc093f4bb3459c24b428f1bcf.jar" />
+    </item>
+    <item
+        jar="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/hclinzi/StudioProjects/ToGetHer/app/build/intermediates/pre-dexed/debug/classes-3e89f5b21b7f8c9b493e1a86a55ccea9e024856d.jar" />
     </item>
 
 </items>

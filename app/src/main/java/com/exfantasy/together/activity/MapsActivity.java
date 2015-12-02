@@ -34,12 +34,14 @@ import com.exfantasy.together.components.recyclerview.MyAdapter;
 import com.exfantasy.together.components.recyclerview.SnappingRecyclerView;
 import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
+import com.exfantasy.together.gcm.RegistrationIntentService;
 import com.exfantasy.together.login.LoginDialog;
 import com.exfantasy.together.register.UploadImgDialog;
 import com.exfantasy.together.setting.SettingDialog;
 import com.exfantasy.together.vo.Event;
 import com.exfantasy.together.vo.User;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -92,6 +94,8 @@ public class MapsActivity extends AppCompatActivity implements
 
     // google map related
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 8000;
+
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
@@ -124,6 +128,13 @@ public class MapsActivity extends AppCompatActivity implements
 
         // set up recycler view
         setupRecyclerView();
+
+        // check if need to register gcm
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
     }
 
     private void setupActionBar() {
@@ -646,4 +657,22 @@ public class MapsActivity extends AppCompatActivity implements
             }
         }
     }
+
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
 }
