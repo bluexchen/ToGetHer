@@ -198,7 +198,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
-            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<String, Object>();
+            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
             formData.add("email", email);
             formData.add("password", password);
             formData.add("name", name);

@@ -237,7 +237,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
-            MultiValueMap<String, String> formData = new LinkedMultiValueMap<String, String>();
+            MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
             formData.add("userId", mUserId + "");
             formData.add("latitude", mCenterLat + "");
             formData.add("longitude", mCenterLng + "");

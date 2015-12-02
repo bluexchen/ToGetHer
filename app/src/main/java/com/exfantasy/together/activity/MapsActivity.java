@@ -615,7 +615,7 @@ public class MapsActivity extends AppCompatActivity implements
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
 
-            MultiValueMap<String, String> formData = new LinkedMultiValueMap<String, String>();
+            MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
             formData.add("latitude", currentLat);
             formData.add("longitude", currentLng);
 
