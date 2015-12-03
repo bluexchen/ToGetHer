@@ -17,9 +17,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Sergii Nezdolii on 27/07/15.
+ * Base Url:
+ *      https://github.com/jdamcd/android-crop/issues/140
  *
- * Copyright (c) 2015 Frost°. All rights reserved.
+ * Sample Code:
+ *      https://gist.github.com/sergii-frost/04204f8fb708ee6f60ef
  */
 public class ImageUtils {
 
