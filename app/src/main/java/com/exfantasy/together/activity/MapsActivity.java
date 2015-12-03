@@ -38,6 +38,7 @@ import com.exfantasy.together.gcm.RegistrationIntentService;
 import com.exfantasy.together.login.LoginDialog;
 import com.exfantasy.together.register.UploadImgDialog;
 import com.exfantasy.together.setting.SettingDialog;
+import com.exfantasy.together.util.ImageUtils;
 import com.exfantasy.together.vo.Event;
 import com.exfantasy.together.vo.User;
 import com.google.android.gms.common.ConnectionResult;
@@ -514,7 +515,9 @@ public class MapsActivity extends AppCompatActivity implements
 
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
-            mProfileIcon.setImageURI(Crop.getOutput(result));
+            Uri imageUri = Crop.getOutput(result);
+            ImageUtils.normalizeImageForUri(getApplicationContext(), imageUri);
+            mProfileIcon.setImageURI(imageUri);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
