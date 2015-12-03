@@ -78,15 +78,18 @@ public class ImageUtils {
                 folder.mkdirs();
             }
 
-            File imgFile = new File(folder.getPath() + File.separator + "ProfileIcon.jpg");
+            File fileProfileIcon = new File(folder.getPath() + File.separator + "ProfileIcon.jpg");
+            if (fileProfileIcon.exists()) {
+                fileProfileIcon.delete();
+            }
 
             FileOutputStream fos = null;
             try {
-                fos = new FileOutputStream(imgFile);
+                fos = new FileOutputStream(fileProfileIcon);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 fos.flush();
 
-                resultFilePath = imgFile.getCanonicalPath();
+                resultFilePath = fileProfileIcon.getCanonicalPath();
             } catch (Exception e) {
                 Log.e(TAG, "Save upload image failed, msg: " + e.toString(), e);
             } finally {
