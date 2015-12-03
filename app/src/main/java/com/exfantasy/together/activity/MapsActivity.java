@@ -522,6 +522,7 @@ public class MapsActivity extends AppCompatActivity implements
 
             String imgStoredExternalStoragePath = ImageUtils.normalizeImageAndSave(getApplicationContext(), imageUri);
 
+            mProfileIcon.setImageURI(null);
             mProfileIcon.setImageURI(imageUri);
 
             Log.i(TAG, "Image stored path: <" + imgStoredExternalStoragePath + ">");
