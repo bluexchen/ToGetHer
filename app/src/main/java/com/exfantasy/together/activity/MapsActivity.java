@@ -516,7 +516,7 @@ public class MapsActivity extends AppCompatActivity implements
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
             Uri imageUri = Crop.getOutput(result);
-            ImageUtils.normalizeImageForUri(getApplicationContext(), imageUri);
+            ImageUtils.normalizeImageAndSave(getApplicationContext(), imageUri);
             mProfileIcon.setImageURI(imageUri);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
