@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -35,7 +34,7 @@ public class ImageUtils {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
             Bitmap rotatedBitmap = rotateBitmap(bitmap, orientation);
             if (!bitmap.equals(rotatedBitmap)) {
-                saveBitmapToFile(context, rotatedBitmap, uri);
+                saveBitmapToUri(context, rotatedBitmap, uri);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,7 +85,7 @@ public class ImageUtils {
         }
     }
 
-    private static void saveBitmapToFile(Context context, Bitmap croppedImage, Uri saveUri) {
+    private static void saveBitmapToUri(Context context, Bitmap croppedImage, Uri saveUri) {
         if (saveUri != null) {
             OutputStream outputStream = null;
             try {
