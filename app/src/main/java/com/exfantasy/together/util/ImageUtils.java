@@ -78,8 +78,7 @@ public class ImageUtils {
                 folder.mkdirs();
             }
 
-            String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
-            File imgFile = new File(folder.getPath() + File.separator + timestamp + ".jpg");
+            File imgFile = new File(folder.getPath() + File.separator + "ProfileIcon.jpg");
 
             FileOutputStream fos = null;
             try {

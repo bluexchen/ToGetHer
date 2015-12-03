@@ -465,7 +465,10 @@ public class MapsActivity extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu_icon:
-                Crop.pickImage(this);
+                mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
+                if (mAlreadyLogined) {
+                    Crop.pickImage(this);
+                }
                 break;
 
             case R.id.btn_login_at_menu:
@@ -684,9 +687,8 @@ public class MapsActivity extends AppCompatActivity implements
             MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
 
             String email = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
-            String name = mSharedPreferences.getString(SharedPreferencesKey.NAME, "");
 
-            formData.add("name", email + "-" + name);
+            formData.add("email", email);
             formData.add("uploadfile", new FileSystemResource(filePaths[0]));
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
