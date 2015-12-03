@@ -465,7 +465,6 @@ public class MapsActivity extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu_icon:
-                mProfileIcon.setImageDrawable(null);
                 Crop.pickImage(this);
                 break;
 
