@@ -58,6 +58,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.soundcloud.android.crop.Crop;
 
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -516,9 +517,16 @@ public class MapsActivity extends AppCompatActivity implements
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
             Uri imageUri = Crop.getOutput(result);
-            ImageUtils.normalizeImageAndSave(getApplicationContext(), imageUri);
+
+            String imgStoredExternalStoragePath = ImageUtils.normalizeImageAndSave(getApplicationContext(), imageUri);
+
             mProfileIcon.setImageURI(imageUri);
-        } else if (resultCode == Crop.RESULT_ERROR) {
+
+            Log.i(TAG, "Image stored path: <" + imgStoredExternalStoragePath + ">");
+
+            new UploadPhotoTask().execute(imgStoredExternalStoragePath);
+        }
+        else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -661,6 +669,43 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
+    private class UploadPhotoTask extends AsyncTask<String, Void, String> {   //Params, Progress, Result
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected String doInBackground(String... filePaths) {
+            String url = mResources.getString(R.string.base_url) + mResources.getString(R.string.api_upload_file);
+
+            HttpHeaders requestHeaders = new HttpHeaders();
+            requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+
+            String email = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
+            String name = mSharedPreferences.getString(SharedPreferencesKey.NAME, "");
+
+            formData.add("name", email + "-" + name);
+            formData.add("uploadfile", new FileSystemResource(filePaths[0]));
+
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+            String result = response.getBody();
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i(TAG, "Upload image to server, result: <" + result + ">");
+        }
+    }
 
     private boolean checkPlayServices() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();

@@ -33,8 +33,11 @@ public class ImageUtils {
      * Based on https://github.com/jdamcd/android-crop/issues/140#issuecomment-125109892
      * @param context - context to use while saving file
      * @param uri - origin file uri
+     * @return resultFilePath image stored at external storage path
      */
-    public static void normalizeImageAndSave(Context context, Uri uri) {
+    public static String normalizeImageAndSave(Context context, Uri uri) {
+        String resultFilePath = null;
+
         Bitmap bitmap = null;
         Bitmap rotatedBitmap = null;
         try {
@@ -47,7 +50,7 @@ public class ImageUtils {
                     saveBitmapToUri(context, rotatedBitmap, uri);
                     Log.i(TAG, "Save rotated bitmap to url: <" + uri + "> done");
                 }
-                String resultFilePath = saveToExternalStorage(rotatedBitmap);
+                resultFilePath = saveToExternalStorage(rotatedBitmap);
                 if (resultFilePath != null) {
                     Log.i(TAG, "Save rotated bitmap to path: <" + resultFilePath + "> done");
                 }
@@ -62,6 +65,7 @@ public class ImageUtils {
                 rotatedBitmap.recycle();
             }
         }
+        return resultFilePath;
     }
 
     private static String saveToExternalStorage(Bitmap bitmap) {
