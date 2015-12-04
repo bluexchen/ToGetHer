@@ -13,6 +13,7 @@
     <string name="api_create_event">event/create/</string>
     <string name="api_refresh_event">event/query/</string>
     <string name="api_upload_file">file/upload</string>
+    <string name="api_download_file">file/download</string>
 
     <!-- 一般字串 -->
     <string name="action_settings">Settings</string>
