@@ -34,20 +34,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="Password"/>
-
     </android.support.design.widget.TextInputLayout>
-
-    <!--
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btn_login_at_dlg_login"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:padding="12dp"
-        android:text="Login"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/btn_shape_selector_orange5"/>
-        -->
 
     <info.hoang8f.widget.FButton
         android:id="@+id/btn_login_at_dlg_login"
@@ -66,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="24dp"
-        android:text="還沒加入ToGetHer?申請一個吧!"
+        android:text="@string/hint_go_to_register"
         android:gravity="center"
         android:textColor="#F44336"
         android:textSize="16dip"/>

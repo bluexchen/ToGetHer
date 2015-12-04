@@ -60,6 +60,8 @@
     <string name="msg_register_failed_with_dupilcate_email">註冊失敗，email已使用</string>
 
     <!-- 登入畫面 -->
+    <string name="hint_go_to_register">還沒加入ToGetHer?申請一個吧!</string>
+
     <string name="msg_login_success">登入成功，歡迎開始使用</string>
     <string name="msg_login_failed_with_email_not_existed">登入失敗，請確認帳號存在</string>
     <string name="msg_login_failed_with_error_password">登入失敗，請確認密碼正確</string>
@@ -71,12 +73,14 @@
     <string name="hint_event_name">活動名稱</string>
     <string name="hint_event_content">活動內容</string>
     <string name="hint_event_people_required">需求人數</string>
+    <string name="hint_event_date">活動日期</string>
     <string name="hint_event_time">活動時間</string>
     <string name="btn_create_event">建立活動</string>
 
     <string name="warn_pls_input_event_name">請輸入活動名稱</string>
     <string name="warn_pls_input_event_content">請簡介活動內容</string>
     <string name="warn_pls_input_attendee_num">請輸入參與人數</string>
+    <string name="warn_pls_input_event_date">請輸入活動日期</string>
     <string name="warn_pls_input_event_time">請輸入活動時間</string>
 
     <string name="msg_create_event_succeed">建立活動成功</string>

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="15dp">
 
-    <!-- Event Name Label -->
+    <!-- Event Name -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             android:hint="@string/hint_event_name" />
     </android.support.design.widget.TextInputLayout>
 
-    <!-- The Content of Event -->
+    <!-- Event Content -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,20 +31,32 @@
             android:hint="@string/hint_event_content"/>
     </android.support.design.widget.TextInputLayout>
 
-    <!-- The Number of People Required Label -->
+    <!-- Event Number of People Required -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/et_people_num_at_dlg_create_event"
+        <EditText android:id="@+id/et_event_requied_people_num_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="@string/hint_event_people_required"/>
     </android.support.design.widget.TextInputLayout>
 
-    <!-- Event Content Label -->
+    <!-- Event Date -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/et_event_date_at_dlg_create_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_event_date"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Event Time -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,6 +68,7 @@
             android:hint="@string/hint_event_time"/>
     </android.support.design.widget.TextInputLayout>
 
+    <!-- Create Event Button -->
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_create_evnet_at_dlg_create_event"
         android:layout_width="fill_parent"

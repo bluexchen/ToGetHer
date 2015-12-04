@@ -1,5 +1,6 @@
 package com.exfantasy.together.event;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -50,16 +52,18 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
 
     //Views
     private View mCreateEventView;
-    private EditText mEtEventName;    // 事件名稱
-    private EditText mEtEventContent;  // 事件內容
-    private EditText mEtAttendeeNum;   // 事件人數
-    private EditText mEtEventTime;     // 事件時間
+    private EditText mEtEventName;    // 活動名稱
+    private EditText mEtEventContent;  // 活動內容
+    private EditText mEtAttendeeNum;   // 活動人數
+    private EditText mEtEventDate;     // 活動日期
+    private EditText mEtEventTime;     // 活動時間
     private Button   mBtnCreateEvent;
 
     //values
     private Double mCenterLat;
     private Double mCenterLng;
 
+    private final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy/MM/dd");
     private final SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm");
 
     @Override
@@ -91,9 +95,14 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
 
         mEtEventName = (EditText) mCreateEventView.findViewById(R.id.et_event_name_at_dlg_create_event);
         mEtEventContent = (EditText) mCreateEventView.findViewById(R.id.et_event_content_at_dlg_create_event);
-        mEtAttendeeNum  = (EditText) mCreateEventView.findViewById(R.id.et_people_num_at_dlg_create_event);
+        mEtAttendeeNum  = (EditText) mCreateEventView.findViewById(R.id.et_event_requied_people_num_at_dlg_create_event);
+        mEtEventDate = (EditText) mCreateEventView.findViewById(R.id.et_event_date_at_dlg_create_event);
         mEtEventTime = (EditText) mCreateEventView.findViewById(R.id.et_event_time_at_dlg_create_event);
         mBtnCreateEvent = (Button) mCreateEventView.findViewById(R.id.btn_create_evnet_at_dlg_create_event);
+
+        mEtEventDate.setKeyListener(null);
+        mEtEventDate.setFocusable(false);
+        mEtEventDate.setClickable(true);
 
         mEtEventTime.setKeyListener(null);
         mEtEventTime.setFocusable(false);
@@ -101,6 +110,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
     }
 
     private void setListener(AlertDialog.Builder builder) {
+        mEtEventDate.setOnClickListener(this);
         mEtEventTime.setOnClickListener(this);
         mBtnCreateEvent.setOnClickListener(this);
         builder.setView(mCreateEventView).setNegativeButton(R.string.cancel, this);
@@ -109,6 +119,10 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.et_event_date_at_dlg_create_event:
+                showDatePicker();
+                break;
+
             case R.id.et_event_time_at_dlg_create_event:
                 showTimePicker();
                 break;
@@ -145,6 +159,11 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
             mEtAttendeeNum.requestFocus();
             return false;
         }
+        String eventDate = mEtEventDate.getText().toString();
+        if (eventDate.isEmpty()) {
+            showMsgWithToast(getString(R.string.warn_pls_input_event_date));
+            return false;
+        }
         String eventTime = mEtEventTime.getText().toString();
         if (eventTime.isEmpty()) {
             showMsgWithToast(getString(R.string.warn_pls_input_event_time));
@@ -153,8 +172,29 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
         return true;
     }
 
+    private void showDatePicker() {
+        final Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePicker
+                = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(Calendar.YEAR, selectedYear);
+                        cal.set(Calendar.MONTH, selectedMonth);
+                        cal.set(Calendar.DAY_OF_MONTH, selectedDay);
+                        String showDate = mDateFormat.format(cal.getTime());
+
+                        mEtEventDate.setText(showDate);
+                    }
+        }, year, month, day);
+        datePicker.show();
+    }
+
     private void showTimePicker() {
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
         TimePickerDialog timePicker
@@ -176,7 +216,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -190,7 +230,8 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
         private String mEventName;
         private String mEventContent;
         private int mAttendeeNum;
-        private long mEventTime;
+        private int mEventDate;
+        private int mEventTime;
 
         private Event mEventToCreate;
 
@@ -200,11 +241,36 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
             mEventName = mEtEventName.getText().toString();
             mEventContent = mEtEventContent.getText().toString();
             mAttendeeNum = Integer.parseInt(mEtAttendeeNum.getText().toString());
+            mEventDate = getEventDate();
+            mEventTime = getEventTime();
 
+            mEventToCreate = new Event(mCenterLat, mCenterLng, mEventName, mEventContent, mAttendeeNum, mEventTime);
+        }
+
+        private int getEventDate() {
+            String sEventDate = mEtEventDate.getText().toString();
+            Calendar calToGetEventDate = Calendar.getInstance();
+            try {
+                Date date = mDateFormat.parse(sEventDate);
+
+                Calendar tempCal = Calendar.getInstance();
+                tempCal.setTime(date);
+
+                calToGetEventDate.set(Calendar.YEAR, tempCal.get(Calendar.YEAR));
+                calToGetEventDate.set(Calendar.MONTH, tempCal.get(Calendar.MONTH));
+                calToGetEventDate.set(Calendar.DAY_OF_MONTH, tempCal.get(Calendar.DAY_OF_MONTH));
+            } catch (ParseException e) {
+                Log.e(TAG, "Parse event date got exception, msg: " + e.getMessage());
+            }
+            return DateTimeUtil.dateValue(calToGetEventDate);
+        }
+
+        private int getEventTime() {
             String sEventTime = mEtEventTime.getText().toString();
             Calendar calToGetEventTime = Calendar.getInstance();
             try {
                 Date time = mTimeFormat.parse(sEventTime);
+
                 Calendar tempCal = Calendar.getInstance();
                 tempCal.setTime(time);
 
@@ -213,9 +279,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
             } catch (ParseException e) {
                 Log.e(TAG, "Parse event time got exception, msg: " + e.getMessage());
             }
-            mEventTime = DateTimeUtil.dateTimeValue(calToGetEventTime);
-
-            mEventToCreate = new Event(mCenterLat, mCenterLng, mEventName, mEventContent, mAttendeeNum, mEventTime);
+            return DateTimeUtil.timeValue(calToGetEventTime);
         }
 
         @Override
@@ -238,7 +302,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
 
                 HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
 
-                Log.i(TAG, ">>>>> Prepare to create event with UserId: <" + mUserId + ">, Latitude: <" + mCenterLat + ">, Longitude: <" + mCenterLng + ">, EventName: <" + mEtEventTime + ">, Content: <" + mEventContent + ">, AttendeeName: <" + mAttendeeNum + ">, Time: <" + mEventTime + ">");
+                Log.i(TAG, ">>>>> Prepare to create " + mEventToCreate);
 
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
@@ -247,11 +311,11 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
 
                 createEventResult = response.getBody();
 
-                Log.i(TAG, "<<<<< Create event with UserId: <" + mUserId + ">, Latitude: <" + mCenterLat + ">, Longitude: <" + mCenterLng + ">, EventName: <" + mEtEventTime + ">, Content: <" + mEventContent + ">, AttendeeName: <" + mAttendeeNum + ">, Time: <" + mEventTime + "> done, result: <" + createEventResult + ">");
+                Log.i(TAG, "<<<<< Create " + mEventToCreate + " done");
 
                 return createEventResult;
             } catch (Exception e) {
-                Log.e(TAG, "<<<<< Create event with UserId: <" + mUserId + ">, Latitude: <" + mCenterLat + ">, Longitude: <" + mCenterLng + ">, EventName: <" + mEtEventTime + ">, Content: <" + mEventContent + ">, AttendeeName: <" + mAttendeeNum + ">, Time: <" + mEventTime + "> failed, err-msg: <" + e.toString() + ">", e);
+                Log.e(TAG, "<<<<< Create " + mEventToCreate + " failed, err-msg: <" + e.toString() + ">", e);
 
                 createEventResult = new OpResult();
                 createEventResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
