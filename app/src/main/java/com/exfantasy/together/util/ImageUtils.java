@@ -134,7 +134,7 @@ public class ImageUtils {
         }
     }
 
-    private static String saveToExternalStorage(Bitmap bitmap) {
+    public static String saveToExternalStorage(Bitmap bitmap) {
         String resultFilePath = null;
 
         String storageState = Environment.getExternalStorageState();

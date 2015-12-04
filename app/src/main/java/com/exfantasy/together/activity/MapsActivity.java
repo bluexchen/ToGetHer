@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -157,6 +158,9 @@ public class MapsActivity extends AppCompatActivity implements
             Bitmap bitmap = ImageUtils.loadProfileIcomFromExternalStorage();
             if (bitmap != null) {
                 mProfileIcon.setImageBitmap(bitmap);
+            }
+            else {
+                new DownloadPhotoTask().execute();
             }
         }
 
@@ -706,6 +710,46 @@ public class MapsActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result) {
             Log.i(TAG, "Upload image to server, result: <" + result + ">");
+        }
+    }
+
+    private class DownloadPhotoTask extends AsyncTask<Void, Void, byte[]> {   //Params, Progress, Result
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected byte[] doInBackground(Void... params) {
+            String url = getString(R.string.base_url) + getString(R.string.api_download_file);
+
+            HttpHeaders requestHeaders = new HttpHeaders();
+            requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+
+            String email = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
+
+            formData.add("email", email);
+            formData.add("file-name", ImageUtils.PROFILE_ICON_NAME);
+
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            ResponseEntity<byte[]> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, byte[].class);
+
+            byte[] downloadFile = response.getBody();
+
+            return downloadFile;
+        }
+
+        @Override
+        protected void onPostExecute(byte[] downloadFile) {
+            if (downloadFile != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(downloadFile, 0, downloadFile.length);
+                ImageUtils.saveToExternalStorage(bitmap);
+                mProfileIcon.setImageBitmap(bitmap);
+            }
         }
     }
 
