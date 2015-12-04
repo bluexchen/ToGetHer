@@ -2,6 +2,7 @@ package com.exfantasy.together.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -13,8 +14,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Base Url:
@@ -26,6 +25,9 @@ import java.util.Date;
 public class ImageUtils {
 
     private static final String TAG = "ImageUtils";
+
+    public static final String TOGETHER_ROOT_FOLDER = "TogetherUpload";
+    public static final String PROFILE_ICON_NAME = "ProfileIcon.jpg";
 
     /**
      * Allows to fix issue for some phones when image processed with android-crop
@@ -63,43 +65,6 @@ public class ImageUtils {
             }
             if (rotatedBitmap != null) {
                 rotatedBitmap.recycle();
-            }
-        }
-        return resultFilePath;
-    }
-
-    private static String saveToExternalStorage(Bitmap bitmap) {
-        String resultFilePath = null;
-
-        String storageState = Environment.getExternalStorageState();
-        if (storageState.equals(Environment.MEDIA_MOUNTED)) {
-            File folder = new File(Environment.getExternalStorageDirectory(), "TogetherUploadPhotos");
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            File fileProfileIcon = new File(folder.getPath() + File.separator + "ProfileIcon.jpg");
-            if (fileProfileIcon.exists()) {
-                fileProfileIcon.delete();
-            }
-
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(fileProfileIcon);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush();
-
-                resultFilePath = fileProfileIcon.getCanonicalPath();
-            } catch (Exception e) {
-                Log.e(TAG, "Save upload image failed, msg: " + e.toString(), e);
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException e) {
-                        Log.e(TAG, "Closing FileOutputStream failed, msg: " + e.toString(), e);
-                    }
-                }
             }
         }
         return resultFilePath;
@@ -167,5 +132,57 @@ public class ImageUtils {
                 }
             }
         }
+    }
+
+    private static String saveToExternalStorage(Bitmap bitmap) {
+        String resultFilePath = null;
+
+        String storageState = Environment.getExternalStorageState();
+        if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+            File folder = new File(Environment.getExternalStorageDirectory(), TOGETHER_ROOT_FOLDER);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File fileProfileIcon = new File(folder.getPath() + File.separator + PROFILE_ICON_NAME);
+            if (fileProfileIcon.exists()) {
+                fileProfileIcon.delete();
+            }
+
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(fileProfileIcon);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.flush();
+
+                resultFilePath = fileProfileIcon.getCanonicalPath();
+            } catch (Exception e) {
+                Log.e(TAG, "Save upload image failed, msg: " + e.toString(), e);
+            } finally {
+                if (fos != null) {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        Log.e(TAG, "Closing FileOutputStream failed, msg: " + e.toString(), e);
+                    }
+                }
+            }
+        }
+        return resultFilePath;
+    }
+
+    public static Bitmap loadProfileIcomFromExternalStorage() {
+        File folder = new File(Environment.getExternalStorageDirectory(), TOGETHER_ROOT_FOLDER);
+        if (!folder.exists()) {
+            return null;
+        }
+
+        String profileIconPath = folder.getPath() + File.separator + PROFILE_ICON_NAME;
+        File fileProfileIcon = new File(profileIconPath);
+        if (!fileProfileIcon.exists()) {
+            return null;
+        }
+
+        return BitmapFactory.decodeFile(profileIconPath);
     }
 }

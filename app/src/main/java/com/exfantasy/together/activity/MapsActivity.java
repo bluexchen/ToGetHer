@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -90,7 +91,7 @@ public class MapsActivity extends AppCompatActivity implements
     private SharedPreferences mSharedPreferences;
     private boolean mAlreadyLogined;
 
-    private DrawerLayout drawerLayout;
+    private DrawerLayout mDrawerLayout;
 
     private ImageView mProfileIcon;
 
@@ -114,7 +115,7 @@ public class MapsActivity extends AppCompatActivity implements
         mSharedPreferences = getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
         mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         // set up action bar
         setupActionBar();
@@ -146,16 +147,22 @@ public class MapsActivity extends AppCompatActivity implements
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout, R.string.open_string, R.string.close_string);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open_string, R.string.close_string);
         actionBarDrawerToggle.syncState();
 
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
     }
 
     private void setupMenuItems() {
         // set up profile icon
         mProfileIcon = (ImageView) findViewById(R.id.menu_icon);
         mProfileIcon.setOnClickListener(this);
+        if (mAlreadyLogined) {
+            Bitmap bitmap = ImageUtils.loadProfileIcomFromExternalStorage();
+            if (bitmap != null) {
+                mProfileIcon.setImageBitmap(bitmap);
+            }
+        }
 
         // set up menu_username
         String name = mSharedPreferences.getString(SharedPreferencesKey.NAME, "");
@@ -300,10 +307,10 @@ public class MapsActivity extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawers();
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawers();
             } else {
-                drawerLayout.openDrawer(GravityCompat.START);
+                mDrawerLayout.openDrawer(GravityCompat.START);
             }
             return true;
         }
