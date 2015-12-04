@@ -169,54 +169,47 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     }
 
     private class RegisterTask extends AsyncTask<Void, Void, OpResult> { // Params, Progress, Result
-        private String email;
-        private String password;
-        private String name;
+        private String mEmail;
+        private String mPassword;
+        private String mName;
 
         @Override
         protected void onPreExecute() {
-            email = mEtInputEmail.getText().toString();
-            password = mEtInputPwd.getText().toString();
-            name = mEtInputName.getText().toString();
+            mEmail = mEtInputEmail.getText().toString();
+            mPassword = mEtInputPwd.getText().toString();
+            mName = mEtInputName.getText().toString();
         }
 
         @Override
         protected OpResult doInBackground(Void... params) {
-            // Populate the HTTP Basic Authentitcation header with the username and password
-            String url = getString(R.string.base_url) + getString(R.string.api_register);
-
-            // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
-
-            HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-
-            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
-            formData.add("email", email);
-            formData.add("password", password);
-            formData.add("name", name);
-
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
-
             OpResult registerResult = null;
             try {
+                String url = getString(R.string.base_url) + getString(R.string.api_register);
+
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+                MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+                formData.add("email", mEmail);
+                formData.add("password", mPassword);
+                formData.add("name", mName);
+
+                HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
+
+                Log.i(TAG, ">>>>> Prepare to register with email: <" + mEmail + ">, password: <" + mPassword + ">, name: <" + mName + ">");
+
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+
                 ResponseEntity<OpResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, OpResult.class);
 
                 registerResult = response.getBody();
 
-                return registerResult;
-            } catch (HttpClientErrorException e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
-
-                registerResult = new OpResult();
-                registerResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+                Log.i(TAG, "<<<<< Register with email: <" + mEmail + ">, password: <" + mPassword + ">, name: <" + mName + "> done, result: <" + registerResult + ">");
 
                 return registerResult;
-            } catch (ResourceAccessException e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
+            } catch (Exception e) {
+                Log.e(TAG, "<<<<< Register with email: <" + mEmail + ">, password: <" + mPassword + ">, name: <" + mName + "> failed, err-msg: <" + e.toString() + ">", e);
 
                 registerResult = new OpResult();
                 registerResult.setResultCode(ResultCode.COMMUNICATION_ERROR);

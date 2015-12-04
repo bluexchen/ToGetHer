@@ -171,51 +171,44 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
     }
 
     private class LoginTask extends AsyncTask<Void, Void, LoginResult> { //Params, Progress, Result
-        private String email;
-        private String password;
+        private String mEmail;
+        private String mPassword;
 
         @Override
         protected void onPreExecute() {
-            this.email = mEtEmail.getText().toString();
-            this.password = mEtPassword.getText().toString();
+            mEmail = mEtEmail.getText().toString();
+            mPassword = mEtPassword.getText().toString();
         }
 
         @Override
         protected LoginResult doInBackground(Void... params) {
-            String url = getString(R.string.base_url) + getString(R.string.api_login);
-
-            // Populate the HTTP Basic Authentitcation header with the username and password
-            // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
-
-            HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-
-            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
-            formData.add("email", email);
-            formData.add("password", password);
-
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
-
             LoginResult loginResult = null;
             try {
+                String url = getString(R.string.base_url) + getString(R.string.api_login);
+
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+                MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+                formData.add("email", mEmail);
+                formData.add("password", mPassword);
+
+                HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
+
+                Log.i(TAG, ">>>>> Prepare to login with email: <" + mEmail + ">, password: <" + mPassword + ">");
+
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+
                 ResponseEntity<LoginResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, LoginResult.class);
 
                 loginResult = response.getBody();
 
-                return loginResult;
-            } catch (HttpClientErrorException e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
-
-                loginResult = new LoginResult();
-                loginResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+                Log.i(TAG, "<<<<< Login with email: <" + mEmail + ">, password: <" + mPassword + "> done, result: <" + loginResult + ">");
 
                 return loginResult;
-            } catch (ResourceAccessException e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
+            } catch (Exception e) {
+                Log.e(TAG, "<<<<< Login with email: <" + mEmail + ">, password: <" + mPassword + "> failed, err-msg: <" + e.toString() + ">", e);
 
                 loginResult = new LoginResult();
                 loginResult.setResultCode(ResultCode.COMMUNICATION_ERROR);

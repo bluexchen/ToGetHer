@@ -531,7 +531,7 @@ public class MapsActivity extends AppCompatActivity implements
 
             Log.i(TAG, "Image stored path: <" + imgStoredExternalStoragePath + ">");
 
-            new UploadPhotoTask().execute(imgStoredExternalStoragePath);
+            new UploadProfileImageTask().execute(imgStoredExternalStoragePath);
         }
         else if (resultCode == Crop.RESULT_ERROR) {
             showMsgWithToast(Crop.getError(result).getMessage());
@@ -632,37 +632,34 @@ public class MapsActivity extends AppCompatActivity implements
 
         @Override
         protected Event[] doInBackground(Void... params) {
-            String url = getString(R.string.base_url) + getString(R.string.api_refresh_event);
-
-            // Populate the HTTP Basic Authentitcation header with the username and password
-            // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
-
-            HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-
-            MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-            formData.add("latitude", currentLat);
-            formData.add("longitude", currentLng);
-
-            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
-
-            Event[] events = null;
             try {
+                String url = getString(R.string.base_url) + getString(R.string.api_refresh_event);
+
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+                MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+                formData.add("latitude", currentLat);
+                formData.add("longitude", currentLng);
+
+                HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
+
+                Log.i(TAG, ">>>>> Prepare to refresh events by latitude: <" + currentLat + ">, longitude: <" + currentLng + ">");
+
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+
                 ResponseEntity<Event[]> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Event[].class);
 
-                events = response.getBody();
+                Event[] events = response.getBody();
+
+                Log.i(TAG, "<<<<< Refresh events by latitude: <" + currentLat + ">, longitude: <" + currentLng + "> done, events-length: <" + (events == null ? 0 : events.length) + ">");
 
                 return events;
-            } catch (HttpClientErrorException e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
-            } catch (ResourceAccessException e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
+            } catch (Exception e) {
+                Log.e(TAG, "<<<<< Refresh events by latitude: <" + currentLat + ">, longitude: <" + currentLng + "> failed, err-msg: <" + e.toString() + ">");
+                return null;
             }
-            return null;
         }
 
         @Override
@@ -676,71 +673,91 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
-    private class UploadPhotoTask extends AsyncTask<String, Void, String> {   //Params, Progress, Result
+    private class UploadProfileImageTask extends AsyncTask<String, Void, String> {   //Params, Progress, Result
+        private String mEmail;
 
         @Override
         protected void onPreExecute() {
+            mEmail = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
         }
 
         @Override
         protected String doInBackground(String... filePaths) {
-            String url = getString(R.string.base_url) + getString(R.string.api_upload_file);
+            try {
+                String url = getString(R.string.base_url) + getString(R.string.api_upload_file);
 
-            HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+                MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+                formData.add("email", mEmail);
+                formData.add("uploadfile", new FileSystemResource(filePaths[0]));
 
-            String email = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
+                HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
 
-            formData.add("email", email);
-            formData.add("uploadfile", new FileSystemResource(filePaths[0]));
+                Log.i(TAG, ">>>>> Prepare to upload profile image with email: <" + mEmail + ">");
 
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
-            RestTemplate restTemplate = new RestTemplate();
+                String result = response.getBody();
 
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+                Log.i(TAG, "<<<<< Upload profile image with email: <" + mEmail + "> done, result: <" + result + ">");
 
-            String result = response.getBody();
-
-            return result;
+                return result;
+            } catch (Exception e) {
+                Log.e(TAG, "<<<<< Upload profile image with email: <" + mEmail + ">  failed, err-msg: <" + e.toString() + ">");
+                return null;
+            }
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.i(TAG, "Upload image to server, result: <" + result + ">");
+            if (result != null) {
+
+            }
+            else {
+                showMsgWithToast(getString(R.string.warn_network_error));
+            }
         }
     }
 
     private class DownloadPhotoTask extends AsyncTask<Void, Void, byte[]> {   //Params, Progress, Result
+        private String mEmail;
+
         @Override
         protected void onPreExecute() {
+            mEmail = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
         }
 
         @Override
         protected byte[] doInBackground(Void... params) {
-            String url = getString(R.string.base_url) + getString(R.string.api_download_file);
+            try {
+                String url = getString(R.string.base_url) + getString(R.string.api_download_file);
 
-            HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+                MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+                formData.add("email", mEmail);
+                formData.add("file-name", ImageUtils.PROFILE_ICON_NAME);
 
-            String email = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
+                HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
 
-            formData.add("email", email);
-            formData.add("file-name", ImageUtils.PROFILE_ICON_NAME);
+                Log.i(TAG, ">>>>> Prepare to download profile image with email: <" + mEmail + "> from server");
 
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<byte[]> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, byte[].class);
 
-            RestTemplate restTemplate = new RestTemplate();
+                byte[] downloadFile = response.getBody();
 
-            ResponseEntity<byte[]> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, byte[].class);
+                Log.i(TAG, "<<<<< Download profile image with email: <" + mEmail + "> from server done, length: <" + downloadFile.length + ">");
 
-            byte[] downloadFile = response.getBody();
-
-            return downloadFile;
+                return downloadFile;
+            } catch (Exception e) {
+                Log.e(TAG, "<<<<< Download profile image with email: <" + mEmail + ">  failed, err-msg: <" + e.toString() + ">");
+                return null;
+            }
         }
 
         @Override
@@ -749,6 +766,9 @@ public class MapsActivity extends AppCompatActivity implements
                 Bitmap bitmap = BitmapFactory.decodeByteArray(downloadFile, 0, downloadFile.length);
                 ImageUtils.saveToExternalStorage(bitmap);
                 mProfileIcon.setImageBitmap(bitmap);
+            }
+            else {
+                showMsgWithToast(getString(R.string.warn_network_error));
             }
         }
     }

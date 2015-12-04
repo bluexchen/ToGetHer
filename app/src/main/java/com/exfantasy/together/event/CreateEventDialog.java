@@ -179,7 +179,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -223,45 +223,38 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
 
         @Override
         protected OpResult doInBackground(Void... params) {
-            String url = getString(R.string.base_url) + getString(R.string.api_create_event);
-
-            // Populate the HTTP Basic Authentitcation header with the username and password
-            // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
-
-            HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-            // Create a new RestTemplate instance
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-
-            MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-            formData.add("userId", mUserId + "");
-            formData.add("latitude", mCenterLat + "");
-            formData.add("longitude", mCenterLng + "");
-            formData.add("name", mEventName);
-            formData.add("content", mEventContent);
-            formData.add("attendeeNum", mAttendeeNum + "");
-            formData.add("time", mEventTime + "");
-
-            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
-
             OpResult createEventResult = null;
             try {
+                String url = getString(R.string.base_url) + getString(R.string.api_create_event);
+
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+                MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+                formData.add("userId", mUserId + "");
+                formData.add("latitude", mCenterLat + "");
+                formData.add("longitude", mCenterLng + "");
+                formData.add("name", mEventName);
+                formData.add("content", mEventContent);
+                formData.add("attendeeNum", mAttendeeNum + "");
+                formData.add("time", mEventTime + "");
+
+                HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
+
+                Log.i(TAG, ">>>>> Prepare to create event with UserId: <" + mUserId + ">, Latitude: <" + mCenterLat + ">, Longitude: <" + mCenterLng + ">, EventName: <" + mEtEventTime + ">, Content: <" + mEventContent + ">, AttendeeName: <" + mAttendeeNum + ">, Time: <" + mEventTime + ">");
+
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+
                 ResponseEntity<OpResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, OpResult.class);
 
                 createEventResult = response.getBody();
 
-                return createEventResult;
-            } catch (HttpClientErrorException e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
-
-                createEventResult = new OpResult();
-                createEventResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
+                Log.i(TAG, "<<<<< Create event with UserId: <" + mUserId + ">, Latitude: <" + mCenterLat + ">, Longitude: <" + mCenterLng + ">, EventName: <" + mEtEventTime + ">, Content: <" + mEventContent + ">, AttendeeName: <" + mAttendeeNum + ">, Time: <" + mEventTime + "> done, result: <" + createEventResult + ">");
 
                 return createEventResult;
-            } catch (ResourceAccessException e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
+            } catch (Exception e) {
+                Log.e(TAG, "<<<<< Create event with UserId: <" + mUserId + ">, Latitude: <" + mCenterLat + ">, Longitude: <" + mCenterLng + ">, EventName: <" + mEtEventTime + ">, Content: <" + mEventContent + ">, AttendeeName: <" + mAttendeeNum + ">, Time: <" + mEventTime + "> failed, err-msg: <" + e.toString() + ">", e);
 
                 createEventResult = new OpResult();
                 createEventResult.setResultCode(ResultCode.COMMUNICATION_ERROR);
