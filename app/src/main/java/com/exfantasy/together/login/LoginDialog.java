@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -33,8 +32,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -222,24 +219,24 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
             int resultCode = result.getResultCode();
             switch (resultCode) {
                 case ResultCode.SUCCEED:
-                    showMsgWithToast(getString(R.string.hint_login_success));
+                    showMsgWithToast(getString(R.string.msg_login_success));
                     saveLoginSucceedToSharedPreferences(result.getUserId(), result.getEmail(), result.getName(), result.getUserIconUrl());
                     changeUiStatusWithLoginSucceed(result.getName(), result.getEmail());
                     closeDialog();
                     break;
 
                 case ResultCode.LOGIN_FAILED_CANNOT_FIND_USER_BY_EMAIL:
-                    showMsgWithToast(getString(R.string.hint_login_failed_with_email_not_existed));
+                    showMsgWithToast(getString(R.string.msg_login_failed_with_email_not_existed));
                     mEtEmail.requestFocus();
                     break;
 
                 case ResultCode.LOGIN_FAILED_PASSWORD_INVALID:
-                    showMsgWithToast(getString(R.string.hint_login_failed_with_error_password));
+                    showMsgWithToast(getString(R.string.msg_login_failed_with_error_password));
                     mEtPassword.requestFocus();
                     break;
 
                 case ResultCode.COMMUNICATION_ERROR:
-                    showMsgWithToast(getString(R.string.warn_network_error));
+                    showMsgWithToast(getString(R.string.error_network_abnormal));
                     break;
             }
         }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="200dp"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:padding="15dp">
-
 
     <!-- Event Name Label -->
     <android.support.design.widget.TextInputLayout
@@ -15,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="活動名稱" />
+            android:hint="@string/hint_event_name" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- The Content of Event -->
@@ -27,7 +28,7 @@
         <EditText android:id="@+id/et_event_content_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="活動內容"/>
+            android:hint="@string/hint_event_content"/>
     </android.support.design.widget.TextInputLayout>
 
     <!-- The Number of People Required Label -->
@@ -40,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="需求人數"/>
+            android:hint="@string/hint_event_people_required"/>
     </android.support.design.widget.TextInputLayout>
 
     <!-- Event Content Label -->
@@ -52,9 +53,8 @@
         <EditText android:id="@+id/et_event_time_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ToGetHer時間"/>
+            android:hint="@string/hint_event_time"/>
     </android.support.design.widget.TextInputLayout>
-
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_create_evnet_at_dlg_create_event"
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:padding="12dp"
-        android:text="建立活動"
+        android:text="@string/btn_create_event"
         android:textColor="#FFFFFF"
         android:background="@drawable/btn_shape_selector_orange5"/>
 

@@ -56,26 +56,32 @@
     <string name="warn_pls_verify_password">請確認密碼正確</string>
     <string name="warn_pls_input_name">請輸入暱稱</string>
 
-    <string name="hint_register_success">註冊成功，請到登入畫面登入</string>
-    <string name="hint_register_failed_with_dupilcate_email">註冊失敗，email已使用</string>
+    <string name="msg_register_success">註冊成功，請到登入畫面登入</string>
+    <string name="msg_register_failed_with_dupilcate_email">註冊失敗，email已使用</string>
 
     <!-- 登入畫面 -->
-    <string name="hint_login_success">登入成功，歡迎開始使用</string>
-    <string name="hint_login_failed_with_email_not_existed">登入失敗，請確認帳號存在</string>
-    <string name="hint_login_failed_with_error_password">登入失敗，請確認密碼正確</string>
+    <string name="msg_login_success">登入成功，歡迎開始使用</string>
+    <string name="msg_login_failed_with_email_not_existed">登入失敗，請確認帳號存在</string>
+    <string name="msg_login_failed_with_error_password">登入失敗，請確認密碼正確</string>
 
     <string name="fb_register_btn">以FB註冊</string>
     <string name="facebook_app_id">1675407852702220</string>
 
     <!--- 建立事件畫面 -->
+    <string name="hint_event_name">活動名稱</string>
+    <string name="hint_event_content">活動內容</string>
+    <string name="hint_event_people_required">需求人數</string>
+    <string name="hint_event_time">活動時間</string>
+    <string name="btn_create_event">建立活動</string>
+
     <string name="warn_pls_input_event_name">請輸入活動名稱</string>
     <string name="warn_pls_input_event_content">請簡介活動內容</string>
     <string name="warn_pls_input_attendee_num">請輸入參與人數</string>
     <string name="warn_pls_input_event_time">請輸入活動時間</string>
 
-    <string name="hint_create_event_succeed">建立活動成功</string>
-    <string name="hint_create_event_failed">建立活動失敗</string>
+    <string name="msg_create_event_succeed">建立活動成功</string>
+    <string name="msg_create_event_failed">建立活動失敗</string>
 
     <!-- 網路異常或伺服器發生異常 -->
-    <string name="warn_network_error">網路異常或伺服器發生異常</string>
+    <string name="error_network_abnormal">網路異常或伺服器發生異常</string>
 </resources>

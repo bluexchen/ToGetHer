@@ -667,7 +667,7 @@ public class MapsActivity extends AppCompatActivity implements
                 showMarkerOnMap(refreshEvents);
             }
             else {
-                showMsgWithToast(getString(R.string.warn_network_error));
+                showMsgWithToast(getString(R.string.error_network_abnormal));
             }
         }
     }
@@ -716,7 +716,7 @@ public class MapsActivity extends AppCompatActivity implements
 
             }
             else {
-                showMsgWithToast(getString(R.string.warn_network_error));
+                showMsgWithToast(getString(R.string.error_network_abnormal));
             }
         }
     }
@@ -767,7 +767,7 @@ public class MapsActivity extends AppCompatActivity implements
                 mProfileIcon.setImageBitmap(bitmap);
             }
             else {
-                showMsgWithToast(getString(R.string.warn_network_error));
+                showMsgWithToast(getString(R.string.error_network_abnormal));
             }
         }
     }

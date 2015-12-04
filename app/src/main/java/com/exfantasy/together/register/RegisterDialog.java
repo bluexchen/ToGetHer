@@ -2,9 +2,6 @@ package com.exfantasy.together.register;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -18,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.exfantasy.together.R;
-import com.exfantasy.together.cnst.SharedPreferencesKey;
 import com.exfantasy.together.vo.OpResult;
 import com.exfantasy.together.vo.ResultCode;
 
@@ -30,8 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -223,17 +217,17 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
             int resultCode = result.getResultCode();
             switch (resultCode) {
                 case ResultCode.SUCCEED:
-                    showMsgWithToast(getString(R.string.hint_register_success));
+                    showMsgWithToast(getString(R.string.msg_register_success));
                     closeDialog();
                     break;
 
                 case ResultCode.REGISTER_FAILED_EMAIL_ALREADY_USED:
-                    showMsgWithToast(getString(R.string.hint_register_failed_with_dupilcate_email));
+                    showMsgWithToast(getString(R.string.msg_register_failed_with_dupilcate_email));
                     mEtInputEmail.requestFocus();
                     break;
 
                 case ResultCode.COMMUNICATION_ERROR:
-                    showMsgWithToast(getString(R.string.warn_network_error));
+                    showMsgWithToast(getString(R.string.error_network_abnormal));
                     break;
             }
         }

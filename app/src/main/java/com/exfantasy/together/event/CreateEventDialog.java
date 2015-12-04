@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -33,8 +32,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
@@ -269,16 +266,16 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
             switch (resultCode) {
                 case ResultCode.SUCCEED:
                     Log.i(TAG, "Create " + mEventToCreate + " succeed");
-                    showMsgWithToast(getString(R.string.hint_create_event_succeed));
+                    showMsgWithToast(getString(R.string.msg_create_event_succeed));
                     break;
 
                 case ResultCode.CREATE_EVENT_FAILED:
                     Log.e(TAG, "Create " + mEventToCreate + " failed");
-                    showMsgWithToast(getString(R.string.hint_create_event_failed));
+                    showMsgWithToast(getString(R.string.msg_create_event_failed));
                     break;
 
                 case ResultCode.COMMUNICATION_ERROR:
-                    showMsgWithToast(getString(R.string.warn_network_error));
+                    showMsgWithToast(getString(R.string.error_network_abnormal));
                     break;
             }
             closeDialog();
