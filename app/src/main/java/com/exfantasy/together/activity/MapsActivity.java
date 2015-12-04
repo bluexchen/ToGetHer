@@ -555,6 +555,7 @@ public class MapsActivity extends AppCompatActivity implements
         private TextView mTvEventLatLng;
         private TextView mTvEventAttendeeNum;
         private TextView mTvEventAttendee;
+        private TextView mTvEventDate;
         private TextView mTvEventTime;
 
         public MarkerInfoWindowAdapter(Context context) {
@@ -571,6 +572,7 @@ public class MapsActivity extends AppCompatActivity implements
             mTvEventLatLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_latlng);
             mTvEventAttendeeNum = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_attendee_num);
             mTvEventAttendee = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_attendee);
+            mTvEventDate = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_date);
             mTvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
         }
 
@@ -610,6 +612,9 @@ public class MapsActivity extends AppCompatActivity implements
                 buffer.append("<").append(user.getUserId()).append("-").append(user.getName()).append(">");
             }
             mTvEventAttendee.setText("目前參與者: " + buffer.toString());
+
+            String eventDate = String.valueOf(event.getDate());
+            mTvEventDate.setText("活動日期: " + eventDate);
 
             String eventTime = String.valueOf(event.getTime());
             mTvEventTime.setText("活動時間: " + eventTime);
