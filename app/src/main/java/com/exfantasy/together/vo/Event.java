@@ -36,9 +36,13 @@ public class Event {
      */
     private int attendeeNum;
     /**
+     * 事件日期
+     */
+    private int date;
+    /**
      * 事件時間
      */
-    private long time;
+    private int time;
     /**
      * 參與活動的使用者
      */
@@ -47,11 +51,11 @@ public class Event {
     public Event() {
     }
 
-    public Event(double latitude, double longitude, String name, String content, int attendeeNum, long time) {
-        this(0, 0, latitude, longitude, name, content, attendeeNum, time);
+    public Event(double latitude, double longitude, String name, String content, int attendeeNum, int date, int time) {
+        this(0, 0, latitude, longitude, name, content, attendeeNum, date, time);
     }
 
-    public Event(long eventId, long createUserId, double latitude, double longitude, String name, String content, int attendeeNum, long time) {
+    public Event(long eventId, long createUserId, double latitude, double longitude, String name, String content, int attendeeNum, int date, int time) {
         this.eventId = eventId;
         this.createUserId = createUserId;
         this.latitude = latitude;
@@ -59,6 +63,7 @@ public class Event {
         this.name = name;
         this.content = content;
         this.attendeeNum = attendeeNum;
+        this.date = date;
         this.time = time;
     }
 
@@ -118,11 +123,20 @@ public class Event {
         this.attendeeNum = attendeeNum;
     }
 
+
+    public int getDate() {
+        return date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+    }
+
     public long getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -145,7 +159,7 @@ public class Event {
     public String toString() {
         return "Event [eventId=" + eventId + ", createUserId=" + createUserId + ", latitude=" + latitude
                 + ", longitude=" + longitude + ", name=" + name + ", content=" + content + ", attendeeNum="
-                + attendeeNum + ", time=" + time + ", users=" + users + "]";
+                + attendeeNum + ", date=" + date + ", time=" + time + ", users=" + users + "]";
     }
 }
 

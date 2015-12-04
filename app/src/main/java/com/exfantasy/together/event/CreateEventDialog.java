@@ -226,7 +226,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
     }
 
     private class CreateEventTask extends AsyncTask<Void, Void, OpResult> {   //Params, Progress, Result
-        private long mUserId;
+        private long mCreateUserId;
         private String mEventName;
         private String mEventContent;
         private int mAttendeeNum;
@@ -237,14 +237,14 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
 
         @Override
         protected void onPreExecute() {
-            mUserId = mSharedPreferences.getLong(SharedPreferencesKey.USER_ID, -1);
+            mCreateUserId = mSharedPreferences.getLong(SharedPreferencesKey.USER_ID, -1);
             mEventName = mEtEventName.getText().toString();
             mEventContent = mEtEventContent.getText().toString();
             mAttendeeNum = Integer.parseInt(mEtAttendeeNum.getText().toString());
             mEventDate = getEventDate();
             mEventTime = getEventTime();
 
-            mEventToCreate = new Event(mCenterLat, mCenterLng, mEventName, mEventContent, mAttendeeNum, mEventTime);
+            mEventToCreate = new Event(mCenterLat, mCenterLng, mEventName, mEventContent, mAttendeeNum, mEventDate, mEventTime);
         }
 
         private int getEventDate() {
@@ -292,12 +292,13 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
                 requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
                 MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-                formData.add("userId", mUserId + "");
+                formData.add("createUserId", mCreateUserId + "");
                 formData.add("latitude", mCenterLat + "");
                 formData.add("longitude", mCenterLng + "");
                 formData.add("name", mEventName);
                 formData.add("content", mEventContent);
                 formData.add("attendeeNum", mAttendeeNum + "");
+                formData.add("date", mEventDate + "");
                 formData.add("time", mEventTime + "");
 
                 HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, requestHeaders);
