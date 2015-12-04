@@ -44,6 +44,9 @@
     <string name="join">參加</string>
     <string name="detail">詳情</string>
 
+    <!-- menu 畫面 -->
+    <string name="warn_pls_login">請先登入</string>
+
     <!-- 註冊畫面 -->
     <string name="warn_pls_input_email">請輸入Email</string>
     <string name="warn_pls_input_password">請輸入密碼</string>

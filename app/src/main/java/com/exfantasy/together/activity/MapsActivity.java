@@ -476,6 +476,9 @@ public class MapsActivity extends AppCompatActivity implements
                 if (mAlreadyLogined) {
                     Crop.pickImage(this);
                 }
+                else {
+                    showMsgWithToast(getString(R.string.warn_pls_login));
+                }
                 break;
 
             case R.id.btn_login_at_menu:
@@ -537,7 +540,7 @@ public class MapsActivity extends AppCompatActivity implements
             new UploadPhotoTask().execute(imgStoredExternalStoragePath);
         }
         else if (resultCode == Crop.RESULT_ERROR) {
-            Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
+            showMsgWithToast(Crop.getError(result).getMessage());
         }
     }
 
@@ -635,7 +638,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         @Override
         protected Event[] doInBackground(Void... params) {
-            String url = mResources.getString(R.string.base_url) + mResources.getString(R.string.api_refresh_event);
+            String url = getString(R.string.base_url) + getString(R.string.api_refresh_event);
 
             // Populate the HTTP Basic Authentitcation header with the username and password
             // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
@@ -687,7 +690,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         @Override
         protected String doInBackground(String... filePaths) {
-            String url = mResources.getString(R.string.base_url) + mResources.getString(R.string.api_upload_file);
+            String url = getString(R.string.base_url) + getString(R.string.api_upload_file);
 
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
