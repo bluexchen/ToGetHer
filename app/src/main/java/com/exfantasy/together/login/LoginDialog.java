@@ -45,7 +45,6 @@ import java.util.Collections;
 public class LoginDialog extends DialogFragment implements View.OnClickListener, DialogInterface.OnClickListener {
     private String TAG = this.getClass().getSimpleName();
 
-    private Resources mResource;
     private SharedPreferences mSharedPreferences;
 
     private View mLoginView;
@@ -71,7 +70,6 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        mResource = getActivity().getResources();
         mSharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
 
         findViews(builder, inflater);
@@ -184,7 +182,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
 
         @Override
         protected LoginResult doInBackground(Void... params) {
-            String url = mResource.getString(R.string.base_url) + mResource.getString(R.string.api_login);
+            String url = getString(R.string.base_url) + getString(R.string.api_login);
 
             // Populate the HTTP Basic Authentitcation header with the username and password
             // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);

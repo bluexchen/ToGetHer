@@ -49,7 +49,6 @@ import java.util.Date;
 public class CreateEventDialog extends DialogFragment implements View.OnClickListener, DialogInterface.OnClickListener {
     private String TAG = this.getClass().getSimpleName();
 
-    private Resources mResources;
     private SharedPreferences mSharedPreferences;
 
     //Views
@@ -81,7 +80,6 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        mResources = getActivity().getResources();
         mSharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
 
         findViews(builder, inflater);
@@ -134,25 +132,25 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
     private boolean verifyInput() {
         String eventName = mEtEventName.getText().toString();
         if (eventName.isEmpty()) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_input_event_name));
+            showMsgWithToast(getString(R.string.warn_pls_input_event_name));
             mEtEventName.requestFocus();
             return false;
         }
         String eventContent = mEtEventContent.getText().toString();
         if (eventContent.isEmpty()) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_input_event_content));
+            showMsgWithToast(getString(R.string.warn_pls_input_event_content));
             mEtEventContent.requestFocus();
             return false;
         }
         String attendeeNum = mEtAttendeeNum.getText().toString();
         if (attendeeNum.isEmpty()) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_input_attendee_num));
+            showMsgWithToast(getString(R.string.warn_pls_input_attendee_num));
             mEtAttendeeNum.requestFocus();
             return false;
         }
         String eventTime = mEtEventTime.getText().toString();
         if (eventTime.isEmpty()) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_input_event_time));
+            showMsgWithToast(getString(R.string.warn_pls_input_event_time));
             return false;
         }
         return true;
@@ -225,7 +223,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
 
         @Override
         protected OpResult doInBackground(Void... params) {
-            String url = mResources.getString(R.string.base_url) + mResources.getString(R.string.api_create_event);
+            String url = getString(R.string.base_url) + getString(R.string.api_create_event);
 
             // Populate the HTTP Basic Authentitcation header with the username and password
             // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
@@ -37,7 +36,6 @@ import com.exfantasy.together.event.CreateEventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
 import com.exfantasy.together.gcm.RegistrationIntentService;
 import com.exfantasy.together.login.LoginDialog;
-import com.exfantasy.together.register.UploadImgDialog;
 import com.exfantasy.together.setting.SettingDialog;
 import com.exfantasy.together.util.ImageUtils;
 import com.exfantasy.together.vo.Event;
@@ -87,7 +85,6 @@ public class MapsActivity extends AppCompatActivity implements
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
-    private Resources mResources;
     private SharedPreferences mSharedPreferences;
     private boolean mAlreadyLogined;
 
@@ -111,7 +108,6 @@ public class MapsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mResources = getResources();
         mSharedPreferences = getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
         mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
 
@@ -252,12 +248,6 @@ public class MapsActivity extends AppCompatActivity implements
 
         MyAdapter mAdapter = new MyAdapter(itemsData);
         snappingRecyclerView.setAdapter(mAdapter);
-    }
-
-    private  void showUploadImageDialog(){
-        UploadImgDialog uploadImgDialog = new UploadImgDialog();
-        uploadImgDialog.setImgView(mProfileIcon);
-        uploadImgDialog.show(getSupportFragmentManager(), "UploadImageDialog");
     }
 
     private void showLoginDialog() {

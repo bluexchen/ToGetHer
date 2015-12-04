@@ -43,8 +43,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    private Resources mResources;
-
     // View
     private View mRegisterView;
     private EditText mEtInputEmail;
@@ -68,8 +66,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        mResources = getActivity().getResources();
 
         findViews(builder, inflater);
 
@@ -120,32 +116,32 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         String inputName = mEtInputName.getText().toString();
 
         if (inputEmail.isEmpty()) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_input_email));
+            showMsgWithToast(getString(R.string.warn_pls_input_email));
             mEtInputEmail.requestFocus();
             return false;
         }
         if (inputPwd.isEmpty()) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_input_password));
+            showMsgWithToast(getString(R.string.warn_pls_input_password));
             mEtInputPwd.requestFocus();
             return false;
         }
         if (inputPwd.length() < 6) {
-            showMsgWithToast(mResources.getString(R.string.warn_input_password_length));
+            showMsgWithToast(getString(R.string.warn_input_password_length));
             mEtInputPwd.requestFocus();
             return false;
         }
         if (inputPwdAgain.isEmpty()) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_input_password_again));
+            showMsgWithToast(getString(R.string.warn_pls_input_password_again));
             mEtInputPwdAgain.requestFocus();
             return false;
         }
         if (!inputPwd.equals(inputPwdAgain)) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_verify_password));
+            showMsgWithToast(getString(R.string.warn_pls_verify_password));
             mEtInputPwdAgain.requestFocus();
             return false;
         }
         if (inputName.isEmpty()) {
-            showMsgWithToast(mResources.getString(R.string.warn_pls_input_name));
+            showMsgWithToast(getString(R.string.warn_pls_input_name));
             mEtInputName.requestFocus();
             return false;
         }
@@ -187,7 +183,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
         @Override
         protected OpResult doInBackground(Void... params) {
             // Populate the HTTP Basic Authentitcation header with the username and password
-            String url = mResources.getString(R.string.base_url) + mResources.getString(R.string.api_register);
+            String url = getString(R.string.base_url) + getString(R.string.api_register);
 
             // HttpAuthentication authHeader = new HttpBasicAuthentication(account, password);
 
