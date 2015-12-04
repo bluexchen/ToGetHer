@@ -67,8 +67,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
@@ -552,11 +550,11 @@ public class MapsActivity extends AppCompatActivity implements
 
         private TextView mTvEventId;
         private TextView mTvCreateUserId;
-        private TextView mTvTitle;
-        private TextView mTvLat;
-        private TextView mTvLng;
-        private TextView mTvAttendeeNum;
-        private TextView mTvAttendee;
+        private TextView mTvEventTitle;
+        private TextView mTvEventContent;
+        private TextView mTvEventLatLng;
+        private TextView mTvEventAttendeeNum;
+        private TextView mTvEventAttendee;
         private TextView mTvEventTime;
 
         public MarkerInfoWindowAdapter(Context context) {
@@ -568,11 +566,11 @@ public class MapsActivity extends AppCompatActivity implements
 
             mTvEventId = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_id);
             mTvCreateUserId = (TextView) mView.findViewById(R.id.dlg_marker_tv_create_user_id);
-            mTvTitle = (TextView) mView.findViewById(R.id.dlg_marker_tv_title);
-            mTvLat = (TextView) mView.findViewById(R.id.dlg_marker_tv_lat);
-            mTvLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_lng);
-            mTvAttendeeNum = (TextView) mView.findViewById(R.id.dlg_marker_tv_attendee_num);
-            mTvAttendee = (TextView) mView.findViewById(R.id.dlg_marker_tv_attendee);
+            mTvEventTitle = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_name);
+            mTvEventContent = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_content);
+            mTvEventLatLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_latlng);
+            mTvEventAttendeeNum = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_attendee_num);
+            mTvEventAttendee = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_attendee);
             mTvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
         }
 
@@ -591,18 +589,19 @@ public class MapsActivity extends AppCompatActivity implements
             String createUserId = String.valueOf(event.getCreateUserId());
             mTvCreateUserId.setText("建立者ID: " + createUserId);
 
-            String eventTitle = marker.getTitle();
-            mTvTitle.setText("名稱: " + eventTitle);
+            String eventName = event.getName();
+            mTvEventTitle.setText("名稱: " + eventName);
+
+            String eventContent = event.getContent();
+            mTvEventContent.setText("活動內容: " + eventContent);
 
             LatLng latLng = marker.getPosition();
             String latitude = String.valueOf(latLng.latitude);
-            mTvLat.setText("緯度: " + latitude);
-
             String longitude = String.valueOf(latLng.longitude);
-            mTvLng.setText("經度: " + longitude);
+            mTvEventLatLng.setText("經緯度: " + latitude + ", " + longitude);
 
             String attendeeNum = String.valueOf(event.getAttendeeNum());
-            mTvAttendeeNum.setText("活動人數: " + attendeeNum);
+            mTvEventAttendeeNum.setText("活動人數: " + attendeeNum);
 
             Iterator<User> it = event.getUsers().iterator();
             StringBuilder buffer = new StringBuilder();
@@ -610,7 +609,7 @@ public class MapsActivity extends AppCompatActivity implements
                 User user = it.next();
                 buffer.append("<").append(user.getUserId()).append("-").append(user.getName()).append(">");
             }
-            mTvAttendee.setText("參與者: " + buffer.toString());
+            mTvEventAttendee.setText("目前參與者: " + buffer.toString());
 
             String eventTime = String.valueOf(event.getTime());
             mTvEventTime.setText("活動時間: " + eventTime);
