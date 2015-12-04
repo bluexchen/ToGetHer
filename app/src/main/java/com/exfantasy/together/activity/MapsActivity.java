@@ -706,7 +706,7 @@ public class MapsActivity extends AppCompatActivity implements
 
                 return result;
             } catch (Exception e) {
-                Log.e(TAG, "<<<<< Upload profile image with email: <" + mEmail + ">  failed, err-msg: <" + e.toString() + ">");
+                Log.e(TAG, "<<<<< Upload profile image with email: <" + mEmail + "> failed, err-msg: <" + e.toString() + ">");
                 return null;
             }
         }
@@ -755,7 +755,7 @@ public class MapsActivity extends AppCompatActivity implements
 
                 return downloadFile;
             } catch (Exception e) {
-                Log.e(TAG, "<<<<< Download profile image with email: <" + mEmail + ">  failed, err-msg: <" + e.toString() + ">");
+                Log.e(TAG, "<<<<< Download profile image with email: <" + mEmail + "> failed, err-msg: <" + e.toString() + ">");
                 return null;
             }
         }
