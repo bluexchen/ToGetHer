@@ -540,7 +540,7 @@ public class MapsActivity extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -548,8 +548,6 @@ public class MapsActivity extends AppCompatActivity implements
     private class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         private View mView;
 
-        private TextView mTvEventId;
-        private TextView mTvCreateUserId;
         private TextView mTvEventTitle;
         private TextView mTvEventContent;
         private TextView mTvEventLatLng;
@@ -565,8 +563,6 @@ public class MapsActivity extends AppCompatActivity implements
         private void findViews(Context context) {
             mView = LayoutInflater.from(context).inflate(R.layout.dialog_marker, null);
 
-            mTvEventId = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_id);
-            mTvCreateUserId = (TextView) mView.findViewById(R.id.dlg_marker_tv_create_user_id);
             mTvEventTitle = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_name);
             mTvEventContent = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_content);
             mTvEventLatLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_latlng);
@@ -586,13 +582,10 @@ public class MapsActivity extends AppCompatActivity implements
             Event event = mEventsMap.get(marker);
 
             String eventId = String.valueOf(event.getEventId());
-            mTvEventId.setText("活動ID: " + eventId);
-
             String createUserId = String.valueOf(event.getCreateUserId());
-            mTvCreateUserId.setText("建立者ID: " + createUserId);
 
             String eventName = event.getName();
-            mTvEventTitle.setText("名稱: " + eventName);
+            mTvEventTitle.setText(eventName);
 
             String eventContent = event.getContent();
             mTvEventContent.setText("活動內容: " + eventContent);
