@@ -39,6 +39,7 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
 
     // View
     private View mRegisterView;
+
     private EditText mEtInputEmail;
     private EditText mEtInputPwd;
     private EditText mEtInputPwdAgain;
@@ -46,8 +47,6 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
 
     private Button mBtnRegister;
     private Button mBtnClear;
-
-    private ImageView mImg;
 
     // Value
 
@@ -69,18 +68,16 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     }
 
     private void findViews(AlertDialog.Builder builder, LayoutInflater inflater) {
-        mRegisterView = inflater.inflate(R.layout.new_register_dialog, null);
+        mRegisterView = inflater.inflate(R.layout.dialog_register, null);
         builder.setView(mRegisterView);
 
-        mEtInputEmail = (EditText) mRegisterView.findViewById(R.id.Et_input_email);
-        mEtInputPwd = (EditText) mRegisterView.findViewById(R.id.Et_input_password);
-        mEtInputPwdAgain = (EditText) mRegisterView.findViewById(R.id.Et_input_password_again);
-        mEtInputName = (EditText) mRegisterView.findViewById(R.id.Et_input_name);
+        mEtInputEmail = (EditText) mRegisterView.findViewById(R.id.et_input_email_at_dlg_reg);
+        mEtInputPwd = (EditText) mRegisterView.findViewById(R.id.et_input_password_at_dlg_reg);
+        mEtInputPwdAgain = (EditText) mRegisterView.findViewById(R.id.et_input_password_again_at_dlg_reg);
+        mEtInputName = (EditText) mRegisterView.findViewById(R.id.et_input_name_at_dlg_reg);
 
-        mBtnRegister = (Button) mRegisterView.findViewById(R.id.btn_register_at_dlg_register);
-        mBtnClear  = (Button) mRegisterView.findViewById(R.id.btn_clear_at_dlg_register);
-
-        mImg = (ImageView) mRegisterView.findViewById(R.id.profile_image);
+        mBtnRegister = (Button) mRegisterView.findViewById(R.id.btn_register_at_dlg_reg);
+        mBtnClear  = (Button) mRegisterView.findViewById(R.id.btn_clear_at_dlg_reg);
     }
 
     private void setListener() {
@@ -91,13 +88,13 @@ public class RegisterDialog extends DialogFragment implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_register_at_dlg_register:
+            case R.id.btn_register_at_dlg_reg:
                 if (verifyInput()) {
                     new RegisterTask().execute();
                 }
                 break;
 
-            case R.id.btn_clear_at_dlg_register:
+            case R.id.btn_clear_at_dlg_reg:
                 clearData();
                 break;
         }

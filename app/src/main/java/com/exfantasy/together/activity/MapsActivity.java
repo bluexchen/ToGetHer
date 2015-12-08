@@ -552,7 +552,7 @@ public class MapsActivity extends AppCompatActivity implements
     private class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         private View mView;
 
-        private TextView mTvEventTitle;
+        private TextView mTvEventName;
         private TextView mTvEventContent;
         private TextView mTvEventLatLng;
         private TextView mTvEventAttendeeNum;
@@ -568,15 +568,15 @@ public class MapsActivity extends AppCompatActivity implements
         }
 
         private void findViews(Context context) {
-            mView = LayoutInflater.from(context).inflate(R.layout.dialog_marker, null);
+            mView = LayoutInflater.from(context).inflate(R.layout.marker_info_layout, null);
 
-            mTvEventTitle = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_name);
-            mTvEventContent = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_content);
-            mTvEventLatLng = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_latlng);
-            mTvEventAttendeeNum = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_attendee_num);
-            mTvEventAttendee = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_attendee);
-            mTvEventDate = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_date);
-            mTvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
+            mTvEventName = (TextView) mView.findViewById(R.id.tv_event_name_at_marker_info);
+            mTvEventContent = (TextView) mView.findViewById(R.id.tv_event_content_at_marker_info);
+            mTvEventLatLng = (TextView) mView.findViewById(R.id.tv_event_latlng_at_marker_info);
+            mTvEventAttendeeNum = (TextView) mView.findViewById(R.id.event_attendee_num_at_marker_info);
+            mTvEventAttendee = (TextView) mView.findViewById(R.id.tv_event_attendee_at_marker_info);
+            mTvEventDate = (TextView) mView.findViewById(R.id.tv_event_date_at_marker_info);
+            mTvEventTime = (TextView) mView.findViewById(R.id.tv_event_time_at_marker_info);
 
             // 設定 TextView 字型
             Typeface typeface = Typeface.createFromAsset(getAssets(), "SquareCircle.ttc");
@@ -601,7 +601,7 @@ public class MapsActivity extends AppCompatActivity implements
             String createUserId = String.valueOf(event.getCreateUserId());
 
             String eventName = event.getName();
-            mTvEventTitle.setText(eventName);
+            mTvEventName.setText(eventName);
 
             String eventContent = event.getContent();
             mTvEventContent.setText("活動內容: " + eventContent);

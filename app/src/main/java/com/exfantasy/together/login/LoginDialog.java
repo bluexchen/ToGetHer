@@ -122,7 +122,7 @@ public class LoginDialog extends DialogFragment implements View.OnClickListener,
     // for login Dialog
     private void showRegisterDialog() {
         RegisterDialog registerDialogFragment = new RegisterDialog();
-        registerDialogFragment.show(getFragmentManager(),"registerDialog");
+        registerDialogFragment.show(getFragmentManager(), "registerDialog");
 //        replaceFrtoBackStack(registerDialogFragment, "registerDialog");
 
     }

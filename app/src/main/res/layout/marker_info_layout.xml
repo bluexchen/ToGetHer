@@ -13,7 +13,7 @@
 
     <!-- http://javatechig.com/android/how-to-apply-shadow-effect-on-android-textview -->
     <TextView
-        android:id="@+id/dlg_marker_tv_event_name"
+        android:id="@+id/tv_event_name_at_marker_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -26,37 +26,37 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/dlg_marker_tv_event_content"
+        android:id="@+id/tv_event_content_at_marker_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp" />
 
     <TextView
-        android:id="@+id/dlg_marker_tv_event_latlng"
+        android:id="@+id/tv_event_latlng_at_marker_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp" />
 
     <TextView
-        android:id="@+id/dlg_marker_tv_event_attendee_num"
+        android:id="@+id/event_attendee_num_at_marker_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp" />
 
     <TextView
-        android:id="@+id/dlg_marker_tv_event_attendee"
+        android:id="@+id/tv_event_attendee_at_marker_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp" />
 
     <TextView
-        android:id="@+id/dlg_marker_tv_event_date"
+        android:id="@+id/tv_event_date_at_marker_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp" />
 
     <TextView
-        android:id="@+id/dlg_marker_tv_event_time"
+        android:id="@+id/tv_event_time_at_marker_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp" />
