@@ -132,7 +132,7 @@ public class Event {
         this.date = date;
     }
 
-    public long getTime() {
+    public int getTime() {
         return time;
     }
 

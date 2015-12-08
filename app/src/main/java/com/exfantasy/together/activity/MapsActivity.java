@@ -39,6 +39,7 @@ import com.exfantasy.together.event.MyEventRecordDialog;
 import com.exfantasy.together.gcm.RegistrationIntentService;
 import com.exfantasy.together.login.LoginDialog;
 import com.exfantasy.together.setting.SettingDialog;
+import com.exfantasy.together.util.DateTimeUtil;
 import com.exfantasy.together.util.ImageUtils;
 import com.exfantasy.together.vo.Event;
 import com.exfantasy.together.vo.User;
@@ -71,6 +72,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -557,6 +560,9 @@ public class MapsActivity extends AppCompatActivity implements
         private TextView mTvEventDate;
         private TextView mTvEventTime;
 
+        private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        private SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm:ss");
+
         public MarkerInfoWindowAdapter(Context context) {
             findViews(context);
         }
@@ -616,11 +622,15 @@ public class MapsActivity extends AppCompatActivity implements
             }
             mTvEventAttendee.setText("目前參與者: " + buffer.toString());
 
-            String eventDate = String.valueOf(event.getDate());
-            mTvEventDate.setText("活動日期: " + eventDate);
+            int eventDate = event.getDate();
+            Calendar calDate = DateTimeUtil.parseDateValue(eventDate);
+            String showEventDate = mDateFormat.format(calDate.getTime());
+            mTvEventDate.setText("活動日期: " + showEventDate);
 
-            String eventTime = String.valueOf(event.getTime());
-            mTvEventTime.setText("活動時間: " + eventTime);
+            int eventTime = event.getTime();
+            Calendar calTime = DateTimeUtil.parseTimeValue(eventTime);
+            String showEventTime = mTimeFormat.format(calTime.getTime());
+            mTvEventTime.setText("活動時間: " + showEventTime);
 
             return mView;
         }
