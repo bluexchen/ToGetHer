@@ -93,12 +93,18 @@ public class MapsActivity extends AppCompatActivity implements
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
+    // SharedPreferences
     private SharedPreferences mSharedPreferences;
     private boolean mAlreadyLogined;
 
+    // UI componetns
     private DrawerLayout mDrawerLayout;
-
     private ImageView mProfileIcon;
+    private TextView mTvUserName;
+    private TextView mTvEmail;
+    private LinearLayout mBtnLogin;
+    private LinearLayout mBtnLogout;
+    private FloatingActionButton mFabCreateEvent;
 
     // google map related
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
@@ -178,19 +184,19 @@ public class MapsActivity extends AppCompatActivity implements
 
         // set up menu_username
         String name = mSharedPreferences.getString(SharedPreferencesKey.NAME, "");
-        TextView tvUserName = (TextView) findViewById(R.id.tv_username_at_menu);
-        tvUserName.setText(name);
+        mTvUserName = (TextView) findViewById(R.id.tv_username_at_menu);
+        mTvUserName.setText(name);
 
         // set up menu_user_email
         String email = mSharedPreferences.getString(SharedPreferencesKey.EMAIL, "");
-        TextView tvEmail = (TextView) findViewById(R.id.tv_user_email_at_menu);
-        tvEmail.setText(email);
+        mTvEmail = (TextView) findViewById(R.id.tv_user_email_at_menu);
+        mTvEmail.setText(email);
 
         // set up btn_login
-        LinearLayout btnLogin = (LinearLayout) findViewById(R.id.btn_login_at_menu);
-        btnLogin.setOnClickListener(this);
+        mBtnLogin = (LinearLayout) findViewById(R.id.btn_login_at_menu);
+        mBtnLogin.setOnClickListener(this);
         if (mAlreadyLogined) {
-            btnLogin.setVisibility(View.GONE);
+            mBtnLogin.setVisibility(View.GONE);
         }
 
         // set up btn_recently_action
@@ -202,18 +208,18 @@ public class MapsActivity extends AppCompatActivity implements
         btnSetup.setOnClickListener(this);
 
         // set up btn_logout
-        LinearLayout btnLogout = (LinearLayout) findViewById(R.id.btn_logout_at_menu);
-        btnLogout.setOnClickListener(this);
+        mBtnLogout = (LinearLayout) findViewById(R.id.btn_logout_at_menu);
+        mBtnLogout.setOnClickListener(this);
         if (!mAlreadyLogined) {
-            btnLogout.setVisibility(View.GONE);
+            mBtnLogout.setVisibility(View.GONE);
         }
     }
 
     private void setupFloatingActionButton() {
-        FloatingActionButton fabCreateEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
-        fabCreateEvent.setOnClickListener(this);
+        mFabCreateEvent = (FloatingActionButton) findViewById(R.id.fab_create_event);
+        mFabCreateEvent.setOnClickListener(this);
         if (!mAlreadyLogined) {
-            fabCreateEvent.setVisibility(View.GONE);
+            mFabCreateEvent.setVisibility(View.GONE);
         }
 
         FloatingActionButton fabSearchEvent = (FloatingActionButton) findViewById(R.id.fab_search_event);
@@ -828,9 +834,21 @@ public class MapsActivity extends AppCompatActivity implements
             Log.i(TAG, "-----> User logout confirm result: " + yesNo);
 
             if (yesNo == YesNo.YES) {
-                // TODO Processing logout
+                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+
+                changeUiToLogoutStatus();
             }
         }
+    }
+
+    private void changeUiToLogoutStatus() {
+        mTvUserName.setText("");
+        mTvEmail.setText("");
+        mBtnLogin.setVisibility(View.VISIBLE);
+        mBtnLogout.setVisibility(View.GONE);
+        mFabCreateEvent.setVisibility(View.GONE);
     }
 
     private boolean checkPlayServices() {
