@@ -1,6 +1,8 @@
 package com.exfantasy.together.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -11,6 +13,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,6 +34,7 @@ import android.widget.Toast;
 
 import com.exfantasy.together.R;
 import com.exfantasy.together.cnst.SharedPreferencesKey;
+import com.exfantasy.together.cnst.YesNo;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
 import com.exfantasy.together.components.recyclerview.ItemData;
 import com.exfantasy.together.components.recyclerview.MyAdapter;
@@ -106,6 +111,9 @@ public class MapsActivity extends AppCompatActivity implements
     // Record events information
     private Map<Marker, Event> mEventsMap = new HashMap<>();
 
+    // Handle Logout confirm result
+    private LogoutConfirmResultHandler mLogoutConfirmResultHander;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +145,8 @@ public class MapsActivity extends AppCompatActivity implements
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
+
+        mLogoutConfirmResultHander = new LogoutConfirmResultHandler();
     }
 
     private void setupActionBar() {
@@ -490,7 +500,7 @@ public class MapsActivity extends AppCompatActivity implements
                 break;
 
             case R.id.btn_logout_at_menu:
-                // TODO
+                showLogoutConfirmDialog();
                 break;
 
             case R.id.fab_create_event:
@@ -505,6 +515,27 @@ public class MapsActivity extends AppCompatActivity implements
                 new RefreshEventTask().execute();
                 break;
         }
+    }
+
+    private void showLogoutConfirmDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.msg_logout_confirm))
+                .setMessage(getString(R.string.msg_logout_desc))
+                .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Message msg = Message.obtain();
+                        msg.arg1 = YesNo.YES.ordinal();
+                        mLogoutConfirmResultHander.sendMessage(msg);
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Message msg = Message.obtain();
+                        msg.arg1 = YesNo.NO.ordinal();
+                        mLogoutConfirmResultHander.sendMessage(msg);
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -786,6 +817,18 @@ public class MapsActivity extends AppCompatActivity implements
             }
             else {
                 showMsgWithToast(getString(R.string.error_network_abnormal));
+            }
+        }
+    }
+
+    private class LogoutConfirmResultHandler extends Handler {
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            YesNo yesNo = YesNo.values()[msg.arg1];
+            Log.i(TAG, "-----> User logout confirm result: " + yesNo);
+
+            if (yesNo == YesNo.YES) {
+                // TODO Processing logout
             }
         }
     }

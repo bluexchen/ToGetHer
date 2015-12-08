@@ -26,6 +26,7 @@
     <string name="setup">設定</string>
     <string name="username">username</string>
     <string name="password">password</string>
+    <string name="confirm">確認</string>
     <string name="cancel">取消</string>
 
     <string name="register_btn">註冊</string>
@@ -68,6 +69,10 @@
 
     <string name="fb_register_btn">以FB註冊</string>
     <string name="facebook_app_id">1675407852702220</string>
+
+    <!-- 登出對話框 -->
+    <string name="msg_logout_confirm">確認登出?</string>
+    <string name="msg_logout_desc">登出後下次使用需重新登入</string>
 
     <!--- 建立事件畫面 -->
     <string name="hint_event_name">活動名稱</string>
