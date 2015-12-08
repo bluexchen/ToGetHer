@@ -561,7 +561,7 @@ public class MapsActivity extends AppCompatActivity implements
         private TextView mTvEventTime;
 
         private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        private SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm:ss");
+        private SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm");
 
         public MarkerInfoWindowAdapter(Context context) {
             findViews(context);
