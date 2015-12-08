@@ -6,6 +6,7 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -570,6 +571,15 @@ public class MapsActivity extends AppCompatActivity implements
             mTvEventAttendee = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_attendee);
             mTvEventDate = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_date);
             mTvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
+
+            // 設定 TextView 字型
+            Typeface typeface = Typeface.createFromAsset(getAssets(), "ShakeShake.ttc");
+            mTvEventContent.setTypeface(typeface);
+            mTvEventLatLng.setTypeface(typeface);
+            mTvEventAttendeeNum.setTypeface(typeface);
+            mTvEventAttendee.setTypeface(typeface);
+            mTvEventDate.setTypeface(typeface);
+            mTvEventTime.setTypeface(typeface);
         }
 
         @Override
