@@ -573,7 +573,7 @@ public class MapsActivity extends AppCompatActivity implements
             mTvEventTime = (TextView) mView.findViewById(R.id.dlg_marker_tv_event_time);
 
             // 設定 TextView 字型
-            Typeface typeface = Typeface.createFromAsset(getAssets(), "ShakeShake.ttc");
+            Typeface typeface = Typeface.createFromAsset(getAssets(), "SquareCircle.ttc");
             mTvEventContent.setTypeface(typeface);
             mTvEventLatLng.setTypeface(typeface);
             mTvEventAttendeeNum.setTypeface(typeface);
