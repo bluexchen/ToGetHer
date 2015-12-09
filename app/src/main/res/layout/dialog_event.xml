@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,8 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="我想說..." />
+            android:hint="@string/hint_i_wanna_say" />
     </android.support.design.widget.TextInputLayout>
+
     <info.hoang8f.widget.FButton
         android:id="@+id/btn_join_at_dlg_event"
         android:layout_width="fill_parent"
@@ -30,4 +32,5 @@
         android:textColor="#FFFFFF"
         fbutton:buttonColor="@color/fbutton_color_orange"
         fbutton:shadowEnabled="true" />
+
 </LinearLayout>

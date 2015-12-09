@@ -298,6 +298,14 @@ public class MapsActivity extends AppCompatActivity implements
         createEventFr.show(getSupportFragmentManager(), "CreateEventDialog");
     }
 
+    private void showEventDialog(long eventId) {
+        DialogFragment eventDialog = new EventDialog();
+        Bundle bundle = new Bundle();
+        bundle.putLong("eventId", eventId);
+        eventDialog.setArguments(bundle);
+        eventDialog.show(getSupportFragmentManager(), "EventDialog");
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -360,8 +368,14 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                DialogFragment eventDialog = new EventDialog();
-                eventDialog.show(getSupportFragmentManager(), "EventDialog");
+                mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
+                if (mAlreadyLogined) {
+                    Event event = mEventsMap.get(marker);
+                    showEventDialog(event.getEventId());
+                }
+                else {
+                    showMsgWithToast(getString(R.string.warn_pls_login_to_join));
+                }
             }
         });
 
@@ -712,7 +726,7 @@ public class MapsActivity extends AppCompatActivity implements
 
                 return events;
             } catch (Exception e) {
-                Log.e(TAG, "<<<<< Refresh events by latitude: <" + currentLat + ">, longitude: <" + currentLng + "> failed, err-msg: <" + e.toString() + ">");
+                Log.e(TAG, "<<<<< Refresh events by latitude: <" + currentLat + ">, longitude: <" + currentLng + "> failed, err-msg: <" + e.toString() + ">", e);
                 return null;
             }
         }
@@ -761,7 +775,7 @@ public class MapsActivity extends AppCompatActivity implements
 
                 return result;
             } catch (Exception e) {
-                Log.e(TAG, "<<<<< Upload profile image with email: <" + mEmail + "> failed, err-msg: <" + e.toString() + ">");
+                Log.e(TAG, "<<<<< Upload profile image with email: <" + mEmail + "> failed, err-msg: <" + e.toString() + ">", e);
                 return null;
             }
         }
@@ -810,7 +824,7 @@ public class MapsActivity extends AppCompatActivity implements
 
                 return downloadFile;
             } catch (Exception e) {
-                Log.e(TAG, "<<<<< Download profile image with email: <" + mEmail + "> failed, err-msg: <" + e.toString() + ">");
+                Log.e(TAG, "<<<<< Download profile image with email: <" + mEmail + "> failed, err-msg: <" + e.toString() + ">", e);
                 return null;
             }
         }

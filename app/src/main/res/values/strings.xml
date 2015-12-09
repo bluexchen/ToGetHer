@@ -2,7 +2,7 @@
     <string name="app_name">ToGetHer</string>
 
     <!--- Server 位址 -->
-    <string name="base_url">http://114.34.95.168:8080/</string>
+    <string name="base_url">http://10.1.154.102:8080/</string>
 
     <!--- Gcm -->
     <string name="gcm_defaultSenderId">978444275273</string>
@@ -12,6 +12,7 @@
     <string name="api_register">user/register/</string>
     <string name="api_create_event">event/create/</string>
     <string name="api_refresh_event">event/query/</string>
+    <string name="api_join_event">event/join/</string>
     <string name="api_upload_file">file/upload</string>
     <string name="api_download_file">file/download</string>
 
@@ -90,6 +91,17 @@
 
     <string name="msg_create_event_succeed">建立活動成功</string>
     <string name="msg_create_event_failed">建立活動失敗</string>
+
+    <!-- 參加事件畫面 -->
+    <string name="hint_i_wanna_say">我想說...</string>
+    <string name="warn_pls_login_to_join">如想參加請先登入</string>
+
+    <string name="msg_join_event_succeed">加入活動成功</string>
+    <string name="msg_join_event_failed_with_cannot_find_mapping_event">無法找到對應活動</string>
+    <string name="msg_join_event_failed_with_cannot_find_mapping_user">無法找到對應帳號</string>
+    <string name="msg_join_event_failed_with_join_user_created">無需參加自己建立的活動</string>
+    <string name="msg_join_event_failed_with_already_joined">您已經加入過</string>
+    <string name="msg_join_event_failed_with_server_exception">加入活動失敗，伺服器發生問題</string>
 
     <!-- 網路異常或伺服器發生異常 -->
     <string name="error_network_abnormal">網路異常或伺服器發生異常</string>
