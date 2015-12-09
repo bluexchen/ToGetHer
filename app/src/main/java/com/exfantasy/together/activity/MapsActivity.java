@@ -97,7 +97,7 @@ public class MapsActivity extends AppCompatActivity implements
     private SharedPreferences mSharedPreferences;
     private boolean mAlreadyLogined;
 
-    // UI componetns
+    // UI components
     private DrawerLayout mDrawerLayout;
     private ImageView mProfileIcon;
     private TextView mTvUserName;
