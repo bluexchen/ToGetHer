@@ -2,7 +2,7 @@
     <string name="app_name">ToGetHer</string>
 
     <!--- Server 位址 -->
-    <string name="base_url">http://10.1.154.102:8080/</string>
+    <string name="base_url">http://114.34.95.168:8080/</string>
 
     <!--- Gcm -->
     <string name="gcm_defaultSenderId">978444275273</string>
