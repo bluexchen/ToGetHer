@@ -40,6 +40,7 @@ import com.exfantasy.together.components.recyclerview.ItemData;
 import com.exfantasy.together.components.recyclerview.MyAdapter;
 import com.exfantasy.together.components.recyclerview.SnappingRecyclerView;
 import com.exfantasy.together.event.CreateEventDialog;
+import com.exfantasy.together.event.EventDialog;
 import com.exfantasy.together.event.MyEventRecordDialog;
 import com.exfantasy.together.gcm.RegistrationIntentService;
 import com.exfantasy.together.login.LoginDialog;
@@ -359,8 +360,8 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                // TODO show a detail dialog
-                Log.i(TAG, ">>>>> you clicked on a marker info window");
+                DialogFragment eventDialog = new EventDialog();
+                eventDialog.show(getSupportFragmentManager(), "EventDialog");
             }
         });
 
