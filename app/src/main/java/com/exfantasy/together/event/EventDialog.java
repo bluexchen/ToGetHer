@@ -202,20 +202,20 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
             int resultCode = result.getResultCode();
             switch (resultCode) {
                 case ResultCode.SUCCEED:
-                    showMsgWithToast(getString(R.string.msg_join_event_succeed));
+                    showMsgWithToast(getString(R.string.msg_leave_msg_succeed));
                     break;
 
                 case ResultCode.LEAVE_MSG_FAILED_WITH_EVENT_IS_NULL:
-                    showMsgWithToast(getString(R.string.msg_join_event_failed_with_cannot_find_mapping_event));
+                    showMsgWithToast(getString(R.string.msg_leave_msg_failed_with_cannot_find_mapping_event));
                     break;
 
                 case ResultCode.LEAVE_MSG_FAILED_WITH_USER_IS_NULL:
-                    showMsgWithToast(getString(R.string.msg_join_event_failed_with_join_user_created));
+                    showMsgWithToast(getString(R.string.msg_leave_msg_failed_with_cannot_find_mapping_user));
                     break;
 
                 case ResultCode.JOIN_EVENT_FAILED_WITH_EXCEPTION:
                     String resultMsg = result.getResultMsg();
-                    showMsgWithToast(getString(R.string.msg_join_event_failed_with_server_exception));
+                    showMsgWithToast(getString(R.string.msg_leave_msg_failed_with_server_exception));
                     Log.e(TAG, "<<<<< Leave message failed with error-msg: " + resultMsg);
                     break;
 
