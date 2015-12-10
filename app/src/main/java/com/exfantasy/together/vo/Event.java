@@ -159,6 +159,10 @@ public class Event {
         users.add(user);
     }
 
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
     }
