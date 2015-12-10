@@ -24,6 +24,7 @@ import com.exfantasy.together.cnst.SharedPreferencesKey;
 import com.exfantasy.together.components.floatingActionButton.FloatingActionButton;
 import com.exfantasy.together.vo.OpResult;
 import com.exfantasy.together.vo.ResultCode;
+import com.exfantasy.together.vo.User;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -37,6 +38,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by User on 2015/12/8.
@@ -51,6 +53,9 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
 
     // UI Components
     private View mEventView;
+    private TextView mTvEventContent;
+    private TextView mTvEventAttendeeNum;
+    private TextView mTvEventAttendee;
     private Button mBtnJoin;
 
     @Override
@@ -72,17 +77,30 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
         findViews(builder, inflater);
 
         setListener(builder);
-
+        setContent(bundle);
         return builder.create();
     }
 
     private void findViews(AlertDialog.Builder builder, LayoutInflater inflater) {
         mEventView = inflater.inflate(R.layout.dialog_event, null);
-        builder.setView(mEventView);
 
+        builder.setView(mEventView);
+        mTvEventContent = (TextView)mEventView.findViewById(R.id.tv_event_content_at_dlg_event);
+        mTvEventAttendeeNum = (TextView)mEventView.findViewById(R.id.tv_attendee_num_at_dlg_event);
+        mTvEventAttendee = (TextView)mEventView.findViewById(R.id.tv_event_attendee_at_dlg_event);
         mBtnJoin = (Button) mEventView.findViewById(R.id.btn_join_at_dlg_event);
     }
+    private void setContent(Bundle bundle){
+        mTvEventContent.setText("活動內容:"+ bundle.getString("eventContent"));
+        mTvEventAttendeeNum.setText("參加人數:"+ bundle.getInt("eventAttendeeNum"));
 
+        List<User> userList = bundle.getParcelableArrayList("eventAttendee");
+        StringBuilder buffer = new StringBuilder();
+        for(User user : userList) {
+            buffer.append("<").append(user.getUserId()).append("-").append(user.getName()).append(">");
+        }
+        mTvEventAttendee.setText("目前參與者: " + buffer.toString());
+    }
     private void setListener(AlertDialog.Builder builder) {
         builder.setNegativeButton(R.string.cancel, this);
 

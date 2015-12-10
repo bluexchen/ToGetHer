@@ -79,6 +79,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -298,10 +299,13 @@ public class MapsActivity extends AppCompatActivity implements
         createEventFr.show(getSupportFragmentManager(), "CreateEventDialog");
     }
 
-    private void showEventDialog(long eventId) {
+    private void showEventDialog(Event event) {
         DialogFragment eventDialog = new EventDialog();
         Bundle bundle = new Bundle();
-        bundle.putLong("eventId", eventId);
+        bundle.putLong("eventId", event.getEventId());
+        bundle.putString("eventContent", event.getContent());
+        bundle.putInt("eventAttendeeNum", event.getAttendeeNum());
+        bundle.putParcelableArrayList("eventAttendee", new ArrayList(event.getUsers()));
         eventDialog.setArguments(bundle);
         eventDialog.show(getSupportFragmentManager(), "EventDialog");
     }
@@ -371,7 +375,7 @@ public class MapsActivity extends AppCompatActivity implements
                 mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
                 if (mAlreadyLogined) {
                     Event event = mEventsMap.get(marker);
-                    showEventDialog(event.getEventId());
+                    showEventDialog(event);
                 }
                 else {
                     showMsgWithToast(getString(R.string.warn_pls_login_to_join));
@@ -596,7 +600,7 @@ public class MapsActivity extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -605,10 +609,6 @@ public class MapsActivity extends AppCompatActivity implements
         private View mView;
 
         private TextView mTvEventName;
-        private TextView mTvEventContent;
-        private TextView mTvEventLatLng;
-        private TextView mTvEventAttendeeNum;
-        private TextView mTvEventAttendee;
         private TextView mTvEventDate;
         private TextView mTvEventTime;
 
@@ -623,19 +623,11 @@ public class MapsActivity extends AppCompatActivity implements
             mView = LayoutInflater.from(context).inflate(R.layout.marker_info_layout, null);
 
             mTvEventName = (TextView) mView.findViewById(R.id.tv_event_name_at_marker_info);
-            mTvEventContent = (TextView) mView.findViewById(R.id.tv_event_content_at_marker_info);
-            mTvEventLatLng = (TextView) mView.findViewById(R.id.tv_event_latlng_at_marker_info);
-            mTvEventAttendeeNum = (TextView) mView.findViewById(R.id.event_attendee_num_at_marker_info);
-            mTvEventAttendee = (TextView) mView.findViewById(R.id.tv_event_attendee_at_marker_info);
             mTvEventDate = (TextView) mView.findViewById(R.id.tv_event_date_at_marker_info);
             mTvEventTime = (TextView) mView.findViewById(R.id.tv_event_time_at_marker_info);
 
             // 設定 TextView 字型
             Typeface typeface = Typeface.createFromAsset(getAssets(), "SquareCircle.ttc");
-            mTvEventContent.setTypeface(typeface);
-            mTvEventLatLng.setTypeface(typeface);
-            mTvEventAttendeeNum.setTypeface(typeface);
-            mTvEventAttendee.setTypeface(typeface);
             mTvEventDate.setTypeface(typeface);
             mTvEventTime.setTypeface(typeface);
         }
@@ -649,30 +641,8 @@ public class MapsActivity extends AppCompatActivity implements
         public View getInfoContents(Marker marker) {
             Event event = mEventsMap.get(marker);
 
-            String eventId = String.valueOf(event.getEventId());
-            String createUserId = String.valueOf(event.getCreateUserId());
-
             String eventName = event.getName();
             mTvEventName.setText(eventName);
-
-            String eventContent = event.getContent();
-            mTvEventContent.setText("活動內容: " + eventContent);
-
-            LatLng latLng = marker.getPosition();
-            String latitude = String.valueOf(latLng.latitude);
-            String longitude = String.valueOf(latLng.longitude);
-            mTvEventLatLng.setText("經緯度: " + latitude + ", " + longitude);
-
-            String attendeeNum = String.valueOf(event.getAttendeeNum());
-            mTvEventAttendeeNum.setText("活動人數: " + attendeeNum);
-
-            Iterator<User> it = event.getUsers().iterator();
-            StringBuilder buffer = new StringBuilder();
-            while (it.hasNext()) {
-                User user = it.next();
-                buffer.append("<").append(user.getUserId()).append("-").append(user.getName()).append(">");
-            }
-            mTvEventAttendee.setText("目前參與者: " + buffer.toString());
 
             int eventDate = event.getDate();
             Calendar calDate = DateTimeUtil.parseDateValue(eventDate);
