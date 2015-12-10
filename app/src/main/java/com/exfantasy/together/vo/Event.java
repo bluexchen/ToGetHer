@@ -47,6 +47,10 @@ public class Event {
      * 參與活動的使用者
      */
     private Set<User> users;
+    /**
+     * 活動的留言
+     */
+    private Set<Message> messages;
 
     public Event() {
     }
@@ -155,11 +159,23 @@ public class Event {
         users.add(user);
     }
 
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
+    }
+
+    public void addMessage(Message message) {
+        if (messages == null) {
+            messages = new HashSet<>();
+        }
+        messages.add(message);
+    }
+
     @Override
     public String toString() {
         return "Event [eventId=" + eventId + ", createUserId=" + createUserId + ", latitude=" + latitude
                 + ", longitude=" + longitude + ", name=" + name + ", content=" + content + ", attendeeNum="
-                + attendeeNum + ", date=" + date + ", time=" + time + ", users=" + users + "]";
+                + attendeeNum + ", date=" + date + ", time=" + time + ", users=" + users + ", messages=" + messages
+                + "]";
     }
 }
 
