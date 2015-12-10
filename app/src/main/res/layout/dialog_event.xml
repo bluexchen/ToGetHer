@@ -44,6 +44,20 @@
     </android.support.design.widget.TextInputLayout>
 
     <info.hoang8f.widget.FButton
+        android:id="@+id/btn_leaveMsg_at_dlg_event"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="24dp"
+        android:minHeight="@dimen/flat_button_min_height"
+        android:minWidth="@dimen/flat_button_min_width"
+        android:text="@string/leaveMsg"
+        android:textColor="#FFFFFF"
+        fbutton:buttonColor="@color/fbutton_color_sun_flower"
+        fbutton:shadowEnabled="true" />
+
+    <info.hoang8f.widget.FButton
         android:id="@+id/btn_join_at_dlg_event"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

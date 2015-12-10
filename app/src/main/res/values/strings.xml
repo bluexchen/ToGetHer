@@ -44,6 +44,7 @@
         <item>"修改密碼"></item>
     </string-array>
 
+    <string name="leaveMsg">留言</string>
     <string name="join">參加</string>
     <string name="detail">詳情</string>
 
