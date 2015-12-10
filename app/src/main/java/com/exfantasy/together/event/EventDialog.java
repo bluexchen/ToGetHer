@@ -47,6 +47,12 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
     private long mEventId;
     private long mCreateUserId;
 
+    // Variables to set UI
+    private User mCreateUser;
+    private String mEventContent;
+    private int mAttendeeNum;
+    private String mAttendee;
+
     // UI Components
     private View mEventView;
     private TextView mTvCreateUser;
@@ -67,13 +73,37 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        getData();
+
         findViews(builder, inflater);
 
-        setContent();
+        setUiShowContent();
 
         setListener(builder);
 
         return builder.create();
+    }
+
+    private void getData() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
+        Bundle bundle = getArguments();
+
+        mUserId = sharedPreferences.getLong(SharedPreferencesKey.USER_ID, -1);
+        mEventId = bundle.getLong("eventId");
+        mCreateUserId = bundle.getLong("createUserId");
+
+        List<User> userList = bundle.getParcelableArrayList("eventAttendee");
+        StringBuilder buffer = new StringBuilder();
+        for (User user : userList) {
+            buffer.append("[").append(user.getUserId()).append("-").append(user.getName()).append("]");
+            if (user.getUserId() == mCreateUserId) {
+                mCreateUser = user;
+            }
+        }
+
+        mEventContent = bundle.getString("eventContent");
+        mAttendeeNum = bundle.getInt("eventAttendeeNum");
+        mAttendee = buffer.toString();
     }
 
     private void findViews(AlertDialog.Builder builder, LayoutInflater inflater) {
@@ -93,29 +123,11 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
         }
     }
 
-    private void setContent() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
-        Bundle bundle = getArguments();
-
-        mUserId = sharedPreferences.getLong(SharedPreferencesKey.USER_ID, -1);
-        mEventId = bundle.getLong("eventId");
-        mCreateUserId = bundle.getLong("createUserId");
-
-        User createUser = null;
-
-        List<User> userList = bundle.getParcelableArrayList("eventAttendee");
-        StringBuilder buffer = new StringBuilder();
-        for (User user : userList) {
-            buffer.append("[").append(user.getUserId()).append("-").append(user.getName()).append("]");
-            if (user.getUserId() == mCreateUserId) {
-                createUser = user;
-            }
-        }
-
-        mTvCreateUser.setText("建立活動者: [" + createUser.getUserId() + "-" + createUser.getName() + "]");
-        mTvEventContent.setText("活動內容: "+ bundle.getString("eventContent"));
-        mTvEventAttendeeNum.setText("參加人數: " + bundle.getInt("eventAttendeeNum"));
-        mTvEventAttendee.setText("目前參與者: " + buffer.toString());
+    private void setUiShowContent() {
+        mTvCreateUser.setText("建立活動者: [" + mCreateUser.getUserId() + "-" + mCreateUser.getName() + "]");
+        mTvEventContent.setText("活動內容: "+ mEventContent);
+        mTvEventAttendeeNum.setText("參加人數: " + mAttendeeNum);
+        mTvEventAttendee.setText("目前參與者: " + mAttendee);
     }
 
     private void setListener(AlertDialog.Builder builder) {
