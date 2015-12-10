@@ -302,11 +302,15 @@ public class MapsActivity extends AppCompatActivity implements
     private void showEventDialog(Event event) {
         DialogFragment eventDialog = new EventDialog();
         Bundle bundle = new Bundle();
+
         bundle.putLong("eventId", event.getEventId());
+        bundle.putLong("createUserId", event.getCreateUserId());
         bundle.putString("eventContent", event.getContent());
         bundle.putInt("eventAttendeeNum", event.getAttendeeNum());
         bundle.putParcelableArrayList("eventAttendee", new ArrayList(event.getUsers()));
+
         eventDialog.setArguments(bundle);
+
         eventDialog.show(getSupportFragmentManager(), "EventDialog");
     }
 

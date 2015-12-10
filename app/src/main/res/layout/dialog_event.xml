@@ -7,12 +7,21 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_create_user_at_dlg_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="15dp"
+        android:padding="5dp"/>
+
+    <TextView
         android:id="@+id/tv_event_content_at_dlg_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:textSize="15dp"
         android:padding="5dp"/>
+
     <TextView
         android:id="@+id/tv_attendee_num_at_dlg_event"
         android:layout_width="wrap_content"
@@ -20,6 +29,7 @@
         android:textColor="#000000"
         android:textSize="15dp"
         android:padding="5dp"/>
+
     <TextView
         android:id="@+id/tv_event_attendee_at_dlg_event"
         android:layout_width="wrap_content"
