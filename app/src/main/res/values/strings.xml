@@ -13,6 +13,7 @@
     <string name="api_create_event">event/create/</string>
     <string name="api_refresh_event">event/query/</string>
     <string name="api_join_event">event/join/</string>
+    <string name="api_leave_msg">message/leave-message</string>
     <string name="api_upload_file">file/upload</string>
     <string name="api_download_file">file/download</string>
 
@@ -95,7 +96,12 @@
 
     <!-- 參加事件畫面 -->
     <string name="hint_i_wanna_say">我想說...</string>
+    <string name="warn_pls_input_message">請輸入留言</string>
     <string name="warn_pls_login_to_join">如想參加請先登入</string>
+
+    <string name="msg_leave_msg_failed_with_cannot_find_mapping_event">無法找到對應活動</string>
+    <string name="msg_leave_msg_failed_with_cannot_find_mapping_user">無法找到對應帳號</string>
+    <string name="msg_leave_msg_failed_with_server_exception">留言失敗，伺服器發生問題</string>
 
     <string name="msg_join_event_succeed">加入活動成功</string>
     <string name="msg_join_event_failed_with_cannot_find_mapping_event">無法找到對應活動</string>
