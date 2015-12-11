@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,9 @@ import android.widget.Toast;
 
 import com.exfantasy.together.R;
 import com.exfantasy.together.cnst.SharedPreferencesKey;
+import com.exfantasy.together.components.cardView.CardAdapter;
+import com.exfantasy.together.components.cardView.MsgRecordItem;
+import com.exfantasy.together.vo.Message;
 import com.exfantasy.together.vo.OpResult;
 import com.exfantasy.together.vo.ResultCode;
 import com.exfantasy.together.vo.User;
@@ -32,8 +37,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by User on 2015/12/8.
@@ -52,6 +60,7 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
     private String mEventContent;
     private int mAttendeeNum;
     private String mAttendee;
+    private List<MsgRecordItem> mMessageRecordList = new ArrayList<MsgRecordItem>();
 
     // UI Components
     private View mEventView;
@@ -60,6 +69,7 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
     private TextView mTvEventAttendeeNum;
     private TextView mTvEventAttendee;
     private EditText mEtMessage;
+    private RecyclerView mRecyclerView;
     private Button mBtnLeaveMsg;
     private Button mBtnJoin;
 
@@ -79,6 +89,8 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
 
         setUiShowContent();
 
+        setRecyclerView();
+
         setListener(builder);
 
         return builder.create();
@@ -94,8 +106,11 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
 
         List<User> userList = bundle.getParcelableArrayList("eventAttendee");
         StringBuilder buffer = new StringBuilder();
-        for (User user : userList) {
+        Map<Long, String> userMap = new HashMap<Long, String>();
+        for (int i = 0; i < userList.size(); i++) {
+            User user = userList.get(i);
             buffer.append("[").append(user.getUserId()).append("-").append(user.getName()).append("]");
+            userMap.put(user.getUserId(), user.getName());
             if (user.getUserId() == mCreateUserId) {
                 mCreateUser = user;
             }
@@ -104,6 +119,13 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
         mEventContent = bundle.getString("eventContent");
         mAttendeeNum = bundle.getInt("eventAttendeeNum");
         mAttendee = buffer.toString();
+        if(bundle.getParcelableArrayList("eventMessage") != null){
+            List<Message> messageList = bundle.getParcelableArrayList("eventMessage");
+            for(int i = 0; i < messageList.size(); i++){
+                Message message = messageList.get(i);
+                mMessageRecordList.add(new MsgRecordItem(userMap.get(message.getCreateUserId()), message.getContent()));
+            }
+        }
     }
 
     private void findViews(AlertDialog.Builder builder, LayoutInflater inflater) {
@@ -116,10 +138,29 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
         mTvEventAttendeeNum = (TextView) mEventView.findViewById(R.id.tv_attendee_num_at_dlg_event);
         mTvEventAttendee = (TextView) mEventView.findViewById(R.id.tv_event_attendee_at_dlg_event);
         mEtMessage = (EditText) mEventView.findViewById(R.id.et_message_at_dlg_event);
+        mRecyclerView = (RecyclerView) mEventView.findViewById(R.id.view_recycler_view_at_dlg_event);
         mBtnLeaveMsg = (Button) mEventView.findViewById(R.id.btn_leaveMsg_at_dlg_event);
         mBtnJoin = (Button) mEventView.findViewById(R.id.btn_join_at_dlg_event);
         if (mUserId == mCreateUserId) {
             mBtnJoin.setVisibility(View.GONE);
+        }
+    }
+
+    private void setRecyclerView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        if(mMessageRecordList.size() != 0) {
+           CardAdapter adapter =  new CardAdapter(mMessageRecordList.toArray(new MsgRecordItem[mMessageRecordList.size()]));
+            final float scale = getContext().getResources().getDisplayMetrics().density;
+            int itemHeightpixels = (int) (59* scale + 0.5f);
+            int viewHeightpixels = (int) (130 * scale + 0.5f);
+            int contentHeight = adapter.getItemCount()* itemHeightpixels;
+            if(contentHeight < viewHeightpixels){
+                mRecyclerView.getLayoutParams().height = contentHeight;
+            }
+            mRecyclerView.setAdapter(adapter);
+        }else{
+            mRecyclerView.getLayoutParams().height = 0;
         }
     }
 

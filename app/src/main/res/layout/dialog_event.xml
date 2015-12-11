@@ -53,6 +53,11 @@
             android:textSize="15dp" />
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/view_recycler_view_at_dlg_event"
+        android:layout_width="fill_parent"
+        android:layout_height="130dp"/>
+
     <info.hoang8f.widget.FButton
         android:id="@+id/btn_leaveMsg_at_dlg_event"
         android:layout_width="fill_parent"

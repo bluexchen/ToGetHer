@@ -78,6 +78,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -308,9 +309,10 @@ public class MapsActivity extends AppCompatActivity implements
         bundle.putString("eventContent", event.getContent());
         bundle.putInt("eventAttendeeNum", event.getAttendeeNum());
         bundle.putParcelableArrayList("eventAttendee", new ArrayList(event.getUsers()));
-
+        if(event.getMessages() != null){
+            bundle.putParcelableArrayList("eventMessage", new ArrayList(event.getMessages()));
+        }
         eventDialog.setArguments(bundle);
-
         eventDialog.show(getSupportFragmentManager(), "EventDialog");
     }
 

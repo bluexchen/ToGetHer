@@ -1,6 +1,9 @@
 package com.exfantasy.together.vo;
 
-public class Message {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Message implements Parcelable {
 	/**
 	 * 留言 ID
 	 */
@@ -31,6 +34,22 @@ public class Message {
 		this.content = content;
 		this.date = date;
 		this.time = time;
+	}
+
+	public  Message(Parcel in){
+		long[] ldata = new long[2];
+		String[] sdata = new String[1];
+		int[] idata = new int[2];
+
+		in.readLongArray(ldata);
+		in.readStringArray(sdata);
+		in.readIntArray(idata);
+
+		this.messageId = ldata[0];
+		this.createUserId = ldata[1];
+		this.content = sdata[0];
+		this.date = idata[0];
+		this.time = idata[1];
 	}
 
 	public long getMessageId() {
@@ -78,4 +97,39 @@ public class Message {
 		return "Message [messageId=" + messageId + ", createUserId=" + createUserId + ", content=" + content + ", date="
 				+ date + ", time=" + time + "]";
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLongArray(new long[] {
+				this.messageId,
+				this.createUserId
+		});
+
+		dest.writeStringArray(new String[]{
+				this.content,
+		});
+
+		dest.writeIntArray(new int[]{
+				this.date,
+				this.time
+		});
+	}
+
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+
+		@Override
+		public Object createFromParcel(Parcel source) {
+			return new Message(source);
+		}
+
+		@Override
+		public Object[] newArray(int size) {
+			return new Message[size];
+		}
+	};
 }
