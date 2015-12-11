@@ -149,17 +149,17 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
     private void setRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        if(mMessageRecordList.size() != 0) {
-           CardAdapter adapter =  new CardAdapter(mMessageRecordList.toArray(new MsgRecordItem[mMessageRecordList.size()]));
+        if (mMessageRecordList.size() != 0) {
+            CardAdapter adapter = new CardAdapter(mMessageRecordList.toArray(new MsgRecordItem[mMessageRecordList.size()]));
             final float scale = getContext().getResources().getDisplayMetrics().density;
             int itemHeightpixels = (int) (59* scale + 0.5f);
             int viewHeightpixels = (int) (130 * scale + 0.5f);
             int contentHeight = adapter.getItemCount()* itemHeightpixels;
-            if(contentHeight < viewHeightpixels){
+            if (contentHeight < viewHeightpixels){
                 mRecyclerView.getLayoutParams().height = contentHeight;
             }
             mRecyclerView.setAdapter(adapter);
-        }else{
+        } else {
             mRecyclerView.getLayoutParams().height = 0;
         }
     }

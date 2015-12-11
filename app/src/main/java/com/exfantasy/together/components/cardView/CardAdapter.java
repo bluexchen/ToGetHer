@@ -25,7 +25,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(CardAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.tvMessage.setText(msgRecordItems[position].getCreateName()+":"+msgRecordItems[position].getContent());
+        viewHolder.tvMessage.setText(msgRecordItems[position].getCreateName() + ": " + msgRecordItems[position].getContent());
     }
 
     @Override
