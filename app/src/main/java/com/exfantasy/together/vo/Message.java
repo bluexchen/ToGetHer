@@ -13,6 +13,10 @@ public class Message implements Parcelable {
 	 */
 	private long createUserId;
 	/**
+	 * 建立留言使用者暱稱
+	 */
+	private String createUserName;
+	/**
 	 * 留言內容
 	 */
 	private String content;
@@ -28,9 +32,10 @@ public class Message implements Parcelable {
 	public Message() {
 	}
 
-	public Message(long messageId, long createUserId, String content, int date, int time) {
+	public Message(long messageId, long createUserId, String createUserName, String content, int date, int time) {
 		this.messageId = messageId;
 		this.createUserId = createUserId;
+		this.createUserName = createUserName;
 		this.content = content;
 		this.date = date;
 		this.time = time;
@@ -38,7 +43,7 @@ public class Message implements Parcelable {
 
 	public  Message(Parcel in){
 		long[] ldata = new long[2];
-		String[] sdata = new String[1];
+		String[] sdata = new String[2];
 		int[] idata = new int[2];
 
 		in.readLongArray(ldata);
@@ -47,7 +52,8 @@ public class Message implements Parcelable {
 
 		this.messageId = ldata[0];
 		this.createUserId = ldata[1];
-		this.content = sdata[0];
+		this.createUserName = sdata[0];
+		this.content = sdata[1];
 		this.date = idata[0];
 		this.time = idata[1];
 	}
@@ -66,6 +72,14 @@ public class Message implements Parcelable {
 
 	public void setCreateUserId(long createUserId) {
 		this.createUserId = createUserId;
+	}
+
+	public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
 	}
 
 	public String getContent() {
@@ -94,8 +108,8 @@ public class Message implements Parcelable {
 
 	@Override
 	public String toString() {
-		return "Message [messageId=" + messageId + ", createUserId=" + createUserId + ", content=" + content + ", date="
-				+ date + ", time=" + time + "]";
+		return "Message [messageId=" + messageId + ", createUserId=" + createUserId + ", createUserName="
+				+ createUserName + ", content=" + content + ", date=" + date + ", time=" + time + "]";
 	}
 
 	@Override
@@ -110,11 +124,12 @@ public class Message implements Parcelable {
 				this.createUserId
 		});
 
-		dest.writeStringArray(new String[]{
+		dest.writeStringArray(new String[] {
+				this.createUserName,
 				this.content,
 		});
 
-		dest.writeIntArray(new int[]{
+		dest.writeIntArray(new int[] {
 				this.date,
 				this.time
 		});
