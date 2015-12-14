@@ -106,11 +106,9 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
 
         List<User> userList = bundle.getParcelableArrayList("eventAttendee");
         StringBuilder buffer = new StringBuilder();
-        Map<Long, String> userMap = new HashMap<Long, String>();
         for (int i = 0; i < userList.size(); i++) {
             User user = userList.get(i);
             buffer.append("[").append(user.getUserId()).append("-").append(user.getName()).append("]");
-            userMap.put(user.getUserId(), user.getName());
             if (user.getUserId() == mCreateUserId) {
                 mCreateUser = user;
             }
@@ -123,7 +121,7 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
             List<Message> messageList = bundle.getParcelableArrayList("eventMessage");
             for(int i = 0; i < messageList.size(); i++){
                 Message message = messageList.get(i);
-                mMessageRecordList.add(new MsgRecordItem(userMap.get(message.getCreateUserId()), message.getContent()));
+                mMessageRecordList.add(new MsgRecordItem(message.getCreateUserName(), message.getContent()));
             }
         }
     }
