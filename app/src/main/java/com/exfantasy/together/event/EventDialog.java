@@ -39,9 +39,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by User on 2015/12/8.
@@ -136,7 +134,7 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
         mTvEventAttendeeNum = (TextView) mEventView.findViewById(R.id.tv_attendee_num_at_dlg_event);
         mTvEventAttendee = (TextView) mEventView.findViewById(R.id.tv_event_attendee_at_dlg_event);
         mEtMessage = (EditText) mEventView.findViewById(R.id.et_message_at_dlg_event);
-        mRecyclerView = (RecyclerView) mEventView.findViewById(R.id.view_recycler_view_at_dlg_event);
+        mRecyclerView = (RecyclerView) mEventView.findViewById(R.id.recycler_view_at_dlg_event);
         mBtnLeaveMsg = (Button) mEventView.findViewById(R.id.btn_leaveMsg_at_dlg_event);
         mBtnJoin = (Button) mEventView.findViewById(R.id.btn_join_at_dlg_event);
         if (mUserId == mCreateUserId) {
@@ -150,7 +148,7 @@ public class EventDialog extends DialogFragment  implements View.OnClickListener
         if (mMessageRecordList.size() != 0) {
             CardAdapter adapter = new CardAdapter(mMessageRecordList.toArray(new MsgRecordItem[mMessageRecordList.size()]));
             final float scale = getContext().getResources().getDisplayMetrics().density;
-            int itemHeightpixels = (int) (59* scale + 0.5f);
+            int itemHeightpixels = (int) (59 * scale + 0.5f);
             int viewHeightpixels = (int) (130 * scale + 0.5f);
             int contentHeight = adapter.getItemCount()* itemHeightpixels;
             if (contentHeight < viewHeightpixels){
