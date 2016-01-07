@@ -197,18 +197,20 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
         final Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
+
         TimePickerDialog timePicker
                 = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
-                        Calendar cal = Calendar.getInstance();
-                        cal.set(Calendar.HOUR_OF_DAY, selectedHour);
-                        cal.set(Calendar.MINUTE, selectedMinute);
-                        String showTime = mTimeFormat.format(cal.getTime());
+            @Override
+            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, selectedHour);
+                cal.set(Calendar.MINUTE, selectedMinute);
+                String showTime = mTimeFormat.format(cal.getTime());
 
-                        mEtEventTime.setText(showTime);
-                    }
+                mEtEventTime.setText(showTime);
+            }
         }, hour, minute, false);
+
         timePicker.show();
     }
 
@@ -216,7 +218,7 @@ public class CreateEventDialog extends DialogFragment implements View.OnClickLis
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }

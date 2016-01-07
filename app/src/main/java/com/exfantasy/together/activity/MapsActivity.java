@@ -48,7 +48,6 @@ import com.exfantasy.together.setting.SettingDialog;
 import com.exfantasy.together.util.DateTimeUtil;
 import com.exfantasy.together.util.ImageUtils;
 import com.exfantasy.together.vo.Event;
-import com.exfantasy.together.vo.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -78,13 +77,11 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
-import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class MapsActivity extends AppCompatActivity implements
@@ -101,7 +98,7 @@ public class MapsActivity extends AppCompatActivity implements
     private boolean mAlreadyLogined;
 
     // UI components
-    private DrawerLayout mDrawerLayout;
+    private DrawerLayout mMainDrawerLayout;
     private ImageView mProfileIcon;
     private TextView mTvUserName;
     private TextView mTvEmail;
@@ -131,7 +128,7 @@ public class MapsActivity extends AppCompatActivity implements
         mSharedPreferences = getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
         mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mMainDrawerLayout = (DrawerLayout) findViewById(R.id.mainDL);
 
         // set up action bar
         setupActionBar();
@@ -165,10 +162,10 @@ public class MapsActivity extends AppCompatActivity implements
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open_string, R.string.close_string);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mMainDrawerLayout, R.string.open_string, R.string.close_string);
         actionBarDrawerToggle.syncState();
 
-        mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
+        mMainDrawerLayout.setDrawerListener(actionBarDrawerToggle);
     }
 
     private void setupMenuItems() {
@@ -179,8 +176,7 @@ public class MapsActivity extends AppCompatActivity implements
             Bitmap bitmap = ImageUtils.loadProfileIcomFromExternalStorage();
             if (bitmap != null) {
                 mProfileIcon.setImageBitmap(bitmap);
-            }
-            else {
+            } else {
                 new DownloadPhotoTask().execute();
             }
         }
@@ -232,25 +228,27 @@ public class MapsActivity extends AppCompatActivity implements
         fabRefreshMap.setOnClickListener(this);
     }
 
-    private void setupGoogleMap(){
+    private void setupGoogleMap() {
         MapFragment mapFragment
                 = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
 
         mapFragment.getMapAsync(this);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
+        mGoogleApiClient
+                = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
 
         // Create the LocationRequest object
         int interval = 10 * 1000;
         int fastestInterval = 1000;
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(interval)        // 10 seconds, in milliseconds
-                .setFastestInterval(fastestInterval); // 1 second, in milliseconds
+        mLocationRequest
+                = LocationRequest.create()
+                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    .setInterval(interval)                // 10 seconds, in milliseconds
+                    .setFastestInterval(fastestInterval); // 1 second, in milliseconds
     }
 
     private void setupRecyclerView() {
@@ -260,15 +258,15 @@ public class MapsActivity extends AppCompatActivity implements
         snappingRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         ItemData itemsData[] = {
-                new ItemData("Luffy",R.drawable.icon_onepiece_luffy),
-                new ItemData("Zoro",R.drawable.icon_onepiece_zoro),
-                new ItemData("Nami",R.drawable.icon_onepiece_nami),
-                new ItemData("Sanji",R.drawable.icon_onepiece_sanji),
-                new ItemData("Ussop",R.drawable.icon_onepiece_ussop),
-                new ItemData("Chopper",R.drawable.icon_onepiece_chopper),
-                new ItemData("Nico",R.drawable.icon_onepiece_nico),
-                new ItemData("Franck",R.drawable.icon_onepiece_franck),
-                new ItemData("Brook",R.drawable.icon_onepiece_brook)
+                new ItemData("Luffy", R.drawable.icon_onepiece_luffy),
+                new ItemData("Zoro", R.drawable.icon_onepiece_zoro),
+                new ItemData("Nami", R.drawable.icon_onepiece_nami),
+                new ItemData("Sanji", R.drawable.icon_onepiece_sanji),
+                new ItemData("Ussop", R.drawable.icon_onepiece_ussop),
+                new ItemData("Chopper", R.drawable.icon_onepiece_chopper),
+                new ItemData("Nico", R.drawable.icon_onepiece_nico),
+                new ItemData("Franck", R.drawable.icon_onepiece_franck),
+                new ItemData("Brook", R.drawable.icon_onepiece_brook)
         };
 
         MyAdapter mAdapter = new MyAdapter(itemsData);
@@ -293,9 +291,11 @@ public class MapsActivity extends AppCompatActivity implements
     private void showCreateEventDialog() {
         DialogFragment createEventFr = new CreateEventDialog();
         LatLng centerLatLng = getCenterLatLng();
+
         Bundle latlngBundle = new Bundle();
         latlngBundle.putDouble("lat", centerLatLng.latitude);
         latlngBundle.putDouble("lng", centerLatLng.longitude);
+
         createEventFr.setArguments(latlngBundle);
         createEventFr.show(getSupportFragmentManager(), "CreateEventDialog");
     }
@@ -309,7 +309,7 @@ public class MapsActivity extends AppCompatActivity implements
         bundle.putString("eventContent", event.getContent());
         bundle.putInt("eventAttendeeNum", event.getAttendeeNum());
         bundle.putParcelableArrayList("eventAttendee", new ArrayList(event.getUsers()));
-        if(event.getMessages() != null){
+        if (event.getMessages() != null) {
             bundle.putParcelableArrayList("eventMessage", new ArrayList(event.getMessages()));
         }
         eventDialog.setArguments(bundle);
@@ -336,12 +336,12 @@ public class MapsActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mDrawerLayout.closeDrawers();
+            if (mMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mMainDrawerLayout.closeDrawers();
             } else {
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                mMainDrawerLayout.openDrawer(GravityCompat.START);
             }
             return true;
         }
@@ -364,7 +364,7 @@ public class MapsActivity extends AppCompatActivity implements
         // 設定畫面初始位置
         double initLat = 23.942314;
         double initLng = 121.048767;
-        CameraUpdate center=
+        CameraUpdate center =
                 CameraUpdateFactory.newLatLngZoom(new LatLng(initLat, initLng), 8);
         mMap.moveCamera(center);
 
@@ -382,8 +382,7 @@ public class MapsActivity extends AppCompatActivity implements
                 if (mAlreadyLogined) {
                     Event event = mEventsMap.get(marker);
                     showEventDialog(event);
-                }
-                else {
+                } else {
                     showMsgWithToast(getString(R.string.warn_pls_login_to_join));
                 }
             }
@@ -411,7 +410,8 @@ public class MapsActivity extends AppCompatActivity implements
                     }
 
                     @Override
-                    public void onCancel() {}
+                    public void onCancel() {
+                    }
                 });
                 return true;
             }
@@ -433,7 +433,7 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.clear();
         mEventsMap.clear();
 
-        for (Event event: eventsNearby) {
+        for (Event event : eventsNearby) {
             double lat = event.getLatitude();
             double lng = event.getLongitude();
             String eventName = event.getName();
@@ -456,8 +456,7 @@ public class MapsActivity extends AppCompatActivity implements
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        }
-        else {
+        } else {
             handleNewLocation(location);
         }
     }
@@ -469,28 +468,28 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         /*
-              * Google Play services can resolve some errors it detects.
-              * If the error has a resolution, try sending an Intent to
-              * start a Google Play services activity that can resolve
-              * error.
-              */
+         * Google Play services can resolve some errors it detects.
+         * If the error has a resolution, try sending an Intent to
+         * start a Google Play services activity that can resolve
+         * error.
+         */
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
                 connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
                 /*
-                            * Thrown if Google Play services canceled the original
-                            * PendingIntent
-                            */
+                 * Thrown if Google Play services canceled the original
+                 * PendingIntent
+                 */
             } catch (IntentSender.SendIntentException e) {
                 // Log the error
                 Log.e(TAG, "Google map onConnectionFailed, cannot resolve by google play service activity, msg: " + e.getMessage(), e);
             }
         } else {
             /*
-                     * If no resolution is available, display a dialog to the
-                    * user with the error.
-                      */
+             * If no resolution is available, display a dialog to the
+             * user with the error.
+             */
             Log.e(TAG, "Google map onConnectionFailed with code " + connectionResult.getErrorCode());
         }
     }
@@ -512,8 +511,7 @@ public class MapsActivity extends AppCompatActivity implements
                 mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
                 if (mAlreadyLogined) {
                     Crop.pickImage(this);
-                }
-                else {
+                } else {
                     showMsgWithToast(getString(R.string.warn_pls_login));
                 }
                 break;
@@ -573,8 +571,7 @@ public class MapsActivity extends AppCompatActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
         if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
             beginCrop(result.getData());
-        }
-        else if (requestCode == Crop.REQUEST_CROP) {
+        } else if (requestCode == Crop.REQUEST_CROP) {
             handleCrop(resultCode, result);
         }
     }
@@ -596,8 +593,7 @@ public class MapsActivity extends AppCompatActivity implements
             Log.i(TAG, "Image stored path: <" + imgStoredExternalStoragePath + ">");
 
             new UploadProfileImageTask().execute(imgStoredExternalStoragePath);
-        }
-        else if (resultCode == Crop.RESULT_ERROR) {
+        } else if (resultCode == Crop.RESULT_ERROR) {
             showMsgWithToast(Crop.getError(result).getMessage());
         }
     }
@@ -711,8 +707,7 @@ public class MapsActivity extends AppCompatActivity implements
         protected void onPostExecute(Event[] refreshEvents) {
             if (refreshEvents != null) {
                 showMarkerOnMap(refreshEvents);
-            }
-            else {
+            } else {
                 showMsgWithToast(getString(R.string.error_network_abnormal));
             }
         }
@@ -760,8 +755,7 @@ public class MapsActivity extends AppCompatActivity implements
         protected void onPostExecute(String result) {
             if (result != null) {
 
-            }
-            else {
+            } else {
                 showMsgWithToast(getString(R.string.error_network_abnormal));
             }
         }
@@ -811,8 +805,7 @@ public class MapsActivity extends AppCompatActivity implements
                 Bitmap bitmap = BitmapFactory.decodeByteArray(downloadFile, 0, downloadFile.length);
                 ImageUtils.saveToExternalStorage(bitmap);
                 mProfileIcon.setImageBitmap(bitmap);
-            }
-            else {
+            } else {
                 showMsgWithToast(getString(R.string.error_network_abnormal));
             }
         }
