@@ -1,71 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="15dp">
 
     <!-- Event Name -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/et_event_name_at_dlg_create_event"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/et_event_name_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/hint_event_name" />
+            android:hint="@string/hint_event_name"
+            android:inputType="textEmailAddress" />
+
     </android.support.design.widget.TextInputLayout>
 
     <!-- Event Content -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/et_event_content_at_dlg_create_event"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/et_event_content_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_event_content"/>
+            android:hint="@string/hint_event_content" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- Event Number of People Required -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/et_event_requied_people_num_at_dlg_create_event"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/et_event_requied_people_num_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="@string/hint_event_people_required"/>
+            android:hint="@string/hint_event_people_required"
+            android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- Event Date -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/et_event_date_at_dlg_create_event"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/et_event_date_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_event_date"/>
+            android:hint="@string/hint_event_date" />
+
     </android.support.design.widget.TextInputLayout>
 
     <!-- Event Time -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/et_event_time_at_dlg_create_event"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/et_event_time_at_dlg_create_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_event_time"/>
+            android:hint="@string/hint_event_time" />
+
     </android.support.design.widget.TextInputLayout>
 
     <!-- Create Event Button -->
@@ -74,9 +86,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@drawable/btn_shape_selector_orange5"
         android:padding="12dp"
         android:text="@string/btn_create_event"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/btn_shape_selector_orange5"/>
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

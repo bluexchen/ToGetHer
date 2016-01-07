@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * Created by User on 2015/12/8.
  */
-public class EventDialog extends DialogFragment  implements View.OnClickListener, DialogInterface.OnClickListener{
+public class EventDialog extends DialogFragment implements View.OnClickListener, DialogInterface.OnClickListener{
 
     public static final String TAG = EventDialog.class.getSimpleName();
 

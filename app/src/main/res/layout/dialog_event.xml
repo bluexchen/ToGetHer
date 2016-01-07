@@ -4,13 +4,14 @@
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/teal" >
 
     <TextView
         android:id="@+id/tv_create_user_at_dlg_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:textSize="15dp"
         android:padding="5dp"/>
 
@@ -18,7 +19,7 @@
         android:id="@+id/tv_event_content_at_dlg_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:textSize="15dp"
         android:padding="5dp"/>
 
@@ -26,7 +27,7 @@
         android:id="@+id/tv_attendee_num_at_dlg_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:textSize="15dp"
         android:padding="5dp"/>
 
@@ -34,7 +35,7 @@
         android:id="@+id/tv_event_attendee_at_dlg_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:textSize="15dp"
         android:padding="5dp"/>
 
@@ -49,7 +50,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="@string/hint_i_wanna_say"
-            android:textColor="#000000"
+            android:textColor="@color/white"
             android:textSize="15dp" />
     </android.support.design.widget.TextInputLayout>
 
@@ -68,7 +69,7 @@
         android:minHeight="@dimen/flat_button_min_height"
         android:minWidth="@dimen/flat_button_min_width"
         android:text="@string/leaveMsg"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         fbutton:buttonColor="@color/fbutton_color_sun_flower"
         fbutton:shadowEnabled="true" />
 
@@ -82,7 +83,7 @@
         android:minHeight="@dimen/flat_button_min_height"
         android:minWidth="@dimen/flat_button_min_width"
         android:text="@string/join"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         fbutton:buttonColor="@color/fbutton_color_orange"
         fbutton:shadowEnabled="true" />
 

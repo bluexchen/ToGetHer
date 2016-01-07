@@ -21,6 +21,7 @@
     <color name="hintColor">#ccd3e1</color>
     <color name="btnBgColor">#5bbef5</color>
     <color name="actionbar_background">#424242</color>
+    <color name="teal">#009688</color>
 
     <!-- Flat Button Colors -->
     <color name="fbutton_color_turquoise">#1abc9c</color>
