@@ -51,9 +51,13 @@ import com.exfantasy.together.vo.Event;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -89,7 +93,8 @@ public class MapsActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
-        View.OnClickListener {
+        View.OnClickListener,
+        PlaceSelectionListener {
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -144,6 +149,9 @@ public class MapsActivity extends AppCompatActivity implements
 
         // set up recycler view
         setupRecyclerView();
+
+        // set up PlaceAutoCompleteFragment
+        setupPlaceAutoCompleteFragmet();
 
         // check if need to register gcm
         if (checkPlayServices()) {
@@ -273,6 +281,13 @@ public class MapsActivity extends AppCompatActivity implements
         snappingRecyclerView.setAdapter(mAdapter);
     }
 
+    private void setupPlaceAutoCompleteFragmet() {
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(this);
+    }
+
     private void showLoginDialog() {
         DialogFragment loginDialog = new LoginDialog();
         loginDialog.show(getSupportFragmentManager(), "LoginDialog");
@@ -369,7 +384,11 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.moveCamera(center);
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.setMyLocationEnabled(true);
+        try {
+            mMap.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            Log.e(TAG, "SecurityException raised while set google map my localtion enabled, msg: <" + e.toString() + ">", e);
+        }
 
         mMap.getUiSettings().setAllGesturesEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -388,12 +407,13 @@ public class MapsActivity extends AppCompatActivity implements
             }
         });
 
-        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-                getCenterLatLng();
-            }
-        });
+//        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+//            @Override
+//            public void onCameraChange(CameraPosition cameraPosition) {
+//                Log.i(TAG, "OnCameraChange !!!!!!!!!!!!!!!!!!");
+//                getCenterLatLng();
+//            }
+//        });
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -453,11 +473,15 @@ public class MapsActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(Bundle bundle) {
-        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (location == null) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        } else {
-            handleNewLocation(location);
+        try {
+            Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (location == null) {
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            } else {
+                handleNewLocation(location);
+            }
+        } catch (SecurityException e) {
+            Log.e(TAG, "SecurityException raised while google map onConnected, msg: <" + e.toString() + ">", e);
         }
     }
 
@@ -502,6 +526,38 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    /**
+     * Google Search 結果
+     *
+     * @param place
+     */
+    @Override
+    public void onPlaceSelected(Place place) {
+        LatLng latLng = place.getLatLng();
+
+        Log.i(TAG, "Place Selected: " + place.getName() + ", Latitude: " + latLng.latitude + ", Longitude: " + latLng.longitude);
+
+        CameraUpdate cameraUpdate =
+                CameraUpdateFactory.newLatLngZoom(latLng, 17);
+
+        // FIXME 這邊很怪, 呼叫了移動, 過不去
+        mMap.animateCamera(cameraUpdate);
+
+        Log.i(TAG, "Move map camera to Latitude: " + latLng.latitude + ", Longitude: " + latLng.longitude + " done");
+    }
+
+    /**
+     * Google Search 錯誤
+     *
+     * @param status
+     */
+    @Override
+    public void onError(Status status) {
+        Log.e(TAG, "onError: Status = " + status.toString());
+
+        Toast.makeText(this, "Place selection failed: " + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
