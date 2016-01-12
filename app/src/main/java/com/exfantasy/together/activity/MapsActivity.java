@@ -124,6 +124,7 @@ public class MapsActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i(TAG, "Method Called: OnCreated");
 
         mSharedPreferences = getSharedPreferences(SharedPreferencesKey.TOGEHER_KEY, Context.MODE_PRIVATE);
         mAlreadyLogined = mSharedPreferences.getBoolean(SharedPreferencesKey.ALREADY_LOGINED, false);
@@ -156,6 +157,24 @@ public class MapsActivity extends AppCompatActivity implements
         }
 
         mLogoutConfirmResultHander = new LogoutConfirmResultHandler();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "Method Called: onResume");
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "Method Called: onPause");
+
+        if (mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            mGoogleApiClient.disconnect();
+        }
     }
 
     private void setupActionBar() {
@@ -232,6 +251,7 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void setupGoogleMap() {
+        Log.i(TAG, "Method Called: setupGoogleMap");
         MapFragment mapFragment
                 = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
 
@@ -287,6 +307,9 @@ public class MapsActivity extends AppCompatActivity implements
 //    }
 
     private void setupPlaceAutoCompleteFragmet() {
+
+        Log.i(TAG, "Method Called: setupPlaceAutoCompleteFragmet");
+
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
@@ -336,21 +359,7 @@ public class MapsActivity extends AppCompatActivity implements
         eventDialog.show(getSupportFragmentManager(), "EventDialog");
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mGoogleApiClient.connect();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-            mGoogleApiClient.disconnect();
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -379,6 +388,7 @@ public class MapsActivity extends AppCompatActivity implements
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.i(TAG, "Method Called: onMapReady");
         mMap = googleMap;
 
         // 設定畫面初始位置
@@ -423,6 +433,7 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker) {
+                Log.i(TAG, "Method Called: onMarkerClick");
                 LatLng latLng = marker.getPosition();
 
                 CameraUpdate cameraUpdate =
@@ -431,11 +442,13 @@ public class MapsActivity extends AppCompatActivity implements
                 mMap.animateCamera(cameraUpdate, 800, new GoogleMap.CancelableCallback() {
                     @Override
                     public void onFinish() {
+                        Log.i(TAG, "Method Called: onFinish");
                         marker.showInfoWindow();
                     }
 
                     @Override
                     public void onCancel() {
+                        Log.i(TAG, "Method Called: onCancel");
                     }
                 });
                 return true;
@@ -446,6 +459,7 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void handleNewLocation(Location location) {
+        Log.i(TAG, "Method Called: handleNewLocation");
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
 
@@ -478,6 +492,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(Bundle bundle) {
+        Log.i(TAG, "Method Called: onConnected");
         try {
             Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             if (location == null) {
@@ -492,6 +507,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Method Called: onConnectionSuspended");
     }
 
     @Override
@@ -502,6 +518,7 @@ public class MapsActivity extends AppCompatActivity implements
          * start a Google Play services activity that can resolve
          * error.
          */
+        Log.i(TAG, "Method Called: onConnectionFailed");
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
@@ -526,6 +543,7 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public void onLocationChanged(Location location) {
 //        handleNewLocation(location);
+        Log.i(TAG, "Method Called: onLocationChanged");
     }
 
     @Override
@@ -540,6 +558,8 @@ public class MapsActivity extends AppCompatActivity implements
      */
     @Override
     public void onPlaceSelected(Place place) {
+        Log.i(TAG, "Method Called: onPlaceSelected");
+
         LatLng latLng = place.getLatLng();
 
         Log.i(TAG, "Place Selected: " + place.getName() + ", Latitude: " + latLng.latitude + ", Longitude: " + latLng.longitude);
@@ -629,6 +649,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+        Log.i(TAG, "Method Called: onActivityResult");
         if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
             beginCrop(result.getData());
         } else if (requestCode == Crop.REQUEST_CROP) {
