@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,7 +64,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -148,7 +148,7 @@ public class MapsActivity extends AppCompatActivity implements
         setupGoogleMap();
 
         // set up recycler view
-        setupRecyclerView();
+//        setupRecyclerView();
 
         // set up PlaceAutoCompleteFragment
         setupPlaceAutoCompleteFragmet();
@@ -242,6 +242,15 @@ public class MapsActivity extends AppCompatActivity implements
 
         mapFragment.getMapAsync(this);
 
+        // 移動取得目前位置按鈕於畫面上的位置
+        View mapView = mapFragment.getView();
+        View btnMyLocation = ((View) mapView.findViewById(1).getParent()).findViewById(2);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(130, 130);  // size of button in dp
+        params.addRule(RelativeLayout.ALIGN_LEFT, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        params.setMargins(80, 0, 0, 80);
+        btnMyLocation.setLayoutParams(params);
+
         mGoogleApiClient
                 = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -259,27 +268,27 @@ public class MapsActivity extends AppCompatActivity implements
                     .setFastestInterval(fastestInterval); // 1 second, in milliseconds
     }
 
-    private void setupRecyclerView() {
-        SnappingRecyclerView snappingRecyclerView = (SnappingRecyclerView) findViewById(R.id.event_recycler_view);
-        snappingRecyclerView.setSnapEnabled(true);
-        snappingRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        snappingRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        ItemData itemsData[] = {
-                new ItemData("Luffy", R.drawable.icon_onepiece_luffy),
-                new ItemData("Zoro", R.drawable.icon_onepiece_zoro),
-                new ItemData("Nami", R.drawable.icon_onepiece_nami),
-                new ItemData("Sanji", R.drawable.icon_onepiece_sanji),
-                new ItemData("Ussop", R.drawable.icon_onepiece_ussop),
-                new ItemData("Chopper", R.drawable.icon_onepiece_chopper),
-                new ItemData("Nico", R.drawable.icon_onepiece_nico),
-                new ItemData("Franck", R.drawable.icon_onepiece_franck),
-                new ItemData("Brook", R.drawable.icon_onepiece_brook)
-        };
-
-        MyAdapter mAdapter = new MyAdapter(itemsData);
-        snappingRecyclerView.setAdapter(mAdapter);
-    }
+//    private void setupRecyclerView() {
+//        SnappingRecyclerView snappingRecyclerView = (SnappingRecyclerView) findViewById(R.id.event_recycler_view);
+//        snappingRecyclerView.setSnapEnabled(true);
+//        snappingRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        snappingRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//
+//        ItemData itemsData[] = {
+//                new ItemData("Luffy", R.drawable.icon_onepiece_luffy),
+//                new ItemData("Zoro", R.drawable.icon_onepiece_zoro),
+//                new ItemData("Nami", R.drawable.icon_onepiece_nami),
+//                new ItemData("Sanji", R.drawable.icon_onepiece_sanji),
+//                new ItemData("Ussop", R.drawable.icon_onepiece_ussop),
+//                new ItemData("Chopper", R.drawable.icon_onepiece_chopper),
+//                new ItemData("Nico", R.drawable.icon_onepiece_nico),
+//                new ItemData("Franck", R.drawable.icon_onepiece_franck),
+//                new ItemData("Brook", R.drawable.icon_onepiece_brook)
+//        };
+//
+//        MyAdapter mAdapter = new MyAdapter(itemsData);
+//        snappingRecyclerView.setAdapter(mAdapter);
+//    }
 
     private void setupPlaceAutoCompleteFragmet() {
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)

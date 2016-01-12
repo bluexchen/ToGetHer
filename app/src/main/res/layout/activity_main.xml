@@ -27,8 +27,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginTop="14dp" >
 
             <fragment
                 android:id="@+id/autocomplete_fragment"
@@ -55,7 +54,7 @@
             fab:fab_addButtonColorPressed="@color/orange_pressed"
             fab:fab_addButtonPlusIconColor="@color/white"
             fab:fab_labelStyle="@style/menu_labels_style"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp">
 
@@ -85,13 +84,14 @@
 
         </com.exfantasy.together.components.floatingActionButton.FloatingActionsMenu>
 
+        <!--
         <com.exfantasy.together.components.recyclerview.SnappingRecyclerView
             android:id="@+id/event_recycler_view"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_alignParentBottom="true">
-
         </com.exfantasy.together.components.recyclerview.SnappingRecyclerView>
+        -->
 
     </RelativeLayout>
 
