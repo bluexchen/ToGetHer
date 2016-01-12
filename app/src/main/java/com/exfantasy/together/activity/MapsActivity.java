@@ -164,8 +164,8 @@ public class MapsActivity extends AppCompatActivity implements
         super.onResume();
         Log.i(TAG, "Method Called: onResume");
 
-        if(!mGoogleApiClient.isConnected() || !mGoogleApiClient.isConnecting()) {
-
+        if(!mGoogleApiClient.isConnected() && !mGoogleApiClient.isConnecting()) {
+            Log.i(TAG, "GoogleApiClient is not connected or connecting.");
             mGoogleApiClient.connect();
         }
     }
