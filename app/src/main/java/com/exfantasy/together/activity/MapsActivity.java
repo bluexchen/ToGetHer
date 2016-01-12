@@ -385,7 +385,7 @@ public class MapsActivity extends AppCompatActivity implements
         double initLat = 23.942314;
         double initLng = 121.048767;
         CameraUpdate center =
-                CameraUpdateFactory.newLatLngZoom(new LatLng(initLat, initLng), 8);
+                CameraUpdateFactory.newLatLngZoom(new LatLng(initLat, initLng), 15);
         mMap.moveCamera(center);
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
