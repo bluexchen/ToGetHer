@@ -163,14 +163,22 @@ public class MapsActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "Method Called: onResume");
-        mGoogleApiClient.connect();
+
+        if(!mGoogleApiClient.isConnected() || !mGoogleApiClient.isConnecting()) {
+
+            mGoogleApiClient.connect();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "Method Called: onPause");
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
         if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
