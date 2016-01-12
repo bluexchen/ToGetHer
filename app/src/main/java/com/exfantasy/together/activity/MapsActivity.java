@@ -238,6 +238,7 @@ public class MapsActivity extends AppCompatActivity implements
         mapFragment.getMapAsync(this);
 
         // 移動取得目前位置按鈕於畫面上的位置
+        // http://stackoverflow.com/questions/14489880/how-to-change-the-position-of-maps-apis-get-my-location-button
         View mapView = mapFragment.getView();
         View btnMyLocation = ((View) mapView.findViewById(1).getParent()).findViewById(2);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(130, 130);  // size of button in dp
