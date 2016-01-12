@@ -542,7 +542,6 @@ public class MapsActivity extends AppCompatActivity implements
         CameraUpdate cameraUpdate =
                 CameraUpdateFactory.newLatLngZoom(latLng, 17);
 
-        // FIXME 這邊很怪, 呼叫了移動, 過不去
         mMap.animateCamera(cameraUpdate);
 
         Log.i(TAG, "Move map camera to Latitude: " + latLng.latitude + ", Longitude: " + latLng.longitude + " done");
