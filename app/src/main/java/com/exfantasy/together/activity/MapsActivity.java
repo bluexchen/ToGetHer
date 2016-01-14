@@ -160,6 +160,12 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "Method Called: onPause");
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "Method Called: onResume");
@@ -168,12 +174,6 @@ public class MapsActivity extends AppCompatActivity implements
             Log.i(TAG, "GoogleApiClient is not connected or connecting.");
             mGoogleApiClient.connect();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG, "Method Called: onPause");
     }
 
     @Override
@@ -366,8 +366,6 @@ public class MapsActivity extends AppCompatActivity implements
         eventDialog.setArguments(bundle);
         eventDialog.show(getSupportFragmentManager(), "EventDialog");
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -939,5 +937,4 @@ public class MapsActivity extends AppCompatActivity implements
         }
         return true;
     }
-
 }
